@@ -11,6 +11,10 @@ namespace MuscleGain.Infrastructure.Data
         {
         }
 
-        public DbSet<MuscleGain.Infrastructure.Data.Models.Protein> Proteins { get; set; }
+        public DbSet<Protein> Proteins { get; set; }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);  
+        }
     }
 }

@@ -13,6 +13,8 @@ namespace MuscleGain.Infrastructure.Data.Models
         {
             
         }
+        [Key]
+        public string Id { get; set; }
         [Required]
         [MinLength(2)]
         [MaxLength(30)]
