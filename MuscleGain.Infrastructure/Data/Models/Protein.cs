@@ -9,10 +9,6 @@ namespace MuscleGain.Infrastructure.Data.Models
 {
     public class Protein
     {
-        public Protein()
-        {
-            
-        }
         [Key]
         public string Id { get; set; }
         [Required]
