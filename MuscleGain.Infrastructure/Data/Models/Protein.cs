@@ -4,20 +4,31 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MuscleGain.Infrastructure.Data.DataConstants;
 
 namespace MuscleGain.Infrastructure.Data.Models
 {
     public class Protein
     {
         [Key]
-        public string Id { get; set; }
+        public int Id { get; init; }
+        
         [Required]
-        [MinLength(2)]
-        [MaxLength(30)]
-        public string? Name { get; set; }
+        [StringLength(ProteinNameMaxLength)]
+        public string Name { get; set; }
+
         [Required]
-        [MinLength(0)]
-        [MaxLength(10000)]
-        public decimal Price { get; set; }
+        [Range(ProteinPriceMinLength, ProteinPriceMaxLength)]
+        public decimal? Price { get; set; }
+
+        [Required]
+        public string Description { get; set; }
+
+        [Required]
+        public string ImageUrl { get; set; }
+
+        public int CategoryId { get; set; }
+        public ProteinsCategories ProteinCategory { get; init; }
+        
     }
 }
