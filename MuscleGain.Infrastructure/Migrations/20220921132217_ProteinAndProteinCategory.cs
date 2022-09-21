@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MuscleGain.Infrastructure.Migrations
 {
-    public partial class ProteinAndProteinCategories : Migration
+    public partial class ProteinAndProteinCategory : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -174,7 +174,10 @@ namespace MuscleGain.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Grams = table.Column<int>(type: "int", nullable: false),
+                    Flavour = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Quantity = table.Column<int>(type: "int", maxLength: 5, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", maxLength: 1000, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)

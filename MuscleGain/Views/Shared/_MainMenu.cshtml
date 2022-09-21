@@ -12,21 +12,22 @@
 		</a>
 		<ul class="nav nav-treeview">
 			<li class="nav-item">
-				<a asp-action="Index" class="nav-link active">
+				<a asp-controller="Home" asp-action="Index" class="nav-link active">
 					<i class="far fa-circle nav-icon"></i>
 					<p>Home Page</p>
 				</a>
 			</li>
+			@*TODO: Admin Dashboard*@
 			<li class="nav-item">
-				<a href="#" class="nav-link">
+					<a class="nav-link" asp-area="" asp-controller="Proteins" asp-action="Add">
 					<i class="far fa-circle nav-icon"></i>
-					<p>Proteins</p>
+					Add Protein
 				</a>
 			</li>
 			<li class="nav-item">
 				<a href="#" class="nav-link">
 					<i class="far fa-circle nav-icon"></i>
-					<p>Creatines</p>
+					<p>Creatine</p>
 				</a>
 			</li>
 				<li class="nav-item">

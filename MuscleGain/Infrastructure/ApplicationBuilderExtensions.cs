@@ -18,7 +18,7 @@ namespace MuscleGain.Infrastructure
              
             return app;
         }
-        private static async void SeedProteinCategories(MuscleGainDbContext data)
+        private static void SeedProteinCategories(MuscleGainDbContext data)
         {
             if (data.ProteinsCategories.Any())
             {
@@ -32,7 +32,7 @@ namespace MuscleGain.Infrastructure
                 new ProteinsCategories{Name = "Milk & Casein"}
             });
 
-           await data.SaveChangesAsync();
+            data.SaveChanges();
         }
     }
 }

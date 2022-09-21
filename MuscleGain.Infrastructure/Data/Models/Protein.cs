@@ -18,7 +18,18 @@ namespace MuscleGain.Infrastructure.Data.Models
         public string Name { get; set; }
 
         [Required]
-        [Range(ProteinPriceMinLength, ProteinPriceMaxLength)]
+        [Range(ProteinGramsMinLength, ProteinGramsMaxLength)]
+        public int? Grams { get; set; }
+
+        [Required]
+        [StringLength(ProteinFlavorMaxLength, MinimumLength = ProteinFlavorMinLength)]
+        public string Flavour { get; set; }
+        [Required]
+        [MinLength(ProteinQtyMinLength),MaxLength(ProteinQtyMaxLength)]
+        public int? Quantity { get; set; }
+
+        [Required]
+        [MinLength(ProteinPriceMinLength),MaxLength(ProteinPriceMaxLength)]
         public decimal? Price { get; set; }
 
         [Required]
