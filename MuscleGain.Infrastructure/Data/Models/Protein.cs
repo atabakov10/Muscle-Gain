@@ -24,9 +24,6 @@ namespace MuscleGain.Infrastructure.Data.Models
         [Required]
         [StringLength(ProteinFlavorMaxLength, MinimumLength = ProteinFlavorMinLength)]
         public string Flavour { get; set; }
-        [Required]
-        [MinLength(ProteinQtyMinLength),MaxLength(ProteinQtyMaxLength)]
-        public int? Quantity { get; set; }
 
         [Required]
         [MinLength(ProteinPriceMinLength),MaxLength(ProteinPriceMaxLength)]

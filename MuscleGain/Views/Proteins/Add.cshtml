@@ -1,5 +1,46 @@
-﻿
-<div class="mb-3">
-	<label for="exampleInputPassword1" class="form-label">Password</label>
-	<input type="password" class="form-control" id="exampleInputPassword1">
+﻿@model MuscleGain.Models.Proteins.AddProtein;
+
+@{
+	ViewData["Title"] = "Add Protein";
+}
+
+<div class="container">
+	<div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+		<h2 class="heading-margin text-center">Add Protein</h2>
+		<form method="post">
+			<fieldset enabled>
+				<div class="mb-3">
+					<label asp-for="Name" class="form-label"></label>
+					<input asp-for="Name" class="form-control" placeholder="Whey Protein, Clear Protein, etc...">
+				</div>
+				<div class="mb-3">
+					<label asp-for="Grams" class="form-label"></label>
+					<input asp-for="Grams" class="form-control" placeholder="Please put your protein's weight in grams.'">
+				</div>
+				<div class="mb-3">
+					<label asp-for="Flavour" class="form-label"></label>
+					<input asp-for="Flavour" class="form-control" placeholder="Chocolate, biscuit, etc...">
+				</div>
+				<div class="mb-3">
+					<label asp-for="Price" class="form-label"></label>
+					<input asp-for="Price" class="form-control" placeholder="Please put your price in dollars."/>
+				</div>
+				<div class="mb-3">
+					<label asp-for="Description" class="form-label"></label>
+					<textarea asp-for="Description" rows="4" class="form-control" placeholder="Please write something about your product."></textarea>
+				</div>
+				<div class="mb-3">
+					<label asp-for="ImageUrl" class="form-label"></label>
+					<input asp-for="ImageUrl" class="form-control" placeholder="Put your URL here...">
+				</div>
+				<select class="form-select">
+					<option selected>Open this select menu</option>
+					<option value="1">One</option>
+					<option value="2">Two</option>
+					<option value="3">Three</option>
+				</select>
+				<button type="submit" class="btn btn-primary">Save</button>
+			</fieldset>
+		</form>
+	</div>
 </div>

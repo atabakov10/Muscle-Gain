@@ -60,3 +60,7 @@ pre {
     font-weight: 400;
     line-height: 18.5714px;
 }
+.heading-margin {
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
