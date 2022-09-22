@@ -12,8 +12,8 @@ using MuscleGain.Infrastructure.Data;
 namespace MuscleGain.Infrastructure.Migrations
 {
     [DbContext(typeof(MuscleGainDbContext))]
-    [Migration("20220922120003_ProteinAndPCategory")]
-    partial class ProteinAndPCategory
+    [Migration("20220922173038_ProteinAndCategory")]
+    partial class ProteinAndCategory
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

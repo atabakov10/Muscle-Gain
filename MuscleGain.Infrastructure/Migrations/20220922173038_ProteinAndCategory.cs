@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MuscleGain.Infrastructure.Migrations
 {
-    public partial class ProteinAndPCategory : Migration
+    public partial class ProteinAndCategory : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

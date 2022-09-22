@@ -6,7 +6,7 @@
 
 <div class="container">
 	<div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-		<form method="post">
+		<form method="post" enctype="multipart/form-data">
 		<h2 class="heading-margin text-center">Add Protein</h2>
 			<div class="mb-3">
 					<label asp-for="Name" class="form-label"></label>
@@ -44,9 +44,9 @@
 				{
 					<option value="@category.Id">@category.Name</option>
 				}
-				
 			</select>
-				<button type="submit" class="btn btn-primary">Save</button>
+		<input type="file" name="image"/>
+		<button type="submit" class="btn btn-primary">Save</button>
 		</form>
 	</div>
 </div>

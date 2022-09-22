@@ -12,7 +12,7 @@ namespace MuscleGain.Models.Proteins
 
         [Required]
         [Range(ProteinGramsMinLength, ProteinGramsMaxLength)]
-        public int Grams { get; init; }
+        public int? Grams { get; init; }
 
         [Required]
         [StringLength(ProteinFlavorMaxLength, MinimumLength = ProteinFlavorMinLength)]
@@ -20,13 +20,13 @@ namespace MuscleGain.Models.Proteins
 
         [Required]
         [Range(ProteinPriceMinLength, ProteinPriceMaxLength)]
-        public decimal Price { get; init; }
+        public decimal? Price { get; init; }
 
         [Required]
         [StringLength(int.MaxValue, MinimumLength = ProteinDescriptionMinLength)]
         public string Description { get; init; }
 
-        [Required]
+        //[Required]
         [Display(Name = "Image URL")]
         [Url]
         public string ImageUrl { get; init; }
