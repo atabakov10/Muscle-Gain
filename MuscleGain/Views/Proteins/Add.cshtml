@@ -6,41 +6,47 @@
 
 <div class="container">
 	<div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-		<h2 class="heading-margin text-center">Add Protein</h2>
 		<form method="post">
-			<fieldset enabled>
-				<div class="mb-3">
+		<h2 class="heading-margin text-center">Add Protein</h2>
+			<div class="mb-3">
 					<label asp-for="Name" class="form-label"></label>
 					<input asp-for="Name" class="form-control" placeholder="Whey Protein, Clear Protein, etc...">
+					<span asp-validation-for="Name" class="small text-danger"></span>
 				</div>
 				<div class="mb-3">
 					<label asp-for="Grams" class="form-label"></label>
 					<input asp-for="Grams" class="form-control" placeholder="Please put your protein's weight in grams.'">
+					<span asp-validation-for="Grams" class="small text-danger"></span>
 				</div>
 				<div class="mb-3">
 					<label asp-for="Flavour" class="form-label"></label>
 					<input asp-for="Flavour" class="form-control" placeholder="Chocolate, biscuit, etc...">
+					<span asp-validation-for="Flavour" class="small text-danger"></span>
 				</div>
 				<div class="mb-3">
 					<label asp-for="Price" class="form-label"></label>
 					<input asp-for="Price" class="form-control" placeholder="Please put your price in dollars."/>
+					<span asp-validation-for="Price" class="small text-danger"></span>
 				</div>
 				<div class="mb-3">
 					<label asp-for="Description" class="form-label"></label>
-					<textarea asp-for="Description" rows="4" class="form-control" placeholder="Please write something about your product."></textarea>
+					<textarea asp-for="Description" rows="4" class="form-control" placeholder="Please write at least 10 words about your product."></textarea>
+					<span asp-validation-for="Description" class="small text-danger"></span>
 				</div>
 				<div class="mb-3">
 					<label asp-for="ImageUrl" class="form-label"></label>
 					<input asp-for="ImageUrl" class="form-control" placeholder="Put your URL here...">
+					<span asp-validation-for="ImageUrl" class="small text-danger"></span>
 				</div>
-				<select class="form-select">
-					<option selected>Open this select menu</option>
-					<option value="1">One</option>
-					<option value="2">Two</option>
-					<option value="3">Three</option>
-				</select>
+			<select asp-for="CategoryId" class="form-select">
+				<label asp-for="CategoryId"></label>
+				@foreach (var category in Model.Categories)
+				{
+					<option value="@category.Id">@category.Name</option>
+				}
+				
+			</select>
 				<button type="submit" class="btn btn-primary">Save</button>
-			</fieldset>
 		</form>
 	</div>
 </div>

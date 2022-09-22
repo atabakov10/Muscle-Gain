@@ -262,11 +262,6 @@ namespace MuscleGain.Infrastructure.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("Quantity")
-                        .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");

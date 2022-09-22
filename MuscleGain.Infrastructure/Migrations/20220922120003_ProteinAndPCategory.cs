@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MuscleGain.Infrastructure.Migrations
 {
-    public partial class ProteinAndProteinCategory : Migration
+    public partial class ProteinAndPCategory : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -176,7 +176,6 @@ namespace MuscleGain.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Grams = table.Column<int>(type: "int", nullable: false),
                     Flavour = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Quantity = table.Column<int>(type: "int", maxLength: 5, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", maxLength: 1000, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),

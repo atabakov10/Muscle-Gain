@@ -9,6 +9,7 @@ namespace MuscleGain.Infrastructure.Data
     public static class DataConstants
     {
         //Protein
+        public const int ProteinNameMinLength = 4;
         public const int ProteinNameMaxLength = 30;
         public const int ProteinPriceMaxLength = 1000;
         public const int ProteinPriceMinLength = 10;
@@ -16,7 +17,7 @@ namespace MuscleGain.Infrastructure.Data
         public const int ProteinGramsMaxLength = 5000;
         public const int ProteinFlavorMinLength = 3;
         public const int ProteinFlavorMaxLength = 30;
-        public const int ProteinQtyMinLength = 1;
-        public const int ProteinQtyMaxLength = 5;
+        public const int ProteinDescriptionMinLength = 10;
+
     }
 }
