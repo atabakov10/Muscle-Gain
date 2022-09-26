@@ -6,7 +6,7 @@
 
 <div class="container">
 	<div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-		<form method="post" enctype="multipart/form-data">
+		<form method="post">
 		<h2 class="heading-margin text-center">Add Protein</h2>
 			<div class="mb-3">
 					<label asp-for="Name" class="form-label"></label>
@@ -15,7 +15,7 @@
 				</div>
 				<div class="mb-3">
 					<label asp-for="Grams" class="form-label"></label>
-					<input asp-for="Grams" class="form-control" placeholder="Please put your protein's weight in grams.'">
+					<input asp-for="Grams" class="form-control" placeholder="Please put your protein's weight.">
 					<span asp-validation-for="Grams" class="small text-danger"></span>
 				</div>
 				<div class="mb-3">
@@ -45,8 +45,7 @@
 					<option value="@category.Id">@category.Name</option>
 				}
 			</select>
-		<input type="file" name="image"/>
-		<button type="submit" class="btn btn-primary">Save</button>
+			<button type="submit" class="btn btn-primary">Save</button>
 		</form>
 	</div>
 </div>

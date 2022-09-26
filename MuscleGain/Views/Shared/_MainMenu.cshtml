@@ -4,9 +4,8 @@
 	with font-awesome or any other icon font library -->
 	<li class="nav-item menu-open">
 		<a href="#" class="nav-link active">
-			<i class="nav-icon fas fa-tachometer-alt"></i>
 			<p>
-				All Pages
+				Protein
 				<i class="right fas fa-angle-left"></i>
 			</p>
 		</a>
@@ -14,28 +13,39 @@
 			<li class="nav-item">
 				<a asp-controller="Home" asp-action="Index" class="nav-link active">
 					<i class="far fa-circle nav-icon"></i>
-					<p>Home Page</p>
-				</a>
-			</li>
-			@*TODO: Admin Dashboard*@
-			<li class="nav-item">
-					<a class="nav-link" asp-area="" asp-controller="Proteins" asp-action="Add">
-					<i class="far fa-circle nav-icon"></i>
-						<p>Add Protein</p>
+					<p>Protein Page</p>
 				</a>
 			</li>
 			<li class="nav-item">
-				<a href="#" class="nav-link">
+				<a asp-controller="Proteins" asp-action="Add" class="nav-link">	
 					<i class="far fa-circle nav-icon"></i>
-					<p>Creatine</p>
+					<p>Add Protein</p>
 				</a>
 			</li>
-				<li class="nav-item">
-					<a href="#" class="nav-link">
-						<i class="far fa-circle nav-icon"></i>
-						<p>Other supplements</p>
-					</a>
-					</li>
 		</ul>
 	</li>
+		<li class="nav-item menu-open">
+			<a href="#" class="nav-link active">
+				<p>
+					Creatine
+					<i class="right fas fa-angle-left"></i>
+				</p>
+			</a>
+			<ul class="nav nav-treeview">
+				<li class="nav-item">
+					<a class="nav-link active">
+						<i class="far fa-circle nav-icon"></i>
+						<p>Creatine Page</p>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link">
+						<i class="far fa-circle nav-icon"></i>
+						<p>Add Creatine</p>
+					</a>
+				</li>
+			</ul>
+		</li>
 </ul>
+</nav>
+

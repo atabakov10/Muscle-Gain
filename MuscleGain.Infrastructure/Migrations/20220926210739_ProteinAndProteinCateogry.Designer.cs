@@ -12,8 +12,8 @@ using MuscleGain.Infrastructure.Data;
 namespace MuscleGain.Infrastructure.Migrations
 {
     [DbContext(typeof(MuscleGainDbContext))]
-    [Migration("20220922173038_ProteinAndCategory")]
-    partial class ProteinAndCategory
+    [Migration("20220926210739_ProteinAndProteinCateogry")]
+    partial class ProteinAndProteinCateogry
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -246,9 +246,10 @@ namespace MuscleGain.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int?>("Grams")
+                    b.Property<string>("Grams")
                         .IsRequired()
-                        .HasColumnType("int");
+                        .HasMaxLength(5000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -259,10 +260,10 @@ namespace MuscleGain.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<decimal?>("Price")
+                    b.Property<string>("Price")
                         .IsRequired()
                         .HasMaxLength(1000)
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("nvarchar(1000)");
 
                     b.HasKey("Id");
 

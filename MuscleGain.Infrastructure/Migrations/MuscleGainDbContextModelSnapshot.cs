@@ -244,9 +244,10 @@ namespace MuscleGain.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int?>("Grams")
+                    b.Property<string>("Grams")
                         .IsRequired()
-                        .HasColumnType("int");
+                        .HasMaxLength(5000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -257,10 +258,10 @@ namespace MuscleGain.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<decimal?>("Price")
+                    b.Property<string>("Price")
                         .IsRequired()
                         .HasMaxLength(1000)
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("nvarchar(1000)");
 
                     b.HasKey("Id");
 
