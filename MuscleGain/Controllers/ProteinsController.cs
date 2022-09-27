@@ -21,6 +21,24 @@ namespace MuscleGain.Controllers
             Categories = this.GetProteinCategories()
         });
 
+        public IActionResult All()
+        {
+            var cars = this.data
+                .Proteins
+                .OrderByDescending(p=> p.Id)
+                .Select(p => new ProteinListingViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Grams = p.Grams,
+                    Price = p.Price,
+                    ImageUrl = p.ImageUrl,
+                    Category = p.ProteinCategory.Name
+                })
+                .ToList();
+            return View(cars);
+        }
+
         [HttpPost]
         public IActionResult Add(AddProtein protein)
         {
