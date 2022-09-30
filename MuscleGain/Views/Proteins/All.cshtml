@@ -1,12 +1,18 @@
 ﻿@model IEnumerable<ProteinListingViewModel>
 
+@{
+	ViewData["Title"] = "Protein Page";
+}
+
 @foreach (var protein in Model)
 {
-	<div class="card" style="width: 18rem;">
-		<img src="@protein.ImageUrl" class="card-img-top" alt="@protein.Name @protein.Grams - @protein.Price (@protein.Category)">
+	<div class="col-md-3">
+	<div class="card">
+		<img src="@protein.ImageUrl" class="card-img" alt="@protein.Name @protein.Grams - @protein.Price (@protein.Category)">
 		<div class="card-body text-center">
-			<h5 class="card-title text-center">@protein.Name - @protein.Grams</h5>
+			<h5 class="card-title text-center">@protein.Name (@protein.Flavour) - @protein.Grams</h5>
 			<a asp-controller="Proteins" asp-action="Details" asp-route-id="@protein.Id" class="btn btn-primary">View More</a>
 		</div>
+	</div>
 	</div>
 }

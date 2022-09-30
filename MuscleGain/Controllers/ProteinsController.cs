@@ -31,6 +31,7 @@ namespace MuscleGain.Controllers
                     Id = p.Id,
                     Name = p.Name,
                     Grams = p.Grams,
+                    Flavour = p.Flavour,
                     Price = p.Price,
                     ImageUrl = p.ImageUrl,
                     Category = p.ProteinCategory.Name
@@ -70,7 +71,7 @@ namespace MuscleGain.Controllers
             this.data.Proteins.Add(proteinToAdd);
             this.data.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("All", "Proteins");
         }
 
         private IEnumerable<ProteinCategoryViewModel> GetProteinCategories()
