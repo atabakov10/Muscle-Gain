@@ -1,17 +1,18 @@
-﻿@model List<ProteinListingViewModel>
+﻿@model IndexViewModel
 
 @{
-	ViewData["Title"] = "Welcome!";
+	ViewData["Title"] = "Welcome to Muscle Gain!";
 }
 
 @{
-	var firstProtein = Model.Any() ? Model[0] : null;
+	var proteins = Model.Proteins;
+	var firstProtein = proteins.Any() ? proteins[0] : null;
 
-	var secondProtein = Model.Count > 1 ? Model[1] : null;
-	var thirdProtein = Model.Count > 2 ? Model[2] : null;
+	var secondProtein = proteins.Count > 1 ? proteins[1] : null;
+	var thirdProtein = proteins.Count > 2 ? proteins[2] : null;
 }
 
-@if (!Model.Any())
+@if (!proteins.Any())
 {
 	<div class="jumbotron">
 		<h1 class="display-4">Welcome to Muscle Gain!</h1>
@@ -22,6 +23,8 @@
 		</p>
 	</div>
 }
+
+<div class="mt-5"></div>
 
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 	<ol class="carousel-indicators">
@@ -67,3 +70,4 @@
 		<span class="sr-only">Next</span>
 	</a>
 </div>
+<div class="mb-5"></div>

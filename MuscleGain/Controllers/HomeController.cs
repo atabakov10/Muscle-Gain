@@ -1,5 +1,6 @@
 ﻿
 using MuscleGain.Infrastructure.Data;
+using MuscleGain.Models.Home;
 using MuscleGain.Models.Proteins;
 
 namespace MuscleGain.Controllers
@@ -17,22 +18,32 @@ namespace MuscleGain.Controllers
 
         public IActionResult Index()
         {
-            var protein = this.data
+            var totalProteins = this.data.Proteins.Count();
+
+
+            var proteins = this.data
                 .Proteins
                 .OrderByDescending(p => p.Id)
-                .Select(p => new ProteinListingViewModel
+                .Select(p => new ProteinIndexViewModel()
                 {
                     Id = p.Id,
                     Name = p.Name,
                     Grams = p.Grams,
                     Flavour = p.Flavour,
                     Price = p.Price,
-                    ImageUrl = p.ImageUrl,
-                    Category = p.ProteinCategory.Name
+                    ImageUrl = p.ImageUrl
                 })
                 .Take(3)
                 .ToList();
-            return View(protein);
+
+
+
+
+            return View(new IndexViewModel
+            {
+                TotalProteins = totalProteins,
+                Proteins = proteins
+            });
         }
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

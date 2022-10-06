@@ -11,12 +11,12 @@ namespace MuscleGain.Models.Proteins
         public string Name { get; set; }
 
         [Required]
-        [StringLength(ProteinGramsMaxLength, MinimumLength = ProteinGramsMinLength)]
-        public string Grams { get; init; }
-
-        [Required]
         [StringLength(ProteinFlavorMaxLength, MinimumLength = ProteinFlavorMinLength)]
         public string Flavour { get; init; }
+
+        [Required]
+        [StringLength(ProteinGramsMaxLength, MinimumLength = ProteinGramsMinLength)]
+        public string Grams { get; init; }
 
         [Required]
         [StringLength(ProteinPriceMaxLength,MinimumLength = ProteinPriceMinLength)]

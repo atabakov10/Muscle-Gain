@@ -16,46 +16,51 @@ namespace MuscleGain.Controllers
             this.data = data;
         }
 
-        public IActionResult Add() => View(new AddProtein
+        public async Task<IActionResult> All(string searchTerm)
         {
-            Categories = this.GetProteinCategories()
-        });
+            var proteinsQuery = this.data.Proteins.AsQueryable();
 
-        public IActionResult All()
-        {
-            var cars = this.data
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                proteinsQuery = proteinsQuery.Where(p => (p.Name + " " + p.Flavour).ToLower().Contains(searchTerm.ToLower())
+                                                         || p.Description.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            var proteins = await this.data
                 .Proteins
-                .OrderByDescending(p=> p.Id)
+                .OrderByDescending(p => p.Id)
                 .Select(p => new ProteinListingViewModel
                 {
                     Id = p.Id,
                     Name = p.Name,
-                    Grams = p.Grams,
                     Flavour = p.Flavour,
+                    Grams = p.Grams,
                     Price = p.Price,
                     ImageUrl = p.ImageUrl,
                     Category = p.ProteinCategory.Name
                 })
-                .ToList();
-            return View(cars);
+                .ToListAsync();
+
+
+            return View(new AllProteinsQueryModel
+            {
+                Proteins = proteins,
+                SearchTerm = searchTerm
+            });
         }
+        public  IActionResult Add() => View(new AddProtein
+        {
+            Categories = this.GetProteinCategories()
+        });
+
 
         [HttpPost]
-        public IActionResult Add(AddProtein protein)
+        public async Task<IActionResult> Add(AddProtein protein)
         {
-            //if (protein.ImageUrl == null && image.Name == null)
-            //{
-            //    this.ModelState.AddModelError(nameof(protein.ImageUrl), "Please insert URL or upload a picture.");
-            //}
             if (!this.data.ProteinsCategories.Any(x => x.Id == protein.CategoryId))
             {
                 this.ModelState.AddModelError(nameof(protein.CategoryId), "Category does not exist!");
             }
-
-            //if (image == null)
-            //{
-            //    this.ModelState.AddModelError("Image", "The image is required.");
-            //}
 
             var proteinToAdd = new Protein
             {
@@ -68,8 +73,8 @@ namespace MuscleGain.Controllers
                 CategoryId = protein.CategoryId
 
             };
-            this.data.Proteins.Add(proteinToAdd);
-            this.data.SaveChanges();
+            await this.data.Proteins.AddAsync(proteinToAdd);
+            await this.data.SaveChangesAsync();
 
             return RedirectToAction("All", "Proteins");
         }
@@ -84,5 +89,6 @@ namespace MuscleGain.Controllers
                 })
                 .ToList();
     }
+ 
 }
 

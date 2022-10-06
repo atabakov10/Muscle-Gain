@@ -1,18 +1,38 @@
-﻿@model IEnumerable<ProteinListingViewModel>
+﻿@model AllProteinsQueryModel
 
 @{
 	ViewData["Title"] = "Protein Page";
 }
+<div class="mt-5"></div>
 
-@foreach (var protein in Model)
-{
-	<div class="col-md-3">
-	<div class="card">
-		<img src="@protein.ImageUrl" class="card-img" alt="@protein.Name @protein.Grams - @protein.Price (@protein.Category)">
-		<div class="card-body text-center">
-			<h5 class="card-title text-center">@protein.Name (@protein.Flavour) - @protein.Grams</h5>
-			<a asp-controller="Proteins" asp-action="Details" asp-route-id="@protein.Id" class="btn btn-primary">View More</a>
+<form method="get">
+	<div class="row mb-3">
+		<div class="form-group col-md-3">
+			<label asp-for="SearchTerm" class="form-label"></label>
+			<input asp-for="SearchTerm" class="form-control" placeholder="Whey protein, etc...">
 		</div>
+		<div class="form-group col-md-3">
+
+		</div>
+		<div class="form-group col-md-3">
+
+		</div>
+	
 	</div>
-	</div>
-}
+</form>
+
+<div class="row">
+	@foreach (var protein in Model.Proteins)
+	{
+		<div class="col-md-4">
+			<div class="card mb-3">
+				<img src="@protein.ImageUrl" class="card-img-top" alt="@protein.Name @protein.Grams - @protein.Price (@protein.Category)">
+				<div class="card-body text-center">
+					<h5 class="card-title text-center">@protein.Name (@protein.Flavour) - @protein.Grams</h5>
+					<a asp-controller="Proteins" asp-action="Details" asp-route-id="@protein.Id" class="btn btn-primary">View More</a>
+				</div>
+			</div>
+		</div>
+		<div class="mb-4"></div>
+	}
+</div>
