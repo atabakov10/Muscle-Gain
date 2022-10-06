@@ -38,8 +38,8 @@
 				<input asp-for="ImageUrl" class="form-control" placeholder="Put your URL here...">
 				<span asp-validation-for="ImageUrl" class="small text-danger"></span>
 			</div>
-			<select asp-for="CategoryId" class="form-select">
 				<label asp-for="CategoryId"></label>
+			<select asp-for="CategoryId" class="form-select">
 				@foreach (var category in Model.Categories)
 				{
 					<option value="@category.Id">@category.Name</option>

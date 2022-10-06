@@ -16,19 +16,33 @@ namespace MuscleGain.Controllers
             this.data = data;
         }
 
-        public async Task<IActionResult> All(string searchTerm)
+        public async Task<IActionResult> All([FromQuery]AllProteinsQueryModel query)
         {
-            var proteinsQuery = this.data.Proteins.AsQueryable();
+            var proteinsQuery =  this.data.Proteins.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(searchTerm))
+            if (!string.IsNullOrWhiteSpace(query.Flavour))
             {
-                proteinsQuery = proteinsQuery.Where(p => (p.Name + " " + p.Flavour).ToLower().Contains(searchTerm.ToLower())
-                                                         || p.Description.ToLower().Contains(searchTerm.ToLower()));
+                proteinsQuery = proteinsQuery.Where(p => p.Flavour == query.Flavour);
             }
 
-            var proteins = await this.data
-                .Proteins
-                .OrderByDescending(p => p.Id)
+            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
+            {
+                proteinsQuery = proteinsQuery.Where(p => (p.Name + " " + p.Flavour).ToLower().Contains(query.SearchTerm.ToLower())
+                                                         || p.Description.ToLower().Contains(query.SearchTerm.ToLower()));
+            }
+            
+            proteinsQuery = query.Sorting switch
+            {
+                ProteinSorting.DateCreated => proteinsQuery.OrderByDescending(p => p.Id),
+                ProteinSorting.NameAndFlavour => proteinsQuery.OrderBy(p=>p.Name).ThenBy(p=> p.Flavour),
+                _ => proteinsQuery.OrderByDescending(p=> p.Id)
+            };
+
+            var totalProteins = await this.data.Proteins.CountAsync();
+
+            var proteins = await proteinsQuery
+                .Skip((query.CurrentPage-1)* AllProteinsQueryModel.ProteinsPerPage)
+                .Take(AllProteinsQueryModel.ProteinsPerPage)
                 .Select(p => new ProteinListingViewModel
                 {
                     Id = p.Id,
@@ -41,12 +55,18 @@ namespace MuscleGain.Controllers
                 })
                 .ToListAsync();
 
+            var proteinsFlavours = await this.data
+                .Proteins
+                .Select(p => p.Flavour)
+                .Distinct()
+                .OrderBy(n=>n)
+                .ToListAsync();
 
-            return View(new AllProteinsQueryModel
-            {
-                Proteins = proteins,
-                SearchTerm = searchTerm
-            });
+            query.TotalProteins = totalProteins;
+            query.Flavours = proteinsFlavours;
+            query.Proteins = proteins;
+
+            return View(query);
         }
         public  IActionResult Add() => View(new AddProtein
         {

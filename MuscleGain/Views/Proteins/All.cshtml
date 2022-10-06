@@ -1,25 +1,58 @@
 ﻿@model AllProteinsQueryModel
 
 @{
-	ViewData["Title"] = "Protein Page";
+	ViewData["Title"] = "Protein page";
 }
-<div class="mt-5"></div>
 
 <form method="get">
-	<div class="row mb-3">
+	<div class="row">
+		<div class="form-group col-md-3">
+				<label asp-for="Flavour"></label>
+			<select asp-for="Flavour" class="form-control">
+				<option value="">All</option>
+
+				@foreach (var name in Model.Flavours)
+				{
+					<option value="@name">@name</option>
+				}
+			</select>
+		</div>
+
 		<div class="form-group col-md-3">
 			<label asp-for="SearchTerm" class="form-label"></label>
 			<input asp-for="SearchTerm" class="form-control" placeholder="Whey protein, etc...">
 		</div>
 		<div class="form-group col-md-3">
-
+			<label asp-for="Sorting"></label>
+			<select asp-for="Sorting" class="form-control">
+				<option value="0" selected>Date created</option>
+				<option value="1">Name and Flavour</option>
+			</select>
 		</div>
-		<div class="form-group col-md-3">
+		
 
-		</div>
-	
 	</div>
 </form>
+
+
+@{
+	var previousPage = Model.CurrentPage - 1;
+	if (previousPage < 1)
+	{
+		previousPage = 1;
+	}
+	var maxPage = Math.Ceiling((double)Model.TotalProteins / AllProteinsQueryModel.ProteinsPerPage);
+}
+
+<div class="row mb-4">
+	<div class="col-md-6">
+		<a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)" asp-controller="Proteins" asp-action="All" asp-route-currentPage="@(previousPage )"><<</a>
+	</div>
+	<div class="col-md-6">
+		<a class="btn btn-primary float-right @(Model.CurrentPage == maxPage ? "disabled" : string.Empty)" asp-controller="Proteins" asp-action="All" asp-route-currentPage="@(Model.CurrentPage + 1)">>></a>
+
+	</div>
+</div>
 
 <div class="row">
 	@foreach (var protein in Model.Proteins)
@@ -36,3 +69,4 @@
 		<div class="mb-4"></div>
 	}
 </div>
+
