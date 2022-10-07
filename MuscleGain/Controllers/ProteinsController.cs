@@ -38,7 +38,7 @@ namespace MuscleGain.Controllers
                 _ => proteinsQuery.OrderByDescending(p=> p.Id)
             };
 
-            var totalProteins = await this.data.Proteins.CountAsync();
+            var totalProteins = await proteinsQuery.CountAsync();
 
             var proteins = await proteinsQuery
                 .Skip((query.CurrentPage-1)* AllProteinsQueryModel.ProteinsPerPage)
@@ -81,6 +81,12 @@ namespace MuscleGain.Controllers
             {
                 this.ModelState.AddModelError(nameof(protein.CategoryId), "Category does not exist!");
             }
+            //TODO:Make protein price error when not ending with $!!!
+            //if (!protein.Price.EndsWith("$"))
+            //{
+            // var Price = protein.Price ; 
+            //    this.ModelState.AddModelError(Price, "Price should be in dollars!");
+            //}
 
             var proteinToAdd = new Protein
             {

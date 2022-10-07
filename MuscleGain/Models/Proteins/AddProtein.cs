@@ -20,6 +20,7 @@ namespace MuscleGain.Models.Proteins
 
         [Required]
         [StringLength(ProteinPriceMaxLength,MinimumLength = ProteinPriceMinLength)]
+        
         public string Price { get; init; }
 
         [Required]
