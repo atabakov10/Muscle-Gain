@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MuscleGain.Infrastructure;
 using MuscleGain.Infrastructure.Data;
+using MuscleGain.Infrastructure.Data.Models.Account;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +12,24 @@ builder.Services.AddDbContext<MuscleGainDbContext>(options =>
     options.UseSqlServer(connectionString, b=> b.MigrationsAssembly("MuscleGain.Infrastructure")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
+    {
+        options.SignIn.RequireConfirmedAccount = true;
+        options.Password.RequireNonAlphanumeric = true;
+        options.Password.RequiredLength = 6;
+        options.User.RequireUniqueEmail = true;
+        options.Password.RequireDigit = true;
+        options.Password.RequireLowercase = true;
+        options.Password.RequiredUniqueChars = 1;
+
+    })
     .AddEntityFrameworkStores<MuscleGainDbContext>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+});
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

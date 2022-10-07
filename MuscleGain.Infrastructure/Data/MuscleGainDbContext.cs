@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MuscleGain.Infrastructure.Data.Models;
+using MuscleGain.Infrastructure.Data.Models.Account;
 
 namespace MuscleGain.Infrastructure.Data
 {
-    public class MuscleGainDbContext : IdentityDbContext
+    public class MuscleGainDbContext : IdentityDbContext<ApplicationUser>
     {
         public MuscleGainDbContext(DbContextOptions<MuscleGainDbContext> options)
             : base(options)

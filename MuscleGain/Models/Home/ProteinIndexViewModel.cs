@@ -6,7 +6,7 @@
         public string Name { get; init; }
         public string Grams { get; init; }
         public string Flavour { get; init; }
-        public string Price { get; init; }
+        public decimal Price { get; init; }
         public string ImageUrl { get; init; }
     }
 }

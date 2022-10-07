@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using MuscleGain.Infrastructure.Data;
@@ -7,6 +8,7 @@ using MuscleGain.Models.Proteins;
 
 namespace MuscleGain.Controllers
 {
+    [Authorize]
     public class ProteinsController : Controller
     {
         private readonly MuscleGainDbContext data;
@@ -16,6 +18,7 @@ namespace MuscleGain.Controllers
             this.data = data;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> All([FromQuery]AllProteinsQueryModel query)
         {
             var proteinsQuery =  this.data.Proteins.AsQueryable();

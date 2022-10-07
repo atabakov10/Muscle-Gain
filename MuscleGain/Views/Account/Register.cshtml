@@ -1,0 +1,45 @@
+﻿@model MuscleGain.Models.Users.RegisterViewModel
+
+@{
+	ViewData["Title"] = "Register";
+}
+
+<div class="row">
+	<div class="col-md-4">
+		<form id="registerForm" method="post">
+			<h2>Create a new account.</h2>
+			<hr />
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-floating">
+				<label asp-for="FirstName"></label>
+				<input asp-for="FirstName" class="form-control" autocomplete="firstname" aria-required="true" />
+				<span asp-validation-for="FirstName" class="text-danger"></span>
+			</div>
+			<div class="form-floating">
+				<label asp-for="LastName"></label>
+				<input asp-for="LastName" class="form-control" autocomplete="lastname" aria-required="true" />
+				<span asp-validation-for="LastName" class="text-danger"></span>
+			</div>
+			<div class="form-floating">
+				<label asp-for="Email"></label>
+				<input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" placeholder="pasifa8979@abv.bg..." />
+				<span asp-validation-for="Email" class="text-danger"></span>
+			</div>
+			<div class="form-floating">
+				<label asp-for="Password"></label>
+				<input asp-for="Password" class="form-control" autocomplete="new-password" aria-required="true" />
+				<span asp-validation-for="Password" class="text-danger"></span>
+			</div>
+			<div class="form-floating">
+				<label asp-for="PasswordRepeat"></label>
+				<input asp-for="PasswordRepeat" class="form-control" autocomplete="new-password" aria-required="true" />
+				<span asp-validation-for="PasswordRepeat" class="text-danger"></span>
+			</div>
+			<button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary mt-3">Register</button>
+		</form>
+	</div>
+</div>
+
+@section Scripts{
+	<partial name="_ValidationScriptsPartial"/>
+}
