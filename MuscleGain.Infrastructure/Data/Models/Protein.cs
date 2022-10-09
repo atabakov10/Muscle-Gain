@@ -28,7 +28,7 @@ namespace MuscleGain.Infrastructure.Data.Models
         [Required]
         //[StringLength(ProteinPriceMaxLength)]
         [MaxLength(ProteinPriceMaxLength)]
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
 
         [Required]
         public string Description { get; set; }
