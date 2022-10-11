@@ -2,6 +2,7 @@
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Models.Home;
 using MuscleGain.Models.Proteins;
+using MuscleGain.Services.Statistics;
 
 namespace MuscleGain.Controllers
 {
@@ -11,16 +12,19 @@ namespace MuscleGain.Controllers
 
     public class HomeController : Controller
     {
+        private readonly IStatisticsService statistics;
         private readonly MuscleGainDbContext data;
-        public HomeController(MuscleGainDbContext data) 
-            => this.data = data;
+        public HomeController(
+            IStatisticsService statistics,
+            MuscleGainDbContext data)
+        { 
+            this.data = data;
+            this.statistics = statistics;
+        }
         
 
         public IActionResult Index()
         {
-            var totalProteins = this.data.Proteins.Count();
-
-
             var proteins = this.data
                 .Proteins
                 .OrderByDescending(p => p.Id)
@@ -36,12 +40,14 @@ namespace MuscleGain.Controllers
                 .Take(3)
                 .ToList();
 
+            var totalStatistics = this.statistics.Total();
 
 
 
             return View(new IndexViewModel
             {
-                TotalProteins = totalProteins,
+                TotalProteins = totalStatistics.TotalProteins,
+                TotalUsers = totalStatistics.TotalUsers,
                 Proteins = proteins
             });
         }

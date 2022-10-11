@@ -2,27 +2,31 @@
 @using MuscleGain.Infrastructure.Data.Models.Account
 @inject SignInManager<ApplicationUser> SignInManager
 
+
+
 <ul class="navbar-nav">
 	@if (SignInManager.IsSignedIn(User))
 	{
-		<li class="nav-item">
-			<form class="form-inline" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-				Hello @User.Identity?.Name!
-			@*<a class="breadcrumb-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>*@
-			</form>
+		
+		<li class="dropdown-menu">
+		<li style="text-align: left"><a type="submit" class="btn btn-outline-info" asp-controller="Home" asp-action="Index">Home Page</a></li>
+			<li>
+				<a type="submit" class="btn btn-outline-info" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+					Hello @User.Identity?.Name!
+				</a>
+			</li>
 		</li>
-		<li class="nav-item">
-			<form class="form-inline" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-				<button type="submit" class="btn btn-outline-dark btn-rounded" data-mdb-ripple-color="dark">Logout</button>
-			</form>
+
+		<li class="dropdown-menu">
+		<li><a type="submit" class="btn btn-outline-info" asp-controller="Account" asp-action="Logout">Logout</a></li>
 		</li>
 	}
 	else
 	{
 		<li class="dropdown-menu">
-			<li><a class="dropdown-item" asp-controller="Account" asp-action="Register">Register</a></li>
-			<li><a class="dropdown-item active" asp-controller="Home" asp-action="Index" aria-current="true">Home Page</a></li>
-			<li><a class="dropdown-item" asp-controller="Account" asp-action="Login">Login</a></li>
+		<li style="text-align: left"><a type="submit" class="btn btn-outline-info" asp-controller="Home" asp-action="Index">Home Page</a></li>
+		<li><a type="submit" class="btn btn-outline-info " asp-controller="Account" asp-action="Register">Register</a></li>
+		<li><a type="submit" class="btn btn-outline-info" asp-controller="Account" asp-action="Login">Login</a></li>
 		</li>
 	}
 </ul>

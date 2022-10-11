@@ -17,7 +17,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<link rel="stylesheet" href="~/css/adminlte.min.css" />
 	<link rel="stylesheet" href="~/plugins/toastr/toastr.min.css" />
 
-
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	@await RenderSectionAsync("Head", false)
 </head>
@@ -35,6 +35,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 			<!-- Right navbar links -->
 			<ul class="navbar-nav ml-auto">
+				<!--Home Page Link-->
+				<!--Register/Login-->
+				<partial name="_LoginPartial"/>
 				<!-- Navbar Search -->
 				@*<li class="nav-item">
 					<a class="nav-link" data-widget="navbar-search" role="button">
@@ -103,13 +106,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						<div class="col-sm-6">
 							@*<h1 class="m-0">@ViewData["Title"]</h1>*@
 						</div><!-- /.col -->
-						<div class="col-sm-6">
-							<ol class="breadcrumb float-sm-right">
-								@*<li class="breadcrumb-item"><a asp-controller="Proteins" asp-action="All">Proteins</a></li>
-								<li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home Page</a></li>*@
-								<partial name="_LoginPartial"/>
-							</ol>
-						</div><!-- /.col -->
+						<!-- /.col -->
 					</div><!-- /.row -->
 				</div><!-- /.container-fluid -->
 			</div>

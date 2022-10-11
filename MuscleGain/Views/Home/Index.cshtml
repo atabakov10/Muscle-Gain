@@ -1,6 +1,7 @@
 ﻿@model IndexViewModel
 
 
+
 @{
 	ViewData["Title"] = "Welcome";
 }
@@ -12,10 +13,13 @@
 	var secondProtein = proteins.Count > 1 ? proteins[1] : null;
 	var thirdProtein = proteins.Count > 2 ? proteins[2] : null;
 }
-<div class="col-sm-6 mb-4">
-<h1>Welcome to Muscle Gain!</h1>
-</div>
 
+<div class="jumbotron">
+	<div class="container">
+		<h1>Welcome to Muscle Gain!</h1>
+		<h2>World's No.1 Online Sports Nutrition Brand</h2>
+	</div>
+</div>
 <hr />
 
 @if (!proteins.Any())

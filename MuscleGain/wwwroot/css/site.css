@@ -15,6 +15,7 @@ html {
 
 body {
   margin-bottom: 60px;
+
 }
 h1 {
     font-family: "Lucida Bright", Georgia, serif;
@@ -24,6 +25,15 @@ h1 {
     font-weight: 700;
     line-height: 26.4px;
 }
+h2 {
+    font-family: "Lucida Bright", Georgia, serif;
+    font-size: 20px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    line-height: 23px;
+}
+
 
 h3 {
     font-family: "Lucida Bright", Georgia, serif;
@@ -69,4 +79,22 @@ pre {
     margin-left: auto;
     margin-right: auto;
     width: 50%;
+}
+.jumbotron .container h1 {
+    text-align: left;
+    color: black;
+    font-size: 60px;
+    font-family: 'Shift', sans-serif;
+    font-weight: bold;
+    padding-top: 20px;
+    padding-bottom: 5px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.jumbotron .container p {
+    font-size: 30px;
+    color: gray;
+    font-weight: bold;
+    text-align: left;
 }

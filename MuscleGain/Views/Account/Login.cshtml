@@ -1,6 +1,5 @@
-﻿@model MuscleGain.Models.Users.LoginViewModel
-
-
+﻿@using static MuscleGain.Models.Users.RegisterViewModel
+@model MuscleGain.Models.Users.LoginViewModel
 @{
 	ViewData["Title"] = "Login page";
 }
@@ -22,8 +21,12 @@
 				<input asp-for="Password" class="form-control" autocomplete="new-password" aria-required="true" />
 				<span asp-validation-for="Password" class="text-danger"></span>
 			</div>
+			<div class="form-inline">
+				Not Registered?<a type="submit" class="btn btn-link" asp-controller="Account" asp-action="Register">Register</a>
+			</div>
 			<button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary mt-3">Login</button>
 		</form>
+		
 	</div>
 </div>
 

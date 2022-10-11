@@ -26,13 +26,13 @@
 				<span asp-validation-for="Grams" class="small text-danger"></span>
 			</div>
 			<div class="mb-3">
-					<label asp-for="Price" class="form-label"></label>
 				<div class="input-group">
+					<label asp-for="Price" class="form-label"></label>
 					<div class="input-group-prepend">
 						<span class="input-group-text">$</span>
-					</div>
 					<input asp-for="Price" asp-format="{0:#,###.00}" aria-label="Amount (to the nearest dollar)" class="form-control" placeholder="The price must be in Dollars."/>
 					<span asp-validation-for="Price" class="small text-danger"></span>
+					</div>
 				</div>
 			</div>
 			<div class="mb-3">
