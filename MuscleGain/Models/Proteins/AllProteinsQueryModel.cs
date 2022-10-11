@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using MuscleGain.Services.Proteins;
 
 namespace MuscleGain.Models.Proteins
 {
 	public class AllProteinsQueryModel
     {
-        public const int ProteinsPerPage = 3 ;
+        public const int ProteinsPerPage = 3;
         public string Flavour { get; init; }
 
         [Display(Name = "Search")]
@@ -19,6 +20,6 @@ namespace MuscleGain.Models.Proteins
 
         public IEnumerable<string> Flavours { get; set; }
 
-        public IEnumerable<ProteinListingViewModel> Proteins { get; set; }
+        public IEnumerable<ProteinServiceModel> Proteins { get; set; }
     }
 }

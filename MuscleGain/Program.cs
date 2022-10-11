@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MuscleGain.Infrastructure;
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Models.Account;
+using MuscleGain.Services.Proteins;
 using MuscleGain.Services.Statistics;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,6 +35,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<IStatisticsService, StatisticsService>();
+
+builder.Services.AddTransient<IProteinService, ProteinService>();
 
 var app = builder.Build();
 

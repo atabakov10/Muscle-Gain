@@ -6,10 +6,10 @@ namespace MuscleGain.Services.Proteins
     {
         public int CurrentPage { get; init; }
 
-        public int ProteinsPerPage { get; init; }
+        public int ProteinsPerPage { get; init; } = 3;
 
         public int TotalProteins { get; set; }
 
-        public IEnumerable<ProteinListingViewModel> Proteins { get; set; }
+        public IEnumerable<ProteinServiceModel> Proteins { get; set; }
     }
 }
