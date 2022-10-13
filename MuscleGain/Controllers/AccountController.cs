@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MuscleGain.Infrastructure.Data.Models.Account;
@@ -35,6 +36,7 @@ namespace MuscleGain.Controllers
                 return View(model);
             }
 
+
             var user = new ApplicationUser()
             {
                 Email = model.Email,
@@ -45,6 +47,9 @@ namespace MuscleGain.Controllers
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
+
+            await _userManager
+                .AddClaimAsync(user, new Claim("FirstName", user.FirstName ?? user.Email));
 
             if (result.Succeeded)
             {

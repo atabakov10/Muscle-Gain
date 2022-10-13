@@ -12,7 +12,7 @@
 		<li style="text-align: left"><a type="submit" class="btn btn-outline-info" asp-controller="Home" asp-action="Index">Home Page</a></li>
 			<li>
 				<a type="submit" class="btn btn-outline-info" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-					Hello @User.Identity?.Name!
+					Hello @ViewBag.UserFirstName
 				</a>
 			</li>
 		</li>

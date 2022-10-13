@@ -11,8 +11,7 @@ using MuscleGain.Services.Proteins;
 
 namespace MuscleGain.Controllers
 {
-    [Authorize]
-    public class ProteinsController : Controller
+    public class ProteinsController : BaseController
     {
         private readonly IProteinService _proteins;
         private readonly MuscleGainDbContext _data;
@@ -22,8 +21,6 @@ namespace MuscleGain.Controllers
             this._proteins = proteins;
             this._data = data;
         }
-        
- 
 
         [AllowAnonymous]
         public async Task<IActionResult>  All([FromQuery]AllProteinsQueryModel query)
@@ -47,7 +44,6 @@ namespace MuscleGain.Controllers
         {
             Categories = this.GetProteinCategories()
         });
-
 
         [HttpPost]
         public async Task<IActionResult> Add(AddProtein protein)
@@ -73,7 +69,6 @@ namespace MuscleGain.Controllers
 
             return RedirectToAction("All", "Proteins");
         }
-
         private IEnumerable<ProteinCategoryViewModel> GetProteinCategories()
             => this._data
                 .ProteinsCategories

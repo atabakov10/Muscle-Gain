@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Models.Home;
 using MuscleGain.Models.Proteins;
@@ -10,22 +11,22 @@ namespace MuscleGain.Controllers
     using MuscleGain.Models;
     using System.Diagnostics;
 
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private readonly IStatisticsService statistics;
-        private readonly MuscleGainDbContext data;
+        private readonly IStatisticsService _statistics;
+        private readonly MuscleGainDbContext _data;
         public HomeController(
             IStatisticsService statistics,
             MuscleGainDbContext data)
         { 
-            this.data = data;
-            this.statistics = statistics;
+            this._data = data;
+            this._statistics = statistics;
         }
-        
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
-            var proteins = this.data
+            var proteins = this._data
                 .Proteins
                 .OrderByDescending(p => p.Id)
                 .Select(p => new ProteinIndexViewModel()
@@ -40,7 +41,7 @@ namespace MuscleGain.Controllers
                 .Take(3)
                 .ToList();
 
-            var totalStatistics = this.statistics.Total();
+            var totalStatistics = this._statistics.Total();
 
 
 
@@ -53,6 +54,7 @@ namespace MuscleGain.Controllers
         }
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [AllowAnonymous]
         public IActionResult Error() =>  View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         
     }
