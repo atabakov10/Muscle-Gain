@@ -18,6 +18,8 @@ namespace MuscleGain.Infrastructure.Data
         public const int ProteinFlavorMinLength = 3;
         public const int ProteinFlavorMaxLength = 30;
         public const int ProteinDescriptionMinLength = 10;
-
+        //Account
+        public const int FirstNameMaxLength = 20;
+        public const int LastNameMaxLength = 20;
     }
 }

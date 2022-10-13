@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Models;
+using MuscleGain.Infrastructure.Data.Models.Protein;
 using MuscleGain.Models.Api.Proteins;
 using MuscleGain.Models.Proteins;
 using MuscleGain.Services.Proteins;
@@ -13,13 +14,13 @@ namespace MuscleGain.Controllers
     [Authorize]
     public class ProteinsController : Controller
     {
-        private readonly IProteinService proteins;
-        private readonly MuscleGainDbContext data;
+        private readonly IProteinService _proteins;
+        private readonly MuscleGainDbContext _data;
 
         public ProteinsController(IProteinService proteins, MuscleGainDbContext data)
         {
-            this.proteins = proteins;
-            this.data = data;
+            this._proteins = proteins;
+            this._data = data;
         }
         
  
@@ -27,14 +28,14 @@ namespace MuscleGain.Controllers
         [AllowAnonymous]
         public async Task<IActionResult>  All([FromQuery]AllProteinsQueryModel query)
         {
-            var queryResult = await this.proteins.All(
+            var queryResult = await this._proteins.All(
                 query.Flavour,
                 query.SearchTerm,
                 query.Sorting,
                 query.CurrentPage,
                 AllProteinsQueryModel.ProteinsPerPage);
 
-            var proteinsFlavours = await this.proteins.AllProteinFlavours();
+            var proteinsFlavours = await this._proteins.AllProteinFlavours();
 
             query.Flavours = proteinsFlavours;
             query.TotalProteins = queryResult.TotalProteins;
@@ -51,7 +52,7 @@ namespace MuscleGain.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddProtein protein)
         {
-            if (!this.data.ProteinsCategories.Any(x => x.Id == protein.CategoryId))
+            if (!this._data.ProteinsCategories.Any(x => x.Id == protein.CategoryId))
             {
                 this.ModelState.AddModelError(nameof(protein.CategoryId), "Category does not exist!");
             }
@@ -67,14 +68,14 @@ namespace MuscleGain.Controllers
                 CategoryId = protein.CategoryId
 
             };
-            await this.data.Proteins.AddAsync(proteinToAdd);
-            await this.data.SaveChangesAsync();
+            await this._data.Proteins.AddAsync(proteinToAdd);
+            await this._data.SaveChangesAsync();
 
             return RedirectToAction("All", "Proteins");
         }
 
         private IEnumerable<ProteinCategoryViewModel> GetProteinCategories()
-            => this.data
+            => this._data
                 .ProteinsCategories
                 .Select(x => new ProteinCategoryViewModel
                 {

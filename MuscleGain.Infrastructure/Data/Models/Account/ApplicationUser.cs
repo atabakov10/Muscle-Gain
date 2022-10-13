@@ -6,9 +6,9 @@ namespace MuscleGain.Infrastructure.Data.Models.Account
 {
     public class ApplicationUser : IdentityUser
     {
-        [StringLength(20)]
+        [StringLength(DataConstants.FirstNameMaxLength)]
         public string? FirstName { get; set; }
-        [StringLength(20)]
+        [StringLength(DataConstants.LastNameMaxLength)]
         public string? LastName { get; set; }
     }
 }

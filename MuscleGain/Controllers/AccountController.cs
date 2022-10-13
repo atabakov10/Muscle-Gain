@@ -1,30 +1,33 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MuscleGain.Infrastructure.Data.Models.Account;
 using MuscleGain.Models.Users;
 
 namespace MuscleGain.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
         public AccountController(
-            SignInManager<ApplicationUser> _signInManager,
-            UserManager<ApplicationUser> _userManager)
+            SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUser> userManager)
         {
-            userManager = _userManager;
-            signInManager = _signInManager;
+            this._userManager = userManager;
+            this._signInManager = signInManager;
         }
         [HttpGet]
-        public async Task<IActionResult> Register()
+        [AllowAnonymous]
+        public IActionResult Register()
         {
             var model = new RegisterViewModel();
 
             return View(model);
         }
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
@@ -41,24 +44,24 @@ namespace MuscleGain.Controllers
                 UserName = model.Email
             };
 
-            var result = await userManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
             {
-                await signInManager.SignInAsync(user, isPersistent: false);
+                await _signInManager.SignInAsync(user, isPersistent: false);
 
                 return RedirectToAction("Index", "Home");
             }
 
             foreach (var item in result.Errors)
             {
-                
-             ModelState.AddModelError("", item.Description);
+                ModelState.AddModelError("", item.Description);
             }
 
             return View(model);
         }
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login(string? returnUrl = null)
         {
             var model = new LoginViewModel()
@@ -70,6 +73,7 @@ namespace MuscleGain.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
@@ -77,11 +81,11 @@ namespace MuscleGain.Controllers
                 return View(model);
             }
 
-            var user = await userManager.FindByEmailAsync(model.Email);
+            var user = await _userManager.FindByEmailAsync(model.Email);
 
             if (user != null)
             {
-                var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
+                var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
 
                 if (result.Succeeded)
                 {
@@ -100,7 +104,7 @@ namespace MuscleGain.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            await signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
     }
