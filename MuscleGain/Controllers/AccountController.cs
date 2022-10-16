@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MuscleGain.Core.Constants;
 using MuscleGain.Infrastructure.Data.Models.Account;
 using MuscleGain.Models.Users;
 
@@ -49,7 +50,7 @@ namespace MuscleGain.Controllers
             var result = await _userManager.CreateAsync(user, model.Password);
 
             await _userManager
-                .AddClaimAsync(user, new Claim("FirstName", user.FirstName ?? user.Email));
+                .AddClaimAsync(user, new Claim(ClaimTypeConstants.FirstName, user.FirstName ?? user.Email));
 
             if (result.Succeeded)
             {
