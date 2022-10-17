@@ -7,16 +7,8 @@
 <ul class="navbar-nav">
 	@if (SignInManager.IsSignedIn(User))
 	{
-		
-		<li class="dropdown-menu">
 		<li style="text-align: left"><a type="submit" class="btn btn-outline-info" asp-controller="Home" asp-action="Index">Home Page</a></li>
-			<li>
-				<a type="submit" class="btn btn-outline-info" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-					Hello @ViewBag.UserFirstName
-				</a>
-			</li>
-		</li>
-
+		
 		<li class="dropdown-menu">
 		<li><a type="submit" class="btn btn-outline-info" asp-controller="Account" asp-action="Logout">Logout</a></li>
 		</li>

@@ -1,4 +1,6 @@
-﻿namespace MuscleGain.Services.Statistics
+﻿using MuscleGain.Services.Statistics;
+
+namespace MuscleGain.Contracts
 {
     public interface IStatisticsService
     {

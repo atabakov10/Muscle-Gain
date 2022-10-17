@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MuscleGain.Infrastructure.Data
+﻿namespace MuscleGain.Infrastructure.Data
 {
     public static class DataConstants
     {

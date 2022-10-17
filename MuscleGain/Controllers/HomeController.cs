@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Authorization;
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Models.Home;
 using MuscleGain.Models.Proteins;
-using MuscleGain.Services.Statistics;
 
 namespace MuscleGain.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using MuscleGain.Contracts;
     using MuscleGain.Models;
     using System.Diagnostics;
 

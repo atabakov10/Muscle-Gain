@@ -1,4 +1,5 @@
-﻿using MuscleGain.Infrastructure.Data;
+﻿using MuscleGain.Contracts;
+using MuscleGain.Infrastructure.Data;
 
 namespace MuscleGain.Services.Statistics
 {

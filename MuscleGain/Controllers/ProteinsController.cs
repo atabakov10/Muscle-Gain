@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using MuscleGain.Contracts;
+using MuscleGain.Core.Constants;
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Models;
 using MuscleGain.Infrastructure.Data.Models.Protein;
 using MuscleGain.Models.Api.Proteins;
 using MuscleGain.Models.Proteins;
-using MuscleGain.Services.Proteins;
 
 namespace MuscleGain.Controllers
 {
@@ -22,7 +23,6 @@ namespace MuscleGain.Controllers
             this._data = data;
         }
 
-        [AllowAnonymous]
         public async Task<IActionResult>  All([FromQuery]AllProteinsQueryModel query)
         {
             var queryResult = await this._proteins.All(
@@ -40,7 +40,10 @@ namespace MuscleGain.Controllers
 
             return View(query);
         }
-        public  IActionResult Add() => View(new AddProtein
+
+        [HttpGet]
+        [Authorize(Roles = $"{RoleConstants.Manager}, {RoleConstants.Supervisor}")]
+        public IActionResult Add() => View(new AddProtein
         {
             Categories = this.GetProteinCategories()
         });
@@ -53,21 +56,26 @@ namespace MuscleGain.Controllers
                 this.ModelState.AddModelError(nameof(protein.CategoryId), "Category does not exist!");
             }
 
-            var proteinToAdd = new Protein
+            if (!ModelState.IsValid)
             {
-                Name = protein.Name,
-                Grams = protein.Grams,
-                Flavour = protein.Flavour,
-                Price = protein.Price,
-                Description = protein.Description,
-                ImageUrl = protein.ImageUrl,
-                CategoryId = protein.CategoryId
+                return View();
+            }
 
-            };
-            await this._data.Proteins.AddAsync(proteinToAdd);
-            await this._data.SaveChangesAsync();
+            await _proteins.Add(protein);
 
-            return RedirectToAction("All", "Proteins");
+            return RedirectToAction(nameof(All));
+        }
+
+        [HttpPost]
+        [Authorize(Policy = "CanDeleteProduct")]
+        [HttpPost]
+        [Authorize(Policy = "CanDeleteProduct")]
+        public async Task<IActionResult> Delete([FromForm] string id)
+        {
+            int idGuid = int.Parse(id);
+            await _proteins.Delete(idGuid);
+
+            return RedirectToAction(nameof(All));
         }
         private IEnumerable<ProteinCategoryViewModel> GetProteinCategories()
             => this._data

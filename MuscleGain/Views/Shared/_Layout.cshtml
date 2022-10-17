@@ -17,7 +17,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<link rel="stylesheet" href="~/css/adminlte.min.css" />
 	<link rel="stylesheet" href="~/plugins/toastr/toastr.min.css" />
 
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	@await RenderSectionAsync("Head", false)
 </head>
@@ -37,28 +37,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			<ul class="navbar-nav ml-auto">
 				<!--Home Page Link-->
 				<!--Register/Login-->
-				<partial name="_LoginPartial"/>
+				<partial name="_LoginPartial" />
 				<!-- Navbar Search -->
 				@*<li class="nav-item">
-					<a class="nav-link" data-widget="navbar-search" role="button">
-						<i class="fas fa-search"></i>
-					</a>
-					<form method="get" class="form-inline">
-						<div class="navbar-search-block">
-							<div class="input-group input-group-sm">
-								<label asp-for="SearchTerm" class="form-label"></label>
-								<input asp-for="SearchTerm" class="form-control" placeholder="Whey Protein, etc...">
-								<div class="input-group-append">
-									<button class="btn btn-navbar" type="submit">
-										<i class="fas fa-search"></i>
-									</button>
-									<button class="btn btn-navbar" type="button" data-widget="navbar-search">
-										<i class="fas fa-times"></i>
-									</button>
-								</div>
-							</div>
-						</div>
-					</form>
+				<a class="nav-link" data-widget="navbar-search" role="button">
+				<i class="fas fa-search"></i>
+				</a>
+				<form method="get" class="form-inline">
+				<div class="navbar-search-block">
+				<div class="input-group input-group-sm">
+				<label asp-for="SearchTerm" class="form-label"></label>
+				<input asp-for="SearchTerm" class="form-control" placeholder="Whey Protein, etc...">
+				<div class="input-group-append">
+				<button class="btn btn-navbar" type="submit">
+				<i class="fas fa-search"></i>
+				</button>
+				<button class="btn btn-navbar" type="button" data-widget="navbar-search">
+				<i class="fas fa-times"></i>
+				</button>
+				</div>
+				</div>
+				</div>
+				</form>
 				</li>*@
 				<li class="nav-item">
 					<a class="nav-link" data-widget="fullscreen" href="#" role="button">
@@ -79,13 +79,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			<!-- Sidebar -->
 			<div class="sidebar">
 				<!-- Sidebar user panel (optional) -->
-				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
-					<div class="image">
-						<img src="~/img/199320906_1461549020864879_6167869086568313649_n.jpg" class="img-circle elevation-2" alt="User Image">
-					</div>
+				<div class="user-panel mt-2 pb-2 mb-2 d-flex">
 					<div class="info">
 						<!-- TODO: Make Profile Tab -->
-						<a asp-action="Profile" class="d-block"><strong>Angel Tabakov</strong></a>
+						@if (User?.Identity?.IsAuthenticated ?? false)
+						{
+							<ul class="dropdown-menu">
+							<li>
+								<li class="image">
+									<img src="~/img/hanging-sign-with-text-welcome-icon-isolated-vector-24794668.jpg" class="img-circle elevation-2" alt="Welcome Image">
+								</li>
+								<a type="submit" class="btn btn-outline-info" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+									Hello, @ViewBag.UserFirstName!
+								</a>
+							</li>
+							</ul>
+						}
+						else
+						{
+							<a asp-controller="Account" asp-action="Register" class="btn btn-outline-secondary">Please Register/Login</a>
+						}
+						
 					</div>
 				</div>
 

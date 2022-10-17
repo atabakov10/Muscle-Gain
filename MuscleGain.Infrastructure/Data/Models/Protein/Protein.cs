@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using static MuscleGain.Infrastructure.Data.DataConstants;
 
 namespace MuscleGain.Infrastructure.Data.Models.Protein
@@ -21,7 +22,6 @@ namespace MuscleGain.Infrastructure.Data.Models.Protein
         public string Flavour { get; set; }
 
         [Required]
-        //[StringLength(ProteinPriceMaxLength)]
         [MaxLength(ProteinPriceMaxLength)]
         public decimal? Price { get; set; }
 
@@ -32,8 +32,12 @@ namespace MuscleGain.Infrastructure.Data.Models.Protein
         [Url]
         public string ImageUrl { get; set; }
 
+        [Comment("Product is active")]
+        public bool IsActive { get; set; } = true;
         public int CategoryId { get; set; }
+
         public ProteinsCategories ProteinCategory { get; init; }
-        
+
+
     }
 }

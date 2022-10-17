@@ -8,7 +8,7 @@
 <form method="get">
 	<div class="row">
 		<div class="form-group col-md-3">
-				<label asp-for="Flavour"></label>
+			<label asp-for="Flavour"></label>
 			<select asp-for="Flavour" class="form-control">
 				<option value="">All</option>
 
@@ -30,7 +30,7 @@
 				<option value="1">Name and Flavour</option>
 			</select>
 		</div>
-		
+
 
 	</div>
 </form>
@@ -73,11 +73,16 @@
 			<div class="card mb-3">
 				<img src="@protein.ImageUrl" class="card-img-top" alt="@protein.Name @protein.Grams - @protein.Price (@protein.Category)">
 				<div class="card-body text-center">
-					<h5 class="card-title text-center">@protein.Name (@protein.Flavour) - @protein.Grams</h5>
-					<a
-						asp-controller="Proteins" 
-						asp-action="Details"
-						asp-route-id="@protein.Id" class="btn btn-primary">View More</a>
+					<h5 class="card-title text-center mb-2">@protein.Name (@protein.Flavour) - @protein.Grams</h5>
+					<a asp-controller="Proteins"
+					   asp-action="Details"
+					   asp-route-id="@protein.Id" class="btn btn-primary">Details</a>
+					<div class="mt-1">
+						<form asp-action="Delete" asp-controller="Proteins" method="post">
+							<input name="id" type="hidden" value="@protein.Id.ToString()" />
+							<button type="submit" class="btn btn-danger" @(User.IsInRole("Supervisor") ? "" : "disabled")>Delete</button>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>

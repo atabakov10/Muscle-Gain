@@ -1,19 +1,30 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MuscleGain.Contracts;
 using MuscleGain.Infrastructure.Data;
+using MuscleGain.Infrastructure.Data.Common;
+using MuscleGain.Infrastructure.Data.Models.Protein;
 using MuscleGain.Models.Proteins;
-using static MuscleGain.Services.Proteins.ProteinQueryServiceModel;
 
 
 namespace MuscleGain.Services.Proteins
 {
     public class ProteinService : IProteinService
     {
+        private readonly IConfiguration config;
         private readonly MuscleGainDbContext data;
+        private readonly IRepository repo;
 
-        public ProteinService(MuscleGainDbContext data)
-        => this.data = data;
-            
-        
+        public ProteinService(
+            IConfiguration _config,
+            MuscleGainDbContext _data,
+            IRepository _repo)
+        {
+            config = _config;
+            data = _data;
+            repo = _repo;
+        }
+
+
         public async Task<ProteinQueryServiceModel> All(
             string flavour,
             string searchTerm,
@@ -68,6 +79,23 @@ namespace MuscleGain.Services.Proteins
             };
         }
 
+        public async Task Add(AddProtein protein)
+        {
+            var product = new Protein()
+            {
+                Name = protein.Name,
+                Grams = protein.Grams,
+                Flavour = protein.Flavour,
+                Price = protein.Price,
+                Description = protein.Description,
+                ImageUrl = protein.ImageUrl,
+                CategoryId = protein.CategoryId
+            };
+
+            await repo.AddAsync(product);
+            await repo.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<string>> AllProteinFlavours()
         => await this.data
                 .Proteins
@@ -75,6 +103,18 @@ namespace MuscleGain.Services.Proteins
                 .Distinct()
                 .OrderBy(n => n)
                 .ToListAsync();
-        
+
+        public async Task Delete(int id)
+        {
+            var product = await repo.All<Protein>()
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (product != null)
+            {
+                product.IsActive = false;
+
+                await repo.SaveChangesAsync();
+            }
+        }
     }
 }

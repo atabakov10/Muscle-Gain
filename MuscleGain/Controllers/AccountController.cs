@@ -12,14 +12,18 @@ namespace MuscleGain.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public AccountController(
             SignInManager<ApplicationUser> signInManager,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
+             this._roleManager = roleManager;
         }
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register()
@@ -28,6 +32,7 @@ namespace MuscleGain.Controllers
 
             return View(model);
         }
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
@@ -66,6 +71,7 @@ namespace MuscleGain.Controllers
 
             return View(model);
         }
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Login(string? returnUrl = null)
@@ -111,6 +117,35 @@ namespace MuscleGain.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> CreateRoles()
+        {
+            await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Manager));
+            await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Supervisor));
+            await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Administrator));
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> AddUsersToRoles()
+        {
+            string email1 = "angelt4@abv.bg";
+            string email2 = "yanatabakova@abv.bg";
+            string email3 = "farisfaris@abv.bg";
+            string email4 = "atabakov99@abv.bg";
+
+            var user = await _userManager.FindByNameAsync(email1);
+            var user2 = await _userManager.FindByNameAsync(email2);
+            var user3 = await _userManager.FindByNameAsync(email3);
+            var user4 = await _userManager.FindByNameAsync(email4);
+
+            await _userManager.AddToRoleAsync(user, RoleConstants.Manager);
+            await _userManager.AddToRoleAsync(user2, RoleConstants.Supervisor);
+            await _userManager.AddToRoleAsync(user3, RoleConstants.Administrator);
+            await _userManager.AddToRolesAsync(user4, new string[] { RoleConstants.Supervisor, RoleConstants.Manager });
+
             return RedirectToAction("Index", "Home");
         }
     }
