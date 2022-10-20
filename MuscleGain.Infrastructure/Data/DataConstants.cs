@@ -7,8 +7,8 @@
         public const int ProteinNameMaxLength = 30;
         public const int ProteinPriceMaxLength = 1000;
         public const int ProteinPriceMinLength = 10;
-        public const int ProteinGramsMinLength = 250;
-        public const int ProteinGramsMaxLength = 5000;
+        public const int ProteinGramsMinLength = 3;
+        public const int ProteinGramsMaxLength = 6;
         public const int ProteinFlavorMinLength = 3;
         public const int ProteinFlavorMaxLength = 30;
         public const int ProteinDescriptionMinLength = 10;

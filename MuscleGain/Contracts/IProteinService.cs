@@ -16,6 +16,6 @@ namespace MuscleGain.Contracts
 
         Task<IEnumerable<string>> AllProteinFlavours();
 
-        Task Delete(int id);
+        //Task Delete(int id);
     }
 }

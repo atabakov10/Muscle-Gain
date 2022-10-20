@@ -9,6 +9,7 @@ using MuscleGain.Infrastructure.Data.Models;
 using MuscleGain.Infrastructure.Data.Models.Protein;
 using MuscleGain.Models.Api.Proteins;
 using MuscleGain.Models.Proteins;
+using System.Net;
 
 namespace MuscleGain.Controllers
 {
@@ -65,18 +66,40 @@ namespace MuscleGain.Controllers
 
             return RedirectToAction(nameof(All));
         }
-
-        [HttpPost]
-        [Authorize(Policy = "CanDeleteProduct")]
-        [HttpPost]
-        [Authorize(Policy = "CanDeleteProduct")]
-        public async Task<IActionResult> Delete([FromForm] string id)
+        [HttpGet]
+        public ActionResult Delete(int? id)
         {
-            int idGuid = int.Parse(id);
-            await _proteins.Delete(idGuid);
+            if (id == null)
+            {
+                return new BadRequestResult();
+            }
+            Protein protein = _data.Proteins.Find(id);
+            if (protein == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View(protein);
+        }
 
+        [HttpPost, ActionName("Delete")]
+        [Authorize(Policy = "CanDeleteProduct")]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            Protein protein = _data.Proteins.Find(id);
+            _data.Proteins.Remove(protein);
+            await _data.SaveChangesAsync();
             return RedirectToAction(nameof(All));
         }
+
+        //[HttpPost]
+        //[Authorize(Policy = "CanDeleteProduct")]
+        //public async Task<IActionResult> Delete([FromForm] string id)
+        //{
+        //    int idGuid = int.Parse(id);
+        //    await _proteins.Delete(idGuid);
+
+        //    return RedirectToAction(nameof(All));
+        //}
         private IEnumerable<ProteinCategoryViewModel> GetProteinCategories()
             => this._data
                 .ProteinsCategories

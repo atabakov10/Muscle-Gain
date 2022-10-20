@@ -104,17 +104,17 @@ namespace MuscleGain.Services.Proteins
                 .OrderBy(n => n)
                 .ToListAsync();
 
-        public async Task Delete(int id)
-        {
-            var product = await repo.All<Protein>()
-                .FirstOrDefaultAsync(p => p.Id == id);
+        //public async Task Delete(int id)
+        //{
+        //    var product = await repo.All<Protein>()
+        //        .FirstOrDefaultAsync(p => p.Id == id);
 
-            if (product != null)
-            {
-                product.IsActive = false;
+        //    if (product != null)
+        //    {
+        //        product.IsActive = false;
 
-                await repo.SaveChangesAsync();
-            }
-        }
+        //        await repo.SaveChangesAsync();
+        //    }
+        //}
     }
 }

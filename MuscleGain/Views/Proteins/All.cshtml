@@ -1,4 +1,4 @@
-﻿@using MuscleGain.Models.Api.Proteins
+﻿
 @model AllProteinsQueryModel
 
 @{
@@ -20,7 +20,7 @@
 		</div>
 
 		<div class="form-group col-md-3">
-			<label asp-for="SearchTerm" class="form-label"></label>
+			<label asp-for="SearchTerm" class="form-label" onmouseenter=""></label>
 			<input asp-for="SearchTerm" class="form-control" placeholder="Whey protein, etc...">
 		</div>
 		<div class="form-group col-md-3">
@@ -30,7 +30,6 @@
 				<option value="1">Name and Flavour</option>
 			</select>
 		</div>
-
 
 	</div>
 </form>
@@ -73,7 +72,7 @@
 			<div class="card mb-3">
 				<img src="@protein.ImageUrl" class="card-img-top" alt="@protein.Name @protein.Grams - @protein.Price (@protein.Category)">
 				<div class="card-body text-center">
-					<h5 class="card-title text-center mb-2">@protein.Name (@protein.Flavour) - @protein.Grams</h5>
+					<h5 class="card-title text-center center">@protein.Name (@protein.Flavour) - @protein.Grams</h5>
 					<a asp-controller="Proteins"
 					   asp-action="Details"
 					   asp-route-id="@protein.Id" class="btn btn-primary">Details</a>

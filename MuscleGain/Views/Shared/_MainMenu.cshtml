@@ -2,32 +2,33 @@
 	<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 		<!-- Add icons to the links using the .nav-icon class
 		with font-awesome or any other icon font library -->
-		<li class="nav-item menu-closed ">
-			<a href="#" class="nav-link active">
+		<li class="nav-item ">
+			<a href="#" class="nav-link active nav-icon">
 				<p>
 					Protein
 					<i class="right fas fa-angle-left"></i>
 				</p>
+			</a>
 			<ul class="nav nav-treeview">
+				<li class="nav-item">
+					<a asp-controller="Proteins" asp-action="All" class="nav-link active">
+						<i class="far fa-circle nav-icon"></i>
+						<p>Protein Page</p>
+					</a>
+				</li>
+				@if (User?.Identity?.IsAuthenticated ?? false)
+				{
 					<li class="nav-item">
-						<a asp-controller="Proteins" asp-action="All" class="nav-link active">
+						<a asp-controller="Proteins" asp-action="Add" class="nav-link">
 							<i class="far fa-circle nav-icon"></i>
-							<p>Protein Page</p>
+							<p>Add Protein</p>
 						</a>
 					</li>
-					@if (User?.Identity?.IsAuthenticated ?? false)
-					{
-						<li class="nav-item">
-							<a asp-controller="Proteins" asp-action="Add" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Add Protein</p>
-							</a>
-						</li>
-					}
-				</ul>
+				}
+			</ul>
 		</li>
-		<li class="nav-item menu-closed mt-3">
-			<a href="#" class="nav-link active">
+		<li class="nav-item">
+			<a href="#" class="nav-link active nav-icon">
 				<p>
 					Creatine
 					<i class="right fas fa-angle-left"></i>
@@ -51,6 +52,7 @@
 				}
 			</ul>
 		</li>
+
 	</ul>
 </nav>
 

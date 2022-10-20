@@ -133,7 +133,7 @@ namespace MuscleGain.Controllers
         {
             string email1 = "angelt4@abv.bg";
             string email2 = "yanatabakova@abv.bg";
-            string email3 = "farisfaris@abv.bg";
+            string email3 = "stefant@abv.bg";
             string email4 = "atabakov99@abv.bg";
 
             var user = await _userManager.FindByNameAsync(email1);

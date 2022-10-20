@@ -84,16 +84,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						<!-- TODO: Make Profile Tab -->
 						@if (User?.Identity?.IsAuthenticated ?? false)
 						{
-							<ul class="dropdown-menu">
-							<li>
-								<li class="image">
-									<img src="~/img/hanging-sign-with-text-welcome-icon-isolated-vector-24794668.jpg" class="img-circle elevation-2" alt="Welcome Image">
-								</li>
-								<a type="submit" class="btn btn-outline-info" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+							<a type="submit" class="btn btn-outline-info" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
 									Hello, @ViewBag.UserFirstName!
 								</a>
-							</li>
-							</ul>
 						}
 						else
 						{

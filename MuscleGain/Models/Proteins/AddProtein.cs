@@ -34,6 +34,6 @@ namespace MuscleGain.Models.Proteins
         [Display(Name = "Category")]
         public int CategoryId { get; init; }
 
-        public IEnumerable<ProteinCategoryViewModel> Categories { get; set; }
+        public IEnumerable<ProteinCategoryViewModel>? Categories { get; set; }
     }
 }
