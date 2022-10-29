@@ -27,6 +27,8 @@ namespace MuscleGain.Controllers
 
         public async Task<IActionResult>  All([FromQuery]AllProteinsQueryModel query)
         {
+            ViewData[MessageConstant.SuccessMessage] = "Successful logout!";
+
             var queryResult = await this.proteinService.All(
                 query.Flavour,
                 query.SearchTerm,
@@ -101,7 +103,7 @@ namespace MuscleGain.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            return View(protein);
+            return View();
         }
 
         [HttpPost, ActionName("Delete")]
@@ -114,24 +116,6 @@ namespace MuscleGain.Controllers
             return RedirectToAction(nameof(All));
         }
 
-        //[HttpPost]
-        //[Authorize(Policy = "CanDeleteProduct")]
-        //public async Task<IActionResult> Delete([FromForm] string id)
-        //{
-        //    int idGuid = int.Parse(id);
-        //    await proteinService.Delete(idGuid);
-
-        //    return RedirectToAction(nameof(All));
-        //}
-        //private async Task<IEnumerable<ProteinCategoryViewModel>> GetProteinCategories()
-        //    => await this.data
-        //        .ProteinsCategories
-        //        .Select(x => new ProteinCategoryViewModel
-        //        {
-        //            Id = x.Id,
-        //            Name = x.Name
-        //        })
-        //        .ToListAsync();
     }
  
 }

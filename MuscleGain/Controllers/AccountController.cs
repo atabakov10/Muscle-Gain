@@ -92,7 +92,7 @@ namespace MuscleGain.Controllers
             {
                 return View(model);
             }
-
+            TempData[MessageConstant.SuccessMessage] = "Successful register!";
             var user = await _userManager.FindByEmailAsync(model.Email);
 
             if (user != null)
@@ -105,7 +105,7 @@ namespace MuscleGain.Controllers
                     {
                         return Redirect(model.ReturnUrl);
                     }
-
+                    
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -117,6 +117,7 @@ namespace MuscleGain.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+
             return RedirectToAction("Index", "Home");
         }
 

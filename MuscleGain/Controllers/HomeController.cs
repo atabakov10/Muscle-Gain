@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Authorization;
+using MuscleGain.Core.Constants;
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Models.Home;
 using MuscleGain.Models.Proteins;
