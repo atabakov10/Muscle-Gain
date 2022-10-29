@@ -9,31 +9,32 @@ using MuscleGain.Infrastructure.Data.Models;
 using MuscleGain.Infrastructure.Data.Models.Protein;
 using MuscleGain.Models.Api.Proteins;
 using MuscleGain.Models.Proteins;
+using MuscleGain.Services.Proteins;
 using System.Net;
 
 namespace MuscleGain.Controllers
 {
     public class ProteinsController : BaseController
     {
-        private readonly IProteinService _proteins;
-        private readonly MuscleGainDbContext _data;
+        private readonly IProteinService proteinService;
+        private readonly MuscleGainDbContext data;
 
-        public ProteinsController(IProteinService proteins, MuscleGainDbContext data)
+        public ProteinsController(IProteinService proteinService, MuscleGainDbContext data)
         {
-            this._proteins = proteins;
-            this._data = data;
+            this.proteinService = proteinService;
+            this.data = data;
         }
 
         public async Task<IActionResult>  All([FromQuery]AllProteinsQueryModel query)
         {
-            var queryResult = await this._proteins.All(
+            var queryResult = await this.proteinService.All(
                 query.Flavour,
                 query.SearchTerm,
                 query.Sorting,
                 query.CurrentPage,
                 AllProteinsQueryModel.ProteinsPerPage);
 
-            var proteinsFlavours = await this._proteins.AllProteinFlavours();
+            var proteinsFlavours = await this.proteinService.AllProteinFlavours();
 
             query.Flavours = proteinsFlavours;
             query.TotalProteins = queryResult.TotalProteins;
@@ -44,15 +45,15 @@ namespace MuscleGain.Controllers
 
         [HttpGet]
         [Authorize(Roles = $"{RoleConstants.Manager}, {RoleConstants.Supervisor}")]
-        public IActionResult Add() => View(new AddProtein
+        public async Task<IActionResult> Add() => View(new AddProtein
         {
-            Categories = this.GetProteinCategories()
+            Categories = await this.proteinService.GetProteinCategoriesAsync()
         });
 
         [HttpPost]
         public async Task<IActionResult> Add(AddProtein protein)
         {
-            if (!this._data.ProteinsCategories.Any(x => x.Id == protein.CategoryId))
+            if (!this.data.ProteinsCategories.Any(x => x.Id == protein.CategoryId))
             {
                 this.ModelState.AddModelError(nameof(protein.CategoryId), "Category does not exist!");
             }
@@ -62,10 +63,32 @@ namespace MuscleGain.Controllers
                 return View();
             }
 
-            await _proteins.Add(protein);
+            await proteinService.Add(protein);
 
             return RedirectToAction(nameof(All));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var model = await proteinService.GetForEditAsync(id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditProteinViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await proteinService.EditAsync(model);
+
+            return RedirectToAction(nameof(All));
+        }
+
         [HttpGet]
         public ActionResult Delete(int? id)
         {
@@ -73,7 +96,7 @@ namespace MuscleGain.Controllers
             {
                 return new BadRequestResult();
             }
-            Protein protein = _data.Proteins.Find(id);
+            Protein protein = data.Proteins.Find(id);
             if (protein == null)
             {
                 return RedirectToAction("Index", "Home");
@@ -85,9 +108,9 @@ namespace MuscleGain.Controllers
         [Authorize(Policy = "CanDeleteProduct")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Protein protein = _data.Proteins.Find(id);
-            _data.Proteins.Remove(protein);
-            await _data.SaveChangesAsync();
+            Protein protein = data.Proteins.Find(id);
+            data.Proteins.Remove(protein);
+            await data.SaveChangesAsync();
             return RedirectToAction(nameof(All));
         }
 
@@ -96,19 +119,19 @@ namespace MuscleGain.Controllers
         //public async Task<IActionResult> Delete([FromForm] string id)
         //{
         //    int idGuid = int.Parse(id);
-        //    await _proteins.Delete(idGuid);
+        //    await proteinService.Delete(idGuid);
 
         //    return RedirectToAction(nameof(All));
         //}
-        private IEnumerable<ProteinCategoryViewModel> GetProteinCategories()
-            => this._data
-                .ProteinsCategories
-                .Select(x => new ProteinCategoryViewModel
-                {
-                    Id = x.Id,
-                    Name = x.Name
-                })
-                .ToList();
+        //private async Task<IEnumerable<ProteinCategoryViewModel>> GetProteinCategories()
+        //    => await this.data
+        //        .ProteinsCategories
+        //        .Select(x => new ProteinCategoryViewModel
+        //        {
+        //            Id = x.Id,
+        //            Name = x.Name
+        //        })
+        //        .ToListAsync();
     }
  
 }

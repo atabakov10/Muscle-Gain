@@ -104,17 +104,53 @@ namespace MuscleGain.Services.Proteins
                 .OrderBy(n => n)
                 .ToListAsync();
 
-        //public async Task Delete(int id)
-        //{
-        //    var product = await repo.All<Protein>()
-        //        .FirstOrDefaultAsync(p => p.Id == id);
 
-        //    if (product != null)
-        //    {
-        //        product.IsActive = false;
+        public async Task<IEnumerable<ProteinCategoryViewModel>> GetProteinCategoriesAsync()
+        {
+            return await this.data
+                .ProteinsCategories
+                .Select(x => new ProteinCategoryViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                })
+                .ToListAsync();
+        }
 
-        //        await repo.SaveChangesAsync();
-        //    }
-        //}
+        public async Task<EditProteinViewModel> GetForEditAsync(int id)
+        {
+            var protein = await data.Proteins.FindAsync(id);
+
+            var model = new EditProteinViewModel()
+            {
+                Id = id,
+                Name = protein.Name,
+                Flavour = protein.Flavour,
+                Grams = protein.Grams,
+                Price = protein.Price,
+                Description = protein.Description,
+                ImageUrl = protein.ImageUrl,
+                CategoryId = protein.CategoryId
+            };
+
+            model.Categories = await GetProteinCategoriesAsync();
+
+            return model;
+        }
+
+        public async Task EditAsync(EditProteinViewModel model)
+        {
+            var entity = await data.Proteins.FindAsync(model.Id);
+
+            entity.Name = model.Name;
+            entity.Flavour = model.Flavour;
+            entity.Grams = model.Grams;
+            entity.Price = model.Price;
+            entity.Description = model.Description;
+            entity.ImageUrl = model.ImageUrl;
+            entity.CategoryId = model.CategoryId;
+
+            await data.SaveChangesAsync();
+        }
     }
 }

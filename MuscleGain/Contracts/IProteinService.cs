@@ -16,6 +16,10 @@ namespace MuscleGain.Contracts
 
         Task<IEnumerable<string>> AllProteinFlavours();
 
-        //Task Delete(int id);
+        Task<IEnumerable<ProteinCategoryViewModel>> GetProteinCategoriesAsync();
+
+        Task<EditProteinViewModel> GetForEditAsync(int id);
+
+        Task EditAsync(EditProteinViewModel model);
     }
 }

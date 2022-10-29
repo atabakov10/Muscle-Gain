@@ -16,7 +16,7 @@
 						<p>Protein Page</p>
 					</a>
 				</li>
-				@if (User?.Identity?.IsAuthenticated ?? false)
+				@if (User?.IsInRole("Manager") ?? false)
 				{
 					<li class="nav-item">
 						<a asp-controller="Proteins" asp-action="Add" class="nav-link">
