@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MuscleGain.Contracts;
 using MuscleGain.Infrastructure.Data;
-using MuscleGain.Infrastructure.Data.Common;
+//using MuscleGain.Infrastructure.Data.Common;
 using MuscleGain.Infrastructure.Data.Models.Protein;
 using MuscleGain.Models.Proteins;
 
@@ -12,21 +12,19 @@ namespace MuscleGain.Services.Proteins
     {
         private readonly IConfiguration config;
         private readonly MuscleGainDbContext data;
-        private readonly IRepository repo;
 
         public ProteinService(
             IConfiguration _config,
-            MuscleGainDbContext _data,
-            IRepository _repo)
+            MuscleGainDbContext _data)
         {
             config = _config;
             data = _data;
-            repo = _repo;
+            
         }
 
 
-        public async Task<ProteinQueryServiceModel> All(
-            string flavour,
+        public async Task<ProteinQueryServiceModel> AllAsync(
+            string category,
             string searchTerm,
             ProteinSorting sorting,
             int currentPage,
@@ -34,9 +32,9 @@ namespace MuscleGain.Services.Proteins
         {
             var proteinsQuery = this.data.Proteins.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(flavour))
+            if (!string.IsNullOrWhiteSpace(category))
             {
-                proteinsQuery = proteinsQuery.Where(p => p.Flavour == flavour);
+                proteinsQuery = proteinsQuery.Where(p => p.ProteinCategory.Name == category);
             }
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
@@ -79,7 +77,7 @@ namespace MuscleGain.Services.Proteins
             };
         }
 
-        public async Task Add(AddProtein protein)
+        public async Task AddAsync(AddProtein protein)
         {
             var product = new Protein()
             {
@@ -92,14 +90,14 @@ namespace MuscleGain.Services.Proteins
                 CategoryId = protein.CategoryId
             };
 
-            await repo.AddAsync(product);
-            await repo.SaveChangesAsync();
+            await data.AddAsync(product);
+            await data.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<string>> AllProteinFlavours()
+        public async Task<IEnumerable<string>> AllProteinCategoriesAsync()
         => await this.data
                 .Proteins
-                .Select(p => p.Flavour)
+                .Select(p => p.ProteinCategory.Name)
                 .Distinct()
                 .OrderBy(n => n)
                 .ToListAsync();
@@ -151,6 +149,25 @@ namespace MuscleGain.Services.Proteins
             entity.CategoryId = model.CategoryId;
 
             await data.SaveChangesAsync();
+        }
+
+        public async Task<ProteinDetailsViewModel> GetForDetailsAsync(int id)
+        {
+            var protein = await data.Proteins.FindAsync(id);
+            var category = await AllProteinCategoriesAsync();
+            var model = new ProteinDetailsViewModel()
+            {
+                Id = id,
+                Name = protein.Name,
+                Flavour = protein.Flavour,
+                Grams = protein.Grams,
+                Price = protein.Price,
+                Description = protein.Description,
+                ImageUrl = protein.ImageUrl,
+                //Category = category.Where()
+            };
+
+            return model;
         }
     }
 }

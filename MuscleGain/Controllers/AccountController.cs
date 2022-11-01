@@ -103,6 +103,7 @@ namespace MuscleGain.Controllers
                 {
                     if (model.ReturnUrl != null)
                     {
+                        ViewData[MessageConstant.SuccessMessage] = "Successful login!";
                         return Redirect(model.ReturnUrl);
                     }
                     

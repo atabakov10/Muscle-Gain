@@ -1,0 +1,44 @@
+﻿@model ProteinDetailsViewModel
+
+@{
+	ViewData["Title"] = "Protein Details";
+
+}
+
+<link rel="stylesheet" href="css/site.css"/>
+
+<div class="container bootdey">
+<div class="col-md-12">
+<section class="panel">
+      <div class="panel-body">
+          <div class="col-md-6">
+              <div class="pro-img-details">
+                  <img src=@Model.ImageUrl>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <h2 class="pro-d-title">
+                  <a>
+                      @Model.Name
+                  </a>
+              </h2>
+              <p>
+                 @Model.Description 
+              </p>
+              <div class="product_meta">
+                  <span class="tagged_as"><strong>Flavour:</strong> <a>@Model.Flavour</a></span>
+                  <span class="posted_in"> <strong>Category:</strong> @Model.Category. <a rel="tag" href="#"></a>, <a rel="tag" href="#">Men</a>, <a rel="tag" href="#">Shirts</a>, <a rel="tag" href="#">T-shirt</a>.</span>
+              </div>
+              <div class="m-bot15"> <strong>Price : </strong><span class="pro-price"> $@Model.Price</span></div>
+              <div class="form-group">
+                  <label>Quantity</label>
+                  <input type="quantiy" placeholder="1" class="form-control quantity">
+              </div>
+              <p>
+                  <button class="btn btn-round btn-danger" type="button"><i class="fa fa-shopping-cart"></i> AddAsync to Cart</button>
+              </p>
+          </div>
+      </div>
+  </section>
+  </div>
+  </div>

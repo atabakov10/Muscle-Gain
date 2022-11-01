@@ -27,18 +27,16 @@ namespace MuscleGain.Controllers
 
         public async Task<IActionResult>  All([FromQuery]AllProteinsQueryModel query)
         {
-            ViewData[MessageConstant.SuccessMessage] = "Successful logout!";
-
-            var queryResult = await this.proteinService.All(
-                query.Flavour,
+            var queryResult = await this.proteinService.AllAsync(
+                query.Category,
                 query.SearchTerm,
                 query.Sorting,
                 query.CurrentPage,
                 AllProteinsQueryModel.ProteinsPerPage);
 
-            var proteinsFlavours = await this.proteinService.AllProteinFlavours();
+            var proteinCategories = await this.proteinService.AllProteinCategoriesAsync();
 
-            query.Flavours = proteinsFlavours;
+            query.Categories = proteinCategories;
             query.TotalProteins = queryResult.TotalProteins;
             query.Proteins = queryResult.Proteins;
 
@@ -65,7 +63,7 @@ namespace MuscleGain.Controllers
                 return View();
             }
 
-            await proteinService.Add(protein);
+            await proteinService.AddAsync(protein);
 
             return RedirectToAction(nameof(All));
         }
@@ -89,6 +87,14 @@ namespace MuscleGain.Controllers
             await proteinService.EditAsync(model);
 
             return RedirectToAction(nameof(All));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var data = await proteinService.GetForDetailsAsync(id);
+
+            return View(data);
         }
 
         [HttpGet]

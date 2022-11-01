@@ -7,7 +7,7 @@ namespace MuscleGain.Models.Api.Proteins
         public string Flavour { get; set; }
 
         public string SearchTerm { get; set; }
-
+        
         public ProteinSorting Sorting { get; set; }
 
         public int CurrentPage { get; set; } = 1;

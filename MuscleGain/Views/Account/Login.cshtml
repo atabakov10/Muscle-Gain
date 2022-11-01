@@ -3,32 +3,87 @@
 	ViewData["Title"] = "Login page";
 }
 
-<div class="row">
-	<div class="col-md-4 center">
-		<form id="loginForm" method="post">
-			<h2>Login</h2>
-			<hr />
-			<input type="hidden" asp-for="ReturnUrl" />
-			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-			<div class="form-floating">
-				<label asp-for="Email"></label>
-				<input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" />
-				<span asp-validation-for="Email" class="text-danger"></span>
-			</div>
-			<div class="form-floating">
-				<label asp-for="Password"></label>
-				<input asp-for="Password" class="form-control" autocomplete="new-password" aria-required="true" />
-				<span asp-validation-for="Password" class="text-danger"></span>
-			</div>
-			<div class="form-inline">
-				Not Registered?<a type="submit" class="btn btn-link" asp-controller="Account" asp-action="Register">Register</a>
-			</div>
-			<button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary mt-3">Login</button>
-		</form>
-		
-	</div>
-</div>
 
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Font Awesome -->
+<link href="~/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" />
+<!-- icheck bootstrap -->
+<link href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css" rel="stylesheet" />
+<!-- Theme style -->
+<link rel="stylesheet" href="/css/adminlte.min.css">
+
+<body class="hold-transition login-page">
+	<div class="login-box center">
+		<div class="card card-outline card-primary">
+			<div class="card-header text-center">
+				<a asp-controller="Home" asp-action="Index" class="h1"><b>Muscle</b>Gain</a>
+			</div>
+			<div class="card-body">
+				<p class="login-box-msg">Sign in</p>
+				<form method="post">
+					<input type="hidden" asp-for="ReturnUrl" />
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="input-group mb-3">
+						<input asp-for="Email" class="form-control" autocomplete="username" placeholder="Email" aria-required="true" />
+						<span asp-validation-for="Email" class="text-danger"></span>
+						<div class="input-group-append">
+							<div class="input-group-text">
+								<span class="fas fa-envelope"></span>
+							</div>
+						</div>
+					</div>
+					<div class="input-group mb-3">
+						<input asp-for="Password" class="form-control" autocomplete="new-password" placeholder="Password" aria-required="true" />
+						<span asp-validation-for="Password" class="text-danger"></span>
+						<div class="input-group-append">
+							<div class="input-group-text">
+								<span class="fas fa-lock"></span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-8">
+							<div class="icheck-primary">
+								<input type="checkbox" id="remember">
+								<label for="remember">
+									Remember Me
+								</label>
+							</div>
+						</div>
+						<!-- /.col -->
+						<div class="col-4">
+							<button type="submit" class="btn btn-primary btn-block">Sign In</button>
+						</div>
+						<!-- /.col -->
+					</div>
+				</form>
+
+				<div class="social-auth-links text-center mt-2 mb-3">
+					<a href="#" class="btn btn-block btn-primary">
+						<i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+					</a>
+					<a href="#" class="btn btn-block btn-danger">
+						<i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+					</a>
+				</div>
+
+				<p class="mb-0">
+					<a asp-action="Register" class="text-center">Register a new membership</a>
+				</p>
+			</div>
+			<!-- /.card-body -->
+		</div>
+		<!-- /.card -->
+	</div>
+	<!-- /.login-box -->
+
+	<script src="/plugins/jquery/jquery.min.js"></script>
+	<!-- Bootstrap 4 -->
+	<script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="js/adminlte.min.js"></script>
+</body>
 @section Scripts{
-	<partial name="_ValidationScriptsPartial"/>
+	<partial name="_ValidationScriptsPartial" />
 }

@@ -7,7 +7,7 @@ namespace MuscleGain.Models.Proteins
 	public class AllProteinsQueryModel
     {
         public const int ProteinsPerPage = 3;
-        public string Flavour { get; init; }
+        public string Category { get; set; } = null!;
 
         [Display(Name = "Search")]
         public string SearchTerm { get; init; }
@@ -18,7 +18,7 @@ namespace MuscleGain.Models.Proteins
 
         public int TotalProteins { get; set; }
 
-        public IEnumerable<string> Flavours { get; set; }
+        public IEnumerable<string> Categories { get; set; }
 
         public IEnumerable<ProteinServiceModel> Proteins { get; set; }
     }

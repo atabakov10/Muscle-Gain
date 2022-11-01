@@ -15,8 +15,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css" />
 	<!-- Theme style -->
 	<link rel="stylesheet" href="~/css/adminlte.min.css" />
-	<link rel="stylesheet" href="~/plugins/toastr/toastr.min.css" />
-
+	<link href="~/plugins/toastr/toastr.min.css" rel="stylesheet" />
+	<link href="~/plugins/toastr/toastr.css" rel="stylesheet" />
+	
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	@await RenderSectionAsync("Head", false)
@@ -63,7 +64,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						@if (User?.Identity?.IsAuthenticated ?? false)
 						{
 							<a type="submit" class="btn btn-outline-secondary" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-									Hello, @ViewBag.UserFirstName!
+								Hello, <strong>@ViewBag.UserFirstName</strong>!
 								</a>
 						}
 						else
@@ -84,18 +85,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
-			<!-- Content Header (Page header) -->
-			<div class="content-header">
-				<div class="container-fluid">
-					<div class="row mb-2">
-						<div class="col-sm-6">
-							@*<h1 class="m-0">@ViewData["Title"]</h1>*@
-						</div><!-- /.col -->
-						<!-- /.col -->
-					</div><!-- /.row -->
-				</div><!-- /.container-fluid -->
-			</div>
-			<!-- /.content-header -->
 			<!-- Main content -->
 			<div class="content">
 				<div class="container-fluid">
@@ -106,10 +95,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		</div>
 		<!-- /.content-wrapper -->
 		<!-- Main Footer -->
-		@*<footer class="main-footer">
-			<!-- Default to the left -->
-			<strong>Muscle Gain</strong> - 05.09.2022 - @DateTime.UtcNow.ToString("dd/MM/yyyy")
-		</footer>*@
 		<footer id="sticky-footer" class="flex-shrink-0 py-4 bg-dark text-white-50 main-footer">
 			<div class="container">
 				<small>Muscle Gain - 05.09.2022 - @DateTime.UtcNow.ToString("dd/MM/yyyy")</small>

@@ -4,14 +4,13 @@ using MuscleGain.Contracts;
 using MuscleGain.Core.Constants;
 using MuscleGain.Infrastructure;
 using MuscleGain.Infrastructure.Data;
-using MuscleGain.Infrastructure.Data.Common;
 using MuscleGain.Infrastructure.Data.Models.Account;
 using MuscleGain.Services.Proteins;
 using MuscleGain.Services.Statistics;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// AddAsync services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<MuscleGainDbContext>(options =>
     options.UseSqlServer(connectionString, b=> b.MigrationsAssembly("MuscleGain.Infrastructure")));
@@ -49,14 +48,13 @@ builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 
 builder.Services.AddTransient<IProteinService, ProteinService>();
 
-builder.Services.AddTransient<IRepository, Repository>();
-
 var app = builder.Build();
 
 app.PrepareDataBase();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
 }
 else
@@ -65,6 +63,13 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.Use(async (context, next) =>
+{ 
+    context.Request.Scheme = "https";
+
+    await next();
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -78,5 +83,4 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
-
 app.Run();
