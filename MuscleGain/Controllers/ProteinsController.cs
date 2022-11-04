@@ -25,14 +25,14 @@ namespace MuscleGain.Controllers
             this.data = data;
         }
 
-        public async Task<IActionResult>  All([FromQuery]AllProteinsQueryModel query)
+        public async Task<IActionResult> All([FromQuery] ProteinsQueryModel query)
         {
             var queryResult = await this.proteinService.AllAsync(
                 query.Category,
                 query.SearchTerm,
                 query.Sorting,
                 query.CurrentPage,
-                AllProteinsQueryModel.ProteinsPerPage);
+                ProteinsQueryModel.ProteinsPerPage);
 
             var proteinCategories = await this.proteinService.AllProteinCategoriesAsync();
 
@@ -41,6 +41,13 @@ namespace MuscleGain.Controllers
             query.Proteins = queryResult.Proteins;
 
             return View(query);
+        }
+
+        public async Task<IActionResult> Mine()
+        {
+            var model = new ProteinsQueryModel();
+
+            return View(model);
         }
 
         [HttpGet]
@@ -62,7 +69,6 @@ namespace MuscleGain.Controllers
             {
                 return View();
             }
-
             await proteinService.AddAsync(protein);
 
             return RedirectToAction(nameof(All));
@@ -98,31 +104,42 @@ namespace MuscleGain.Controllers
         }
 
         [HttpGet]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new BadRequestResult();
-            }
-            Protein protein = data.Proteins.Find(id);
-            if (protein == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            return View();
-        }
+        //public ActionResult Delete(int id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new BadRequestResult();
+        //    }
+
+        //    Protein protein = data.Proteins.Find(id);
+        //    if (protein == null)
+        //    {
+        //        return RedirectToAction("Index", "Home");
+        //    }
+
+        //    return View();
+        //}
 
         [HttpPost, ActionName("Delete")]
         [Authorize(Policy = "CanDeleteProduct")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Protein protein = data.Proteins.Find(id);
+            Protein protein =  data.Proteins.Find(id);
+            if (protein == null)
+            {
+                return new NotFoundResult();
+            }
+
+            if (id == null)
+            {
+                return new NotFoundResult();
+            }
             data.Proteins.Remove(protein);
             await data.SaveChangesAsync();
             return RedirectToAction(nameof(All));
         }
 
     }
- 
+
 }
 

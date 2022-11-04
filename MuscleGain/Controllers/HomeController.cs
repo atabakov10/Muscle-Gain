@@ -10,39 +10,30 @@ namespace MuscleGain.Controllers
     using Microsoft.AspNetCore.Mvc;
     using MuscleGain.Contracts;
     using MuscleGain.Models;
+    using MuscleGain.Services.Proteins;
     using System.Diagnostics;
 
     public class HomeController : BaseController
     {
-        private readonly IStatisticsService _statistics;
-        private readonly MuscleGainDbContext _data;
+        private readonly IStatisticsService statistics;
+        private readonly MuscleGainDbContext data;
+        private readonly IProteinService proteinService;
         public HomeController(
-            IStatisticsService statistics,
-            MuscleGainDbContext data)
+            IStatisticsService _statistics,
+            MuscleGainDbContext _data,
+            IProteinService _proteinService)
         { 
-            this._data = data;
-            this._statistics = statistics;
+            data = _data;
+            statistics = _statistics;
+            proteinService = _proteinService;
         }
 
         [AllowAnonymous]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var proteins = this._data
-                .Proteins
-                .OrderByDescending(p => p.Id)
-                .Select(p => new ProteinIndexViewModel()
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Grams = p.Grams,
-                    Flavour = p.Flavour,
-                    Price = p.Price,
-                    ImageUrl = p.ImageUrl
-                })
-                .Take(3)
-                .ToList();
+            var proteins = await proteinService.LastThreeProteins();
 
-            var totalStatistics = this._statistics.Total();
+            var totalStatistics = this.statistics.Total();
 
 
 
@@ -50,7 +41,7 @@ namespace MuscleGain.Controllers
             {
                 TotalProteins = totalStatistics.TotalProteins,
                 TotalUsers = totalStatistics.TotalUsers,
-                Proteins = proteins
+                Proteins = (List<ProteinIndexViewModel>)proteins
             });
         }
         

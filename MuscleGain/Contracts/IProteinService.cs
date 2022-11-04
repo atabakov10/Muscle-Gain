@@ -1,4 +1,5 @@
-﻿using MuscleGain.Models.Proteins;
+﻿using MuscleGain.Models.Home;
+using MuscleGain.Models.Proteins;
 using MuscleGain.Services.Proteins;
 
 namespace MuscleGain.Contracts
@@ -23,5 +24,8 @@ namespace MuscleGain.Contracts
         Task EditAsync(EditProteinViewModel model);
 
         Task<ProteinDetailsViewModel> GetForDetailsAsync(int id);
+
+        Task<IEnumerable<ProteinIndexViewModel>> LastThreeProteins();
+
     }
 }

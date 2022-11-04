@@ -10,7 +10,6 @@ using MuscleGain.Services.Statistics;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// AddAsync services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<MuscleGainDbContext>(options =>
     options.UseSqlServer(connectionString, b=> b.MigrationsAssembly("MuscleGain.Infrastructure")));
@@ -44,9 +43,7 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddTransient<IStatisticsService, StatisticsService>();
-
-builder.Services.AddTransient<IProteinService, ProteinService>();
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 
@@ -60,7 +57,7 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+
     app.UseHsts();
 }
 

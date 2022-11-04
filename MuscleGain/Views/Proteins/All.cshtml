@@ -1,5 +1,5 @@
 ﻿@using MuscleGain.Core.Constants
-@model AllProteinsQueryModel
+@model ProteinsQueryModel
 
 @{
 	ViewData["Title"] = "Protein page";
@@ -10,7 +10,7 @@
 		<div class="form-group col-md-3 mt-3">
 			<label asp-for="Category"></label>
 			<select asp-for="Category" class="form-control">
-				<option value="">AllAsync</option>
+				<option value="">All</option>
 
 				@foreach (var name in Model.Categories)
 				{
@@ -43,7 +43,7 @@
 	{
 		previousPage = 1;
 	}
-	var maxPage = Math.Ceiling((double)Model.TotalProteins / AllProteinsQueryModel.ProteinsPerPage);
+	var maxPage = Math.Ceiling((double)Model.TotalProteins / ProteinsQueryModel.ProteinsPerPage);
 }
 
 <div class="row mb-4">

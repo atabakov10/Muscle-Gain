@@ -1,10 +1,9 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using MuscleGain.Services.Proteins;
 
 namespace MuscleGain.Models.Proteins
 {
-	public class AllProteinsQueryModel
+	public class ProteinsQueryModel
     {
         public const int ProteinsPerPage = 3;
         public string Category { get; set; } = null!;

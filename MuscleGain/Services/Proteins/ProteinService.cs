@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MuscleGain.Contracts;
 using MuscleGain.Infrastructure.Data;
+using MuscleGain.Infrastructure.Data.Common;
 //using MuscleGain.Infrastructure.Data.Common;
 using MuscleGain.Infrastructure.Data.Models.Protein;
+using MuscleGain.Models.Home;
 using MuscleGain.Models.Proteins;
 
 
@@ -10,18 +12,19 @@ namespace MuscleGain.Services.Proteins
 {
     public class ProteinService : IProteinService
     {
+        private readonly IRepository repo;
         private readonly IConfiguration config;
         private readonly MuscleGainDbContext data;
 
         public ProteinService(
             IConfiguration _config,
-            MuscleGainDbContext _data)
+            MuscleGainDbContext _data,
+            IRepository _repo)
         {
             config = _config;
             data = _data;
-            
+            repo = _repo;
         }
-
 
         public async Task<ProteinQueryServiceModel> AllAsync(
             string category,
@@ -154,7 +157,7 @@ namespace MuscleGain.Services.Proteins
         public async Task<ProteinDetailsViewModel> GetForDetailsAsync(int id)
         {
             var protein = await data.Proteins.FindAsync(id);
-            var category = await AllProteinCategoriesAsync();
+            //var category = await AllProteinCategoriesAsync();
             var model = new ProteinDetailsViewModel()
             {
                 Id = id,
@@ -168,6 +171,23 @@ namespace MuscleGain.Services.Proteins
             };
 
             return model;
+        }
+
+        public async Task<IEnumerable<ProteinIndexViewModel>> LastThreeProteins()
+        {
+            return await repo.AllReadonly<Protein>()
+                .OrderByDescending(p => p.Id)
+                .Select(p => new ProteinIndexViewModel()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Grams = p.Grams,
+                    Flavour = p.Flavour,
+                    Price = p.Price,
+                    ImageUrl = p.ImageUrl
+                })
+                .Take(3)
+                .ToListAsync();
         }
     }
 }

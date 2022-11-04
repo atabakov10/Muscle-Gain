@@ -10,4 +10,8 @@
     <ProjectReference Include="..\MuscleGain.Infrastructure\MuscleGain.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Protein\" />
+  </ItemGroup>
+
 </Project>
