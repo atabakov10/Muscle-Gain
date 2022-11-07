@@ -61,6 +61,8 @@ namespace MuscleGain.Controllers
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);
 
+                TempData[MessageConstant.SuccessMessage] = "Your register was successful!";
+
                 return RedirectToAction("Index", "Home");
             }
 
@@ -69,6 +71,7 @@ namespace MuscleGain.Controllers
                 ModelState.AddModelError("", item.Description);
             }
 
+            TempData[MessageConstant.ErrorMessage] = "Your register is invalid!";
             return View(model);
         }
 
@@ -92,7 +95,7 @@ namespace MuscleGain.Controllers
             {
                 return View(model);
             }
-            TempData[MessageConstant.SuccessMessage] = "Successful register!";
+            TempData[MessageConstant.SuccessMessage] = "You've logged in successfully!";
             var user = await _userManager.FindByEmailAsync(model.Email);
 
             if (user != null)
@@ -133,20 +136,20 @@ namespace MuscleGain.Controllers
 
         public async Task<IActionResult> AddUsersToRoles()
         {
-            string email1 = "angelt4@abv.bg";
-            string email2 = "yanatabakova@abv.bg";
-            string email3 = "stefant@abv.bg";
+            //string email1 = "angelt4@abv.bg";
+            //string email2 = "yanatabakova@abv.bg";
+            //string email3 = "stefant@abv.bg";
             string email4 = "atabakov99@abv.bg";
 
-            var user = await _userManager.FindByNameAsync(email1);
-            var user2 = await _userManager.FindByNameAsync(email2);
-            var user3 = await _userManager.FindByNameAsync(email3);
+            //var user = await _userManager.FindByNameAsync(email1);
+            //var user2 = await _userManager.FindByNameAsync(email2);
+            //var user3 = await _userManager.FindByNameAsync(email3);
             var user4 = await _userManager.FindByNameAsync(email4);
 
-            await _userManager.AddToRoleAsync(user, RoleConstants.Manager);
-            await _userManager.AddToRoleAsync(user2, RoleConstants.Supervisor);
-            await _userManager.AddToRoleAsync(user3, RoleConstants.Administrator);
-            await _userManager.AddToRolesAsync(user4, new string[] { RoleConstants.Supervisor, RoleConstants.Manager });
+            //await _userManager.AddToRoleAsync(user, RoleConstants.Manager);
+            //await _userManager.AddToRoleAsync(user2, RoleConstants.Supervisor);
+            //await _userManager.AddToRoleAsync(user3, RoleConstants.Administrator);
+            await _userManager.AddToRolesAsync(user4, new string[] { RoleConstants.Supervisor, RoleConstants.Manager, RoleConstants.Administrator });
 
             return RedirectToAction("Index", "Home");
         }

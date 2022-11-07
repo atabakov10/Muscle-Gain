@@ -16,14 +16,11 @@ namespace MuscleGain.Controllers
     public class HomeController : BaseController
     {
         private readonly IStatisticsService statistics;
-        private readonly MuscleGainDbContext data;
         private readonly IProteinService proteinService;
         public HomeController(
             IStatisticsService _statistics,
-            MuscleGainDbContext _data,
             IProteinService _proteinService)
-        { 
-            data = _data;
+        {
             statistics = _statistics;
             proteinService = _proteinService;
         }

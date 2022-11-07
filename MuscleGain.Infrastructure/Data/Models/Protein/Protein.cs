@@ -32,8 +32,8 @@ namespace MuscleGain.Infrastructure.Data.Models.Protein
         [Url]
         public string ImageUrl { get; set; }
 
-        [Comment("Product is active")]
-        public bool IsActive { get; set; } = true;
+        //[Comment("Product is active")]
+        //public bool IsActive { get; set; } = true;
         public int CategoryId { get; set; }
 
         public ProteinsCategories ProteinCategory { get; init; }

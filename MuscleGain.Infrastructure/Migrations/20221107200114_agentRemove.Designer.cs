@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MuscleGain.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using MuscleGain.Infrastructure.Data;
 namespace MuscleGain.Infrastructure.Migrations
 {
     [DbContext(typeof(MuscleGainDbContext))]
-    partial class MuscleGainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221107200114_agentRemove")]
+    partial class gramsUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -260,6 +262,10 @@ namespace MuscleGain.Infrastructure.Migrations
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit")
+                        .HasComment("Product is active");
 
                     b.Property<string>("Name")
                         .IsRequired()

@@ -103,22 +103,6 @@ namespace MuscleGain.Controllers
             return View(data);
         }
 
-        [HttpGet]
-        //public ActionResult Delete(int id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new BadRequestResult();
-        //    }
-
-        //    Protein protein = data.Proteins.Find(id);
-        //    if (protein == null)
-        //    {
-        //        return RedirectToAction("Index", "Home");
-        //    }
-
-        //    return View();
-        //}
 
         [HttpPost, ActionName("Delete")]
         [Authorize(Policy = "CanDeleteProduct")]

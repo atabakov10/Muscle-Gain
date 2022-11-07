@@ -23,15 +23,14 @@
 @if (!proteins.Any())
 {
 	<div class="jumbotron">
-		<p class="lead">There aren't any proteinService/creatines available, so why don't you just add one?</p>
+		<p class="lead">There aren't any proteins available, so why don't you just add one?</p>
 		<hr class="my-4">
 		<p class="lead">
-			<a asp-controller="Proteins" asp-action="Add" class="btn btn-primary btn-lg" role="button">AddAsync Protein</a>
+			<a asp-controller="Proteins" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add Protein</a>
 		</p>
 	</div>
 }
 
-<div class="mt-5"></div>
 
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 	<ol class="carousel-indicators">
@@ -76,6 +75,10 @@
 		<span class="carousel-control-next-icon" aria-hidden="true"></span>
 		<span class="sr-only">Next</span>
 	</a>
+	
+	
+	<h2>Total number of the proteins in site: @Model.TotalProteins</h2>
+	<h2>Total number of the users in site: @Model.TotalUsers</h2>
 </div>
 
 <div class="mb-5"></div>
