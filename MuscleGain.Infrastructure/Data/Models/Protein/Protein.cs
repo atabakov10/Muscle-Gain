@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using static MuscleGain.Infrastructure.Data.DataConstants;
+using Microsoft.AspNetCore.Identity;
+using MuscleGain.Infrastructure.Data.Models.Account;
 
 namespace MuscleGain.Infrastructure.Data.Models.Protein
 {
@@ -32,12 +35,19 @@ namespace MuscleGain.Infrastructure.Data.Models.Protein
         [Url]
         public string ImageUrl { get; set; }
 
-        //[Comment("Product is active")]
-        //public bool IsActive { get; set; } = true;
         public int CategoryId { get; set; }
 
         public ProteinsCategories ProteinCategory { get; init; }
 
+        //[Required]
+        //public int SellerId { get; set; }
 
+        //[ForeignKey(nameof(SellerId))]
+        //public Seller Seller { get; set; }
+
+        //public string? BuyerId { get; set; }
+
+        //[ForeignKey(nameof(BuyerId))]
+        //public ApplicationUser? Buyer { get; set; }
     }
 }

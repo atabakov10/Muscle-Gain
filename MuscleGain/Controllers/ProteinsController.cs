@@ -96,6 +96,7 @@ namespace MuscleGain.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var data = await proteinService.GetForDetailsAsync(id);
@@ -108,7 +109,7 @@ namespace MuscleGain.Controllers
         [Authorize(Policy = "CanDeleteProduct")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Protein protein =  data.Proteins.Find(id);
+            Protein protein = data.Proteins.Find(id);
             if (protein == null)
             {
                 return new NotFoundResult();

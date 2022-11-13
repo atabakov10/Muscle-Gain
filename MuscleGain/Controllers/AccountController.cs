@@ -2,9 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MuscleGain.Contracts;
 using MuscleGain.Core.Constants;
+using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Models.Account;
 using MuscleGain.Models.Users;
+using MuscleGain.Services.User;
 
 namespace MuscleGain.Controllers
 {
@@ -13,15 +16,21 @@ namespace MuscleGain.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly MuscleGainDbContext data;
+        private readonly IUserService service;
 
         public AccountController(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            MuscleGainDbContext data,
+            IUserService service)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
-             this._roleManager = roleManager;
+            this._roleManager = roleManager;
+            this.data = data;
+            this.service = service;
         }
 
         [HttpGet]
@@ -106,13 +115,13 @@ namespace MuscleGain.Controllers
                 {
                     if (model.ReturnUrl != null)
                     {
-                        ViewData[MessageConstant.SuccessMessage] = "Successful login!";
                         return Redirect(model.ReturnUrl);
                     }
-                    
+
                     return RedirectToAction("Index", "Home");
                 }
             }
+
             ModelState.AddModelError("", "Invalid login");
 
             return View(model);
@@ -134,24 +143,53 @@ namespace MuscleGain.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public async Task<IActionResult> AddUsersToRoles()
+        //public async Task<IActionResult> AddUsersToRoles()
+        //{
+        //    string email4 = "atabakov99@abv.bg";
+
+        //    string email = "koko1926@abv.bg";
+
+        //    var user4 = await _userManager.FindByNameAsync(email);
+        //    await _userManager.AddToRolesAsync(user4, new string[] { RoleConstants.Supervisor, RoleConstants.Manager, RoleConstants.Administrator });
+
+            
+
+        //    return RedirectToAction("Index", "Home");
+        //}
+        public async Task<IActionResult> MyProfile()
         {
-            //string email1 = "angelt4@abv.bg";
-            //string email2 = "yanatabakova@abv.bg";
-            //string email3 = "stefant@abv.bg";
-            string email4 = "atabakov99@abv.bg";
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            //var user = await _userManager.FindByNameAsync(email1);
-            //var user2 = await _userManager.FindByNameAsync(email2);
-            //var user3 = await _userManager.FindByNameAsync(email3);
-            var user4 = await _userManager.FindByNameAsync(email4);
+            var model = await this.service.GetUserProfile(userId);
 
-            //await _userManager.AddToRoleAsync(user, RoleConstants.Manager);
-            //await _userManager.AddToRoleAsync(user2, RoleConstants.Supervisor);
-            //await _userManager.AddToRoleAsync(user3, RoleConstants.Administrator);
-            await _userManager.AddToRolesAsync(user4, new string[] { RoleConstants.Supervisor, RoleConstants.Manager, RoleConstants.Administrator });
-
-            return RedirectToAction("Index", "Home");
+            return View(model);
         }
+
+        public async Task<IActionResult> Edit()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var model = await this.service.GetUserForEdit(userId);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(UserEditViewModel model)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            model.Id = userId;
+
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(model);
+            //}
+
+            await this.service.UpdateUser(model);
+
+            return RedirectToAction("MyProfile", "Account");
+        }
+
     }
 }

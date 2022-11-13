@@ -16,6 +16,7 @@ namespace MuscleGain.Infrastructure.Data
         public DbSet<ProteinsCategories> ProteinsCategories { get; init; }
 
 
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Protein>()

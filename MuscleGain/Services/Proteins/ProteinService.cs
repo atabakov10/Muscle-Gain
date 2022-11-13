@@ -157,8 +157,8 @@ namespace MuscleGain.Services.Proteins
         public async Task<ProteinDetailsViewModel> GetForDetailsAsync(int id)
         {
             var protein = await data.Proteins.FindAsync(id);
-            //var category = await AllProteinCategoriesAsync();
-            var model = new ProteinDetailsViewModel()
+
+			var model = new ProteinDetailsViewModel()
             {
                 Id = id,
                 Name = protein.Name,
@@ -166,8 +166,7 @@ namespace MuscleGain.Services.Proteins
                 Grams = protein.Grams,
                 Price = protein.Price,
                 Description = protein.Description,
-                ImageUrl = protein.ImageUrl,
-                //Category = category.Where()
+                ImageUrl = protein.ImageUrl
             };
 
             return model;

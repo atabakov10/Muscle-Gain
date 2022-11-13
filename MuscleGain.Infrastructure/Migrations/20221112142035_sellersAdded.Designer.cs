@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MuscleGain.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using MuscleGain.Infrastructure.Data;
 namespace MuscleGain.Infrastructure.Migrations
 {
     [DbContext(typeof(MuscleGainDbContext))]
-    partial class MuscleGainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221112142035_sellersAdded")]
+    partial class sellersAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -275,7 +277,7 @@ namespace MuscleGain.Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Proteins", (string)null);
+                    b.ToTable("Proteins");
                 });
 
             modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.ProteinsCategories", b =>
@@ -292,7 +294,7 @@ namespace MuscleGain.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProteinsCategories", (string)null);
+                    b.ToTable("ProteinsCategories");
                 });
 
             modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Seller.Seller", b =>
@@ -316,7 +318,7 @@ namespace MuscleGain.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Sellers", (string)null);
+                    b.ToTable("Sellers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
