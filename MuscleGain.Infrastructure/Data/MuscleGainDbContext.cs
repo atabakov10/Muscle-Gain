@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MuscleGain.Infrastructure.Data.Configurations;
 using MuscleGain.Infrastructure.Data.Models;
 using MuscleGain.Infrastructure.Data.Models.Account;
+using MuscleGain.Infrastructure.Data.Models.Cart;
 using MuscleGain.Infrastructure.Data.Models.Protein;
+using MuscleGain.Infrastructure.Data.Models.Reviews;
 
 namespace MuscleGain.Infrastructure.Data
 {
@@ -13,19 +16,23 @@ namespace MuscleGain.Infrastructure.Data
         {
         }
         public DbSet<Protein> Proteins { get; init; }
+
         public DbSet<ProteinsCategories> ProteinsCategories { get; init; }
 
+        public DbSet<Review> Reviews { get; set; }
 
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+		protected override void OnModelCreating(ModelBuilder builder)
+		{
+			builder.ApplyConfiguration(new UserConfiguration());
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            builder.Entity<Protein>()
-                .HasOne(c => c.ProteinCategory)
-                .WithMany(c => c.Proteins)
-                .HasForeignKey(c => c.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict);
+			builder.ApplyConfiguration(new ProteinConfiguration());
 
-            base.OnModelCreating(builder);
+			builder.ApplyConfiguration(new ReviewConfiguration());
+
+			builder.ApplyConfiguration(new ShoppingCartConfiguration());
+
+			base.OnModelCreating(builder);
         }
     }
 }

@@ -1,0 +1,93 @@
+﻿@model IEnumerable<MuscleGain.Models.ShoppingCart.ShoppingCartProteinViewModel>
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="row">
+        <table class="table table-striped projects">
+            <thead>
+                <tr>
+                    <th style="width: 1%">
+                        #
+                    </th>
+                    <th style="width: 20%">
+                        Project Name
+                    </th>
+                    <th style="width: 20%">
+                        Team Members
+                    </th>
+	                <th style="width: 8%" class="text-center">
+                        Price
+                    </th>
+                    <th style="width: 20%">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var protein in Model)
+                {
+
+                    <tr>
+                        <td>
+                            #
+                        </td>
+                        <td>
+                            <a asp-area="" asp-controller="Proteins" asp-action="Details" asp-route-id="@protein.Id">
+                                <img src="@protein.ImageUrl" width="100" height="80">
+                            </a>
+                        </td>
+                        <td>
+                            <a asp-area="" asp-controller="Proteins" asp-action="Details" asp-route-id="@protein.Id">
+                                @protein.Name
+                            </a>
+                        </td>
+                        <td class="project_progress">
+                            <a asp-area="" asp-controller="Proteins" asp-action="Details" asp-route-id="@protein.Id">
+                                @protein.CreatorFullName
+                            </a>
+                        </td>
+                        <td class="project-state">
+                            @protein.Price
+                        </td>
+                        <td class="project-actions text-right">
+                            <a asp-controller="Proteins" asp-action="Details" asp-route-id="@protein.Id" class="btn btn-primary btn-sm">
+                                <i class="fas fa-folder">
+                                </i>
+                                View
+                            </a>
+                            <a asp-controller="ShoppingCart" asp-action="Delete" asp-route-id="@protein.Id" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash">
+                                </i>
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="col-lg-4 height-280">
+            <div class="mobile-fondsize-20 text-center h4">Информация за поръчката:</div>
+
+            <div class="mt-4">
+                <p class="font-weight-bold text-danger h5 mt-3">Total: @(Model.Sum(x => x.Price))лв.</p>
+            </div>
+
+            <a asp-controller="ShoppingCart" asp-action="DeleteAll" type="button" class="btn btn-block btn-danger btn-lg">Clear Cart</a>
+            <button type="button" class="btn btn-block btn-primary btn-lg">Checkout</button>
+        </div>
+    </div>
+}
+else
+{
+    <p>Your Shopping cart is empty.</p>
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

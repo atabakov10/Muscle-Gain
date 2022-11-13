@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MuscleGain.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using MuscleGain.Infrastructure.Data;
 namespace MuscleGain.Infrastructure.Migrations
 {
     [DbContext(typeof(MuscleGainDbContext))]
-    partial class MuscleGainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221113171323_reviewsMade")]
+    partial class reviewsMade
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -212,9 +214,6 @@ namespace MuscleGain.Infrastructure.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ShoppingCartId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -232,27 +231,7 @@ namespace MuscleGain.Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("ShoppingCartId")
-                        .IsUnique()
-                        .HasFilter("[ShoppingCartId] IS NOT NULL");
-
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Cart.ShoppingCart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.Protein", b =>
@@ -357,21 +336,6 @@ namespace MuscleGain.Infrastructure.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("ProteinShoppingCart", b =>
-                {
-                    b.Property<int>("ShoppingCartId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ShoppingCartProteinsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ShoppingCartId", "ShoppingCartProteinsId");
-
-                    b.HasIndex("ShoppingCartProteinsId");
-
-                    b.ToTable("ProteinShoppingCart");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -423,16 +387,6 @@ namespace MuscleGain.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Account.ApplicationUser", b =>
-                {
-                    b.HasOne("MuscleGain.Infrastructure.Data.Models.Cart.ShoppingCart", "ShoppingCart")
-                        .WithOne("User")
-                        .HasForeignKey("MuscleGain.Infrastructure.Data.Models.Account.ApplicationUser", "ShoppingCartId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("ShoppingCart");
-                });
-
             modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.Protein", b =>
                 {
                     b.HasOne("MuscleGain.Infrastructure.Data.Models.Protein.ProteinsCategories", "ProteinCategory")
@@ -463,29 +417,9 @@ namespace MuscleGain.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ProteinShoppingCart", b =>
-                {
-                    b.HasOne("MuscleGain.Infrastructure.Data.Models.Cart.ShoppingCart", null)
-                        .WithMany()
-                        .HasForeignKey("ShoppingCartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MuscleGain.Infrastructure.Data.Models.Protein.Protein", null)
-                        .WithMany()
-                        .HasForeignKey("ShoppingCartProteinsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Account.ApplicationUser", b =>
                 {
                     b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Cart.ShoppingCart", b =>
-                {
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.Protein", b =>

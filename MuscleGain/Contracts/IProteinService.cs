@@ -1,5 +1,6 @@
 ﻿using MuscleGain.Models.Home;
 using MuscleGain.Models.Proteins;
+using MuscleGain.Models.Reviews;
 using MuscleGain.Services.Proteins;
 
 namespace MuscleGain.Contracts
@@ -15,7 +16,9 @@ namespace MuscleGain.Contracts
 
         Task AddAsync(AddProtein protein);
 
-        Task<IEnumerable<string>> AllProteinCategoriesAsync();
+        Task AddReview(AddReviewViewModel model);
+
+		Task<IEnumerable<string>> AllProteinCategoriesAsync();
 
         Task<IEnumerable<ProteinCategoryViewModel>> GetProteinCategoriesAsync();
 

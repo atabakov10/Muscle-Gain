@@ -2,10 +2,13 @@
 using MuscleGain.Contracts;
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Common;
+using MuscleGain.Infrastructure.Data.Models.Account;
 //using MuscleGain.Infrastructure.Data.Common;
 using MuscleGain.Infrastructure.Data.Models.Protein;
+using MuscleGain.Infrastructure.Data.Models.Reviews;
 using MuscleGain.Models.Home;
 using MuscleGain.Models.Proteins;
+using MuscleGain.Models.Reviews;
 
 
 namespace MuscleGain.Services.Proteins
@@ -156,23 +159,71 @@ namespace MuscleGain.Services.Proteins
 
         public async Task<ProteinDetailsViewModel> GetForDetailsAsync(int id)
         {
-            var protein = await data.Proteins.FindAsync(id);
+	        var protein = await this.repo
+		        .AllReadonly<Protein>()
+		        .Include(r => r.Reviews)
+		        .ThenInclude(u => u.User)
+		        .FirstOrDefaultAsync(x => x.Id == id);
 
-			var model = new ProteinDetailsViewModel()
-            {
-                Id = id,
-                Name = protein.Name,
-                Flavour = protein.Flavour,
-                Grams = protein.Grams,
-                Price = protein.Price,
-                Description = protein.Description,
-                ImageUrl = protein.ImageUrl
-            };
 
-            return model;
+	        if (protein == null)
+	        {
+		        throw new ArgumentException("Invalid protein Id");
+	        }
+
+
+	        return new ProteinDetailsViewModel()
+	        {
+		        Id = id,
+		        Name = protein.Name,
+		        Flavour = protein.Flavour,
+		        Grams = protein.Grams,
+		        Price = protein.Price,
+		        Description = protein.Description,
+		        ImageUrl = protein.ImageUrl,
+
+		        Reviews = protein.Reviews.Select(r => new ReviewViewModel()
+		        {
+			        UserFullName = $"{r.User.FirstName} {r.User.LastName}",
+			        Comment = r.Comment,
+			        Rating = r.Rating,
+			        DateOfPublication = r.DateOfPublication.ToString()
+		        }).ToList(),
+
+		        CategoryId = protein.CategoryId
+	        };
+
+        }
+        public async Task AddReview(AddReviewViewModel model)
+        {
+	        var user = await this.repo.GetByIdAsync<ApplicationUser>(model.UserId);
+
+	        if (user == null)
+	        {
+		        throw new Exception();
+	        }
+
+	        var course = await this.repo.GetByIdAsync<Protein>(model.ProteinId);
+
+	        if (course == null)
+	        {
+		        throw new Exception();
+	        }
+
+	        var review = new Review()
+	        {
+		        Comment = model.Comment,
+		        Rating = model.Rating,
+		        ProteinId = model.ProteinId,
+		        UserId = model.UserId,
+		        DateOfPublication = model.DateOfPublication,
+	        };
+
+	        await this.repo.AddAsync(review);
+	        await this.repo.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<ProteinIndexViewModel>> LastThreeProteins()
+		public async Task<IEnumerable<ProteinIndexViewModel>> LastThreeProteins()
         {
             return await repo.AllReadonly<Protein>()
                 .OrderByDescending(p => p.Id)

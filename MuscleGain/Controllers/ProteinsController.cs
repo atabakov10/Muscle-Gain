@@ -1,16 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.EntityFrameworkCore;
 using MuscleGain.Contracts;
 using MuscleGain.Core.Constants;
 using MuscleGain.Infrastructure.Data;
-using MuscleGain.Infrastructure.Data.Models;
 using MuscleGain.Infrastructure.Data.Models.Protein;
-using MuscleGain.Models.Api.Proteins;
 using MuscleGain.Models.Proteins;
-using MuscleGain.Services.Proteins;
-using System.Net;
+using MuscleGain.Models.Reviews;
 
 namespace MuscleGain.Controllers
 {
@@ -18,11 +14,15 @@ namespace MuscleGain.Controllers
     {
         private readonly IProteinService proteinService;
         private readonly MuscleGainDbContext data;
+        private readonly IUserService userService;
 
-        public ProteinsController(IProteinService proteinService, MuscleGainDbContext data)
+        public ProteinsController(IProteinService proteinService,
+	        MuscleGainDbContext data,
+	        IUserService userService)
         {
             this.proteinService = proteinService;
             this.data = data;
+            this.userService = userService;
         }
 
         public async Task<IActionResult> All([FromQuery] ProteinsQueryModel query)
@@ -104,8 +104,36 @@ namespace MuscleGain.Controllers
             return View(data);
         }
 
+        public IActionResult CreateReview(int id)
+        {
+	        var userId = GetUserId();
 
-        [HttpPost, ActionName("Delete")]
+
+			var model = new AddReviewViewModel()
+	        {
+		        UserId = userId,
+		        ProteinId = id
+	        };
+
+	        return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddReview(AddReviewViewModel model)
+        {
+	        model.DateOfPublication = DateTime.Now;
+
+	        //if (!ModelState.IsValid)
+	        //{
+		       // return View("CreateReview", model);
+	        //}
+
+	        await this.proteinService.AddReview(model);
+	        TempData[MessageConstant.SuccessMessage] = "Successfully added review";
+
+	        return RedirectToAction("Details", "Proteins", new { id = model.ProteinId });
+        }
+
+		[HttpPost, ActionName("Delete")]
         [Authorize(Policy = "CanDeleteProduct")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
@@ -123,8 +151,9 @@ namespace MuscleGain.Controllers
             await data.SaveChangesAsync();
             return RedirectToAction(nameof(All));
         }
-
-    }
+        private string GetUserId()
+	        => this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+	}
 
 }
 

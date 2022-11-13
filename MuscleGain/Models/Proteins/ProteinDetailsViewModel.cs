@@ -1,4 +1,5 @@
-﻿using MuscleGain.Services.Proteins;
+﻿using MuscleGain.Models.Reviews;
+using MuscleGain.Services.Proteins;
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
@@ -23,7 +24,8 @@ namespace MuscleGain.Models.Proteins
         
         public string ImageUrl { get; init; }
 
-        public string Category { get; set; }
-        //public IEnumerable<ProteinCategoryViewModel>? Categories { get; set; }
-    }
+        public ICollection<ReviewViewModel> Reviews { get; set; } = new HashSet<ReviewViewModel>();
+
+        public int CategoryId { get; set; }
+	}
 }
