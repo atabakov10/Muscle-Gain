@@ -143,19 +143,26 @@ namespace MuscleGain.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //public async Task<IActionResult> AddUsersToRoles()
-        //{
-        //    string email4 = "atabakov99@abv.bg";
+        public async Task<IActionResult> AddUsersToRoles()
+        {
+            string email4 = "atabakov99@abv.bg";
 
-        //    string email = "koko1926@abv.bg";
+            string email = "koko1926@abv.bg";
 
-        //    var user4 = await _userManager.FindByNameAsync(email);
-        //    await _userManager.AddToRolesAsync(user4, new string[] { RoleConstants.Supervisor, RoleConstants.Manager, RoleConstants.Administrator });
+            var user4 = await _userManager.FindByNameAsync(email);
+            var result = await _userManager.AddToRolesAsync(user4, new string[] { RoleConstants.Supervisor, RoleConstants.Manager, RoleConstants.Administrator });
 
-            
+            if (result.Succeeded)
+            {
+	            TempData[MessageConstant.SuccessMessage] = "Successfully added role to the user!";
+            }
+            else
+            {
+	            TempData[MessageConstant.ErrorMessage] = "Something went wrong...";
+            }
 
-        //    return RedirectToAction("Index", "Home");
-        //}
+            return RedirectToAction("Index", "Home");
+        }
         public async Task<IActionResult> MyProfile()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

@@ -6,7 +6,7 @@ using System.Data;
 
 namespace MuscleGain.Areas.Admin.Controllers
 {
-    [Authorize(Roles = RoleConstants.Supervisor)]
+    [Authorize(Roles = RoleConstants.Manager)]
     [Area("Admin")]
     public class BaseController : Controller
     {

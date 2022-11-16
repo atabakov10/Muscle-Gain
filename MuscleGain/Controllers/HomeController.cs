@@ -17,12 +17,15 @@ namespace MuscleGain.Controllers
     {
         private readonly IStatisticsService statistics;
         private readonly IProteinService proteinService;
+        private readonly ILogger<HomeController> logger;
         public HomeController(
             IStatisticsService _statistics,
-            IProteinService _proteinService)
+            IProteinService _proteinService,
+            ILogger<HomeController> _logger)
         {
             statistics = _statistics;
             proteinService = _proteinService;
+            logger = _logger;
         }
 
         [AllowAnonymous]

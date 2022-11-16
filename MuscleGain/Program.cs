@@ -23,7 +23,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
         options.User.RequireUniqueEmail = true;
         options.Password.RequireDigit = true;
         options.Password.RequireLowercase = true;
-        options.Password.RequiredUniqueChars = 1;
+        options.Password.RequiredUniqueChars = 1;   
 
     })
     .AddRoles<IdentityRole>()
@@ -33,12 +33,15 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
 });
 
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("CanDeleteProduct", policy =>
-        policy.RequireAssertion(context => context.User.IsInRole(RoleConstants.Manager) && context.User.IsInRole(RoleConstants.Supervisor)));
+        policy.RequireAssertion(context => context.User.IsInRole(RoleConstants.Manager) && 
+                                           context.User.IsInRole(RoleConstants.Supervisor) && 
+                                           context.User.IsInRole(RoleConstants.Administrator)));
 });
 
 builder.Services.AddControllersWithViews();

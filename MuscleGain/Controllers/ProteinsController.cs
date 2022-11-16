@@ -67,9 +67,11 @@ namespace MuscleGain.Controllers
 
             if (!ModelState.IsValid)
             {
+	            TempData[MessageConstant.ErrorMessage] = "Something went wrong!";
                 return View();
             }
             await proteinService.AddAsync(protein);
+            TempData[MessageConstant.SuccessMessage] = "Successfully added protein";
 
             return RedirectToAction(nameof(All));
         }
@@ -91,6 +93,8 @@ namespace MuscleGain.Controllers
             }
 
             await proteinService.EditAsync(model);
+
+            TempData[MessageConstant.SuccessMessage] = "Successfully edited the protein!";
 
             return RedirectToAction(nameof(All));
         }
@@ -148,6 +152,7 @@ namespace MuscleGain.Controllers
                 return new NotFoundResult();
             }
             data.Proteins.Remove(protein);
+            TempData[MessageConstant.SuccessMessage] = "Successfully deleted the protein";
             await data.SaveChangesAsync();
             return RedirectToAction(nameof(All));
         }

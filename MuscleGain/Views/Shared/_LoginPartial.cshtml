@@ -7,15 +7,15 @@
 <ul class="navbar-nav">
 	@if (SignInManager.IsSignedIn(User))
 	{
-		<li style="text-align: left"><a type="submit" class="btn btn-outline-light" asp-controller="Home" asp-action="Index">Home Page</a></li>
+		<li style="text-align: left"><a type="submit" class="btn btn-outline-light" asp-area="" asp-controller="Home" asp-action="Index">Home Page</a></li>
 
 
-		<li style="text-align: left"><a type="submit" class="btn btn-outline-light" asp-controller="Account" asp-action="MyProfile">My Profile</a></li>
+		<li style="text-align: left"><a type="submit" class="btn btn-outline-light" asp-area="" asp-controller="Account" asp-action="MyProfile">My Profile</a></li>
 
 
 
 		<li class="dropdown-menu">
-		<li><a type="submit" class="btn btn-outline-light" asp-controller="Account" asp-action="Logout">Logout</a></li>
+		<li><a type="submit" class="btn btn-outline-light" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
 		</li>
 	}
 	else
