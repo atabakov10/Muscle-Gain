@@ -36,24 +36,32 @@
                 </ul>
             </div>
             <div class="card-body">
-                <div class="tab-content">
-                    <div class="tab-pane active">
-                        <div class="form-group row">
-                            <label asp-for="@Model.FirstName" class="col-sm-2 col-form-label"></label>
-                            <div class="col-sm-10">
-                                <h3>@Model.FirstName</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane active">
-                        <div class="form-group row">
-                            <label asp-for="@Model.LastName" class="col-sm-2 col-form-label"></label>
-                            <div class="col-sm-10">
-                                <h3>@Model.LastName</h3>
-                            </div>
-                        </div>
-                    </div>
-                    @*   <div class="tab-pane active">
+	            <div class="tab-content">
+		            <div class="tab-pane active">
+			            <div class="form-group row">
+				            <label asp-for="@Model.ImageUrl" class="col-sm-2 col-form-label"></label>
+				            <div class="col-sm-10">
+					            <img class="w-25" src=@Model.ImageUrl/>
+				            </div>
+			            </div>
+		            </div>
+		            <div class="tab-pane active">
+			            <div class="form-group row">
+				            <label asp-for="@Model.FirstName" class="col-sm-2 col-form-label"></label>
+				            <div class="col-sm-10">
+					            <h3>@Model.FirstName</h3>
+				            </div>
+			            </div>
+		            </div>
+		            <div class="tab-pane active">
+			            <div class="form-group row">
+				            <label asp-for="@Model.LastName" class="col-sm-2 col-form-label"></label>
+				            <div class="col-sm-10">
+					            <h3>@Model.LastName</h3>
+				            </div>
+			            </div>
+		            </div>
+		            @*   <div class="tab-pane active">
                     <div class="form-group row">
                     <label asp-for="@Model.UserName" class="col-sm-2 col-form-label"></label>
                     <div class="col-sm-10">
@@ -61,18 +69,18 @@
                     </div>
                     </div>
                     </div>*@
-                    <div class="tab-pane active">
-                        <div class="form-group row">
-                            <label asp-for="@Model.Email" class="col-sm-2 col-form-label"></label>
-                            <div class="col-sm-10">
-                                <h3>@Model.Email</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <a asp-controller="Account" asp-action="Edit" class="btn btn-block btn-primary btn-sm">Edit</a>
-                    </div>
-                </div>
+		            <div class="tab-pane active">
+			            <div class="form-group row">
+				            <label asp-for="@Model.Email" class="col-sm-2 col-form-label"></label>
+				            <div class="col-sm-10">
+					            <h3>@Model.Email</h3>
+				            </div>
+			            </div>
+		            </div>
+		            <div class="form-group row">
+			            <a asp-controller="Account" asp-action="Edit" class="btn btn-block btn-primary btn-sm">Edit</a>
+		            </div>
+	            </div>
 
             </div>
 

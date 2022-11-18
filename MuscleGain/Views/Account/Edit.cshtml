@@ -14,27 +14,34 @@
         <div class="card-body">
             <div class="tab-content">
                 <div class="tab-pane active">
-                    <form method="post" class="form-horizontal">
-                        <div class="form-group row">
-                            <label asp-for="@Model.FirstName" class="col-sm-2 col-form-label"></label>
-                            <div class="col-sm-10">
-                                <input asp-for="@Model.FirstName" class="form-control">
-                                <span asp-validation-for="@Model.FirstName" class="small text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label asp-for="@Model.LastName" class="col-sm-2 col-form-label"></label>
-                            <div class="col-sm-10">
-                                <input asp-for="@Model.LastName" class="form-control">
-                                <span asp-validation-for="@Model.LastName" class="small text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="offset-sm-2 col-sm-10">
-                                <button type="submit" class="btn btn-danger">Submit</button>
-                            </div>
-                        </div>
-                    </form>
+	                <form method="post" class="form-horizontal">
+		                <div class="form-group row">
+			                <label asp-for="@Model.ImageUrl" class="col-sm-2 col-form-label"></label>
+			                <div class="col-sm-10">
+				                <input asp-for="@Model.ImageUrl" class="form-control">
+				                <span asp-validation-for="@Model.ImageUrl" class="small text-danger"></span>
+			                </div>
+		                </div>
+		                <div class="form-group row">
+			                <label asp-for="@Model.FirstName" class="col-sm-2 col-form-label"></label>
+			                <div class="col-sm-10">
+				                <input asp-for="@Model.FirstName" class="form-control">
+				                <span asp-validation-for="@Model.FirstName" class="small text-danger"></span>
+			                </div>
+		                </div>
+		                <div class="form-group row">
+			                <label asp-for="@Model.LastName" class="col-sm-2 col-form-label"></label>
+			                <div class="col-sm-10">
+				                <input asp-for="@Model.LastName" class="form-control">
+				                <span asp-validation-for="@Model.LastName" class="small text-danger"></span>
+			                </div>
+		                </div>
+		                <div class="form-group row">
+			                <div class="offset-sm-2 col-sm-10">
+				                <button type="submit" class="btn btn-danger">Submit</button>
+			                </div>
+		                </div>
+	                </form>
                 </div>
 
             </div>

@@ -54,6 +54,7 @@ namespace MuscleGain.Controllers
             var user = new ApplicationUser()
             {
                 Email = model.Email,
+                ImageUrl = model.ImageUrl,
                 FirstName = model.FirstName,
                 EmailConfirmed = true,
                 LastName = model.LastName,
@@ -64,6 +65,9 @@ namespace MuscleGain.Controllers
 
             await _userManager
                 .AddClaimAsync(user, new Claim(ClaimTypeConstants.FirstName, user.FirstName ?? user.Email));
+
+            await _userManager
+	            .AddClaimAsync(user, new Claim(ClaimTypeConstants.ProfilePic, user.ImageUrl ?? String.Empty));
 
             if (result.Succeeded)
             {
@@ -108,7 +112,7 @@ namespace MuscleGain.Controllers
 
             if (user != null)
             {
-                var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
+	            var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
 
                 if (result.Succeeded)
                 {

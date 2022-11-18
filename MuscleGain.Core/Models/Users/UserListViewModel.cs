@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Security.AccessControl;
 
 namespace MuscleGain.Core.Models.Users
 {
@@ -13,5 +14,8 @@ namespace MuscleGain.Core.Models.Users
 
         [Display(Name = "E-mail")]
         public string Email { get; set; }
-    }
+
+		[Display(Name = "Image URL")]
+        public string ImageUrl { get; set; }
+	}
 }

@@ -11,14 +11,19 @@
 			<hr />
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="form-floating">
-				<label asp-for="FirstName"></label>
-				<input asp-for="FirstName" class="form-control" autocomplete="firstname" aria-required="true" />
-				<span asp-validation-for="FirstName" class="text-danger"></span>
+				<label asp-for="ImageUrl"></label>
+				<input asp-for="ImageUrl" class="form-control" autocomplete="firstname" aria-required="true" />
+				<span asp-validation-for="ImageUrl" class="text-danger"></span>
 			</div>
-			<div class="form-floating">
-				<label asp-for="LastName"></label>
-				<input asp-for="LastName" class="form-control" autocomplete="lastname" aria-required="true" />
-				<span asp-validation-for="LastName" class="text-danger"></span>
+			<div class="row g-3 mt-2 mb-2">
+				<div class="col">
+					<input asp-for="FirstName" type="text" class="form-control" placeholder="First name" aria-label="First name">
+					<span asp-validation-for="FirstName" class="text-danger"></span>
+				</div>
+				<div class="col">
+					<input asp-for="LastName" type="text" class="form-control" placeholder="Last name" aria-label="Last name">
+					<span asp-validation-for="LastName" class="text-danger"></span>
+				</div>
 			</div>
 			<div class="form-floating">
 				<label asp-for="Email"></label>

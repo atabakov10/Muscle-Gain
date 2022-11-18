@@ -8,6 +8,22 @@ namespace MuscleGain.Controllers
     [Authorize]
     public class BaseController : Controller
     {
+        public string UserProfilePicture
+        {
+			get
+			{
+				string picture = String.Empty;
+
+				if (User?.Identity?.IsAuthenticated ?? false && User.HasClaim(c => c.Type == ClaimTypeConstants.ProfilePic))
+				{
+					picture = User.Claims
+						.FirstOrDefault(c => c.Type == ClaimTypeConstants.ProfilePic)?
+						.Value ?? picture;
+				}
+
+				return picture;
+			}
+		}
         public string UserFirstName
         {
             get
@@ -30,6 +46,7 @@ namespace MuscleGain.Controllers
             if (User?.Identity?.IsAuthenticated ?? false)
             {
                 ViewBag.UserFirstName = UserFirstName;
+                ViewBag.UserProfilePicture = UserProfilePicture;
             }
 
             base.OnActionExecuted(context);

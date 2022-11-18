@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Build.Globbing
 @model ProteinDetailsViewModel
 
 @{
@@ -55,9 +56,19 @@
 												<div class="card">
 													<div class="card-body">
 														<div class="d-flex flex-start align-items-start">
-															<img class="rounded-circle shadow-1-strong me-3"
-															 src="~/img/199320906_1461549020864879_6167869086568313649_n.jpg" alt="avatar" width="60"
+															@if (review.ImageUrl == null)
+															{
+																<img class="rounded-circle me-3" src="~/img/6a5b3185c490202f2b693763a1f98abf.jpg"
+															 alt="avatar" width="60"
 															 height="60" />
+															}
+															else
+															{
+																<img class="rounded-circle me-3"
+															 src=@review.ImageUrl alt="avatar" width="60"
+															 height="60" />
+															}
+
 															<div>
 																<h6 class="fw-bold text-primary mb-1">@review.UserFullName</h6>
 																<p class="text-muted small mb-0">

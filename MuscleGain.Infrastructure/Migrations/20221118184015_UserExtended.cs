@@ -9,28 +9,17 @@ namespace MuscleGain.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "FirstName",
+                name: "ImageUrl",
                 table: "AspNetUsers",
-                type: "nvarchar(20)",
-                maxLength: 20,
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "LastName",
-                table: "AspNetUsers",
-                type: "nvarchar(20)",
-                maxLength: 20,
-                nullable: true);
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "FirstName",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "LastName",
+                name: "ImageUrl",
                 table: "AspNetUsers");
         }
     }

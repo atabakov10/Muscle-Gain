@@ -9,5 +9,7 @@
 		public string UserFullName { get; set; } = null!;
 
 		public string DateOfPublication { get; set; } = null!;
+
+		public string ImageUrl { get; set; }
 	}
 }

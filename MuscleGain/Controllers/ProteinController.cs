@@ -43,12 +43,6 @@ namespace MuscleGain.Controllers
             return View(query);
         }
 
-        public async Task<IActionResult> Mine()
-        {
-            var model = new ProteinsQueryModel();
-
-            return View(model);
-        }
 
         [HttpGet]
         [Authorize(Roles = $"{RoleConstants.Manager}, {RoleConstants.Supervisor}")]
@@ -126,12 +120,12 @@ namespace MuscleGain.Controllers
         {
 	        model.DateOfPublication = DateTime.Now;
 
-	        //if (!ModelState.IsValid)
-	        //{
-		       // return View("CreateReview", model);
-	        //}
+            if (!ModelState.IsValid)
+            {
+                return View("CreateReview", model);
+            }
 
-	        await this.proteinService.AddReview(model);
+            await this.proteinService.AddReview(model);
 	        TempData[MessageConstant.SuccessMessage] = "Successfully added review";
 
 	        return RedirectToAction("Details", "Protein", new { id = model.ProteinId });

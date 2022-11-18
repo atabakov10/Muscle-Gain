@@ -189,6 +189,7 @@ namespace MuscleGain.Core.Services.Proteins
 			        UserFullName = $"{r.User.FirstName} {r.User.LastName}",
 			        Comment = r.Comment,
 			        Rating = r.Rating,
+                    ImageUrl = r.User.ImageUrl,
 			        DateOfPublication = r.DateOfPublication.ToString()
 		        }).ToList(),
 

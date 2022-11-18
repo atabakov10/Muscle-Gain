@@ -6,7 +6,11 @@ namespace MuscleGain.Core.Models.Users
     {
         public string Id { get; set; }
 
-        [Required]
+        [Url]
+        [Display(Name = "Image URL")]
+        public string ImageUrl { get; set; }
+
+		[Required]
         [StringLength(50, MinimumLength = 2)]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }

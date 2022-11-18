@@ -12,14 +12,14 @@ using MuscleGain.Infrastructure.Data;
 namespace MuscleGain.Infrastructure.Migrations
 {
     [DbContext(typeof(MuscleGainDbContext))]
-    [Migration("20221007181047_UserExtended")]
+    [Migration("20221118184015_UserExtended")]
     partial class UserExtended
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "6.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -184,6 +184,10 @@ namespace MuscleGain.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LastName")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
@@ -214,6 +218,9 @@ namespace MuscleGain.Infrastructure.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ShoppingCartId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -231,10 +238,30 @@ namespace MuscleGain.Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("ShoppingCartId")
+                        .IsUnique()
+                        .HasFilter("[ShoppingCartId] IS NOT NULL");
+
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein", b =>
+            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Cart.ShoppingCart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ShoppingCarts");
+                });
+
+            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.Protein", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -256,8 +283,8 @@ namespace MuscleGain.Infrastructure.Migrations
 
                     b.Property<string>("Grams")
                         .IsRequired()
-                        .HasMaxLength(5000)
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -268,7 +295,8 @@ namespace MuscleGain.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal?>("Price")
+                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("decimal(18,2)");
 
@@ -279,7 +307,7 @@ namespace MuscleGain.Infrastructure.Migrations
                     b.ToTable("Proteins");
                 });
 
-            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.ProteinsCategories", b =>
+            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.ProteinsCategories", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -294,6 +322,60 @@ namespace MuscleGain.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProteinsCategories");
+                });
+
+            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Reviews.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("DateOfPublication")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProteinId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Rating")
+                        .HasMaxLength(5)
+                        .HasColumnType("float");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProteinId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("ProteinShoppingCart", b =>
+                {
+                    b.Property<int>("ShoppingCartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShoppingCartProteinsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ShoppingCartId", "ShoppingCartProteinsId");
+
+                    b.HasIndex("ShoppingCartProteinsId");
+
+                    b.ToTable("ProteinShoppingCart");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -347,9 +429,19 @@ namespace MuscleGain.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein", b =>
+            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Account.ApplicationUser", b =>
                 {
-                    b.HasOne("MuscleGain.Infrastructure.Data.Models.ProteinsCategories", "ProteinCategory")
+                    b.HasOne("MuscleGain.Infrastructure.Data.Models.Cart.ShoppingCart", "ShoppingCart")
+                        .WithOne("User")
+                        .HasForeignKey("MuscleGain.Infrastructure.Data.Models.Account.ApplicationUser", "ShoppingCartId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("ShoppingCart");
+                });
+
+            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.Protein", b =>
+                {
+                    b.HasOne("MuscleGain.Infrastructure.Data.Models.Protein.ProteinsCategories", "ProteinCategory")
                         .WithMany("Proteins")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -358,7 +450,56 @@ namespace MuscleGain.Infrastructure.Migrations
                     b.Navigation("ProteinCategory");
                 });
 
-            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.ProteinsCategories", b =>
+            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Reviews.Review", b =>
+                {
+                    b.HasOne("MuscleGain.Infrastructure.Data.Models.Protein.Protein", "Protein")
+                        .WithMany("Reviews")
+                        .HasForeignKey("ProteinId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("MuscleGain.Infrastructure.Data.Models.Account.ApplicationUser", "User")
+                        .WithMany("Reviews")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Protein");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ProteinShoppingCart", b =>
+                {
+                    b.HasOne("MuscleGain.Infrastructure.Data.Models.Cart.ShoppingCart", null)
+                        .WithMany()
+                        .HasForeignKey("ShoppingCartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MuscleGain.Infrastructure.Data.Models.Protein.Protein", null)
+                        .WithMany()
+                        .HasForeignKey("ShoppingCartProteinsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Account.ApplicationUser", b =>
+                {
+                    b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Cart.ShoppingCart", b =>
+                {
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.Protein", b =>
+                {
+                    b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.ProteinsCategories", b =>
                 {
                     b.Navigation("Proteins");
                 });

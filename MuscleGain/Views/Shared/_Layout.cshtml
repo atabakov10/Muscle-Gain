@@ -65,7 +65,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					<div class="info">
 						@if (User?.Identity?.IsAuthenticated ?? false)
 						{
-							<a type="submit" class="btn btn-outline-secondary" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+							<a type="submit" class="btn btn-outline-secondary" asp-area="" asp-controller="Account" asp-action="MyProfile" title="Manage">
+								@if (ViewBag.UserProfilePicture == String.Empty)
+								{
+									<img class="rounded-circle me-3" src="~/img/6a5b3185c490202f2b693763a1f98abf.jpg"
+									     alt="avatar" width="60"
+									     height="60" />
+								}
+								else
+								{
+									<img class="rounded-circle me-5" src=@ViewBag.UserProfilePicture
+									     alt="avatar" width="100"
+									     height="100" />
+								}
 								Hello, <strong>@ViewBag.UserFirstName</strong>!
 							</a>
 						}

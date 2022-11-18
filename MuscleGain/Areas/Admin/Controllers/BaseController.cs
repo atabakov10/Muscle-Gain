@@ -10,7 +10,23 @@ namespace MuscleGain.Areas.Admin.Controllers
     [Area("Admin")]
     public class BaseController : Controller
     {
-        public string UserFirstName
+	    public string UserProfilePicture
+	    {
+		    get
+		    {
+			    string picture = String.Empty;
+
+			    if (User?.Identity?.IsAuthenticated ?? false && User.HasClaim(c => c.Type == ClaimTypeConstants.ProfilePic))
+			    {
+				    picture = User.Claims
+					    .FirstOrDefault(c => c.Type == ClaimTypeConstants.ProfilePic)?
+					    .Value ?? picture;
+			    }
+
+			    return picture;
+		    }
+	    }
+		public string UserFirstName
         {
             get
             {
@@ -32,6 +48,7 @@ namespace MuscleGain.Areas.Admin.Controllers
             if (User?.Identity?.IsAuthenticated ?? false)
             {
                 ViewBag.UserFirstName = UserFirstName;
+                ViewBag.UserProfilePicture = UserProfilePicture;
             }
 
             base.OnActionExecuted(context);
