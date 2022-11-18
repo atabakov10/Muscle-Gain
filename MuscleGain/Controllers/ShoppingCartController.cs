@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MuscleGain.Contracts;
 using MuscleGain.Core.Constants;
 using System.Security.Claims;
+using MuscleGain.Core.Contracts;
 
 namespace MuscleGain.Controllers
 {
@@ -23,15 +23,15 @@ namespace MuscleGain.Controllers
 			return View(proteins);
 		}
 
-		public async Task<IActionResult> Add([FromRoute] int id)
+		public async Task<IActionResult> Add([FromRoute] int proteinId)
 		{
 			var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
-			await this.shoppingCartService.AddProteinInShoppingCart(id, userId);
+			await this.shoppingCartService.AddProteinInShoppingCart(proteinId, userId);
 
-			TempData[MessageConstant.SuccessMessage] = "Successfully added protein to Shopping cart";
+			//TempData[MessageConstant.SuccessMessage] = "Successfully added protein to Shopping cart";
 
-			return RedirectToAction("All", "Proteins");
+			return RedirectToAction("All", "Protein");
 		}
 
 		public async Task<IActionResult> Delete(int id)

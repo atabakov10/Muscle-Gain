@@ -1,0 +1,96 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ProteinsQueryModel
+
+@{
+	ViewData["Title"] = "Protein page";
+}
+
+<form method="get">
+	<div class="row">
+		<div class="form-group col-md-3 mt-3">
+			<label asp-for="Category"></label>
+			<select asp-for="Category" class="form-control">
+				<option value="">All</option>
+
+				@foreach (var name in Model.Categories)
+				{
+					<option value="@name">@name</option>
+				}
+			</select>
+		</div>
+
+		<div class="form-group col-md-3 mt-3">
+			<label asp-for="SearchTerm" class="form-label"></label>
+			<input asp-for="SearchTerm" type="text" class="form-control" placeholder="Whey protein, etc...">
+		</div>
+		<div class="form-group col-md-3 mt-3">
+			<label asp-for="Sorting"></label>
+			<select asp-for="Sorting" class="form-control">
+				<option value="0" selected>Date created</option>
+				<option value="1">Name and Flavour</option>
+			</select>
+		</div>
+
+	</div>
+	<script src="js/scripts.js">
+	</script>
+</form>
+
+
+@{
+	var previousPage = Model.CurrentPage - 1;
+	if (previousPage < 1)
+	{
+		previousPage = 1;
+	}
+	var maxPage = Math.Ceiling((double)Model.TotalProteins / ProteinsQueryModel.ProteinsPerPage);
+}
+
+<div class="row mb-4">
+	<div class="col-md-6">
+		<a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+		   asp-controller="Protein"
+		   asp-action="All"
+		   asp-route-currentPage="@(previousPage)"
+		   asp-route-category="@Model.Category"
+		   asp-route-searchTerm="@Model.SearchTerm"
+		   asp-route-sorting="@((int)Model.Sorting)"><<</a>
+	</div>
+	<div class="col-md-6">
+		<a class="btn btn-primary float-right @(Model.CurrentPage == maxPage ? "disabled" : string.Empty)"
+		   asp-controller="Protein"
+		   asp-action="All"
+		   asp-route-currentPage="@(Model.CurrentPage + 1)"
+		   asp-route-category="@Model.Category"
+		   asp-route-searchTerm="@Model.SearchTerm"
+		   asp-route-sorting="@((int)Model.Sorting)">>></a>
+	</div>
+</div>
+
+<div class="row">
+	@foreach (var protein in Model.Proteins)
+	{
+		<div class="col-md-4">
+			<div class="card mb-3">
+				<img src="@protein.ImageUrl" class="card-img-top" alt="@protein.Name @protein.Grams - @protein.Price (@protein.Category)">
+				<div class="card-body text-center">
+					<h5 class="card-title text-center center">@protein.Name (@protein.Flavour) - @protein.Grams</h5>
+					<div class="btn-group mt-1" role="group" aria-label="Basic mixed styles example">
+						@if (User.IsInRole("Supervisor"))
+						{
+							<a asp-controller="Protein" asp-action="Delete" asp-route-id="@protein.Id" class="btn btn-danger">Delete</a>
+						}
+						@if (User.IsInRole("Manager") || User.IsInRole("Administrator"))
+						{
+							<a asp-controller="Protein" asp-action="Edit" asp-route-id="@protein.Id" class="btn btn-warning">Edit</a>
+						}
+						<a asp-controller="Protein" asp-action="Details" asp-route-id="@protein.Id" class="btn btn-success">Details</a>
+						<a asp-controller="ShoppingCart" asp-action="Add" class="btn btn-round btn-danger" type="button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+					</div>
+				</div>
+			</div>
+			<div class="mb-4"></div>
+
+		</div>
+	}
+</div>

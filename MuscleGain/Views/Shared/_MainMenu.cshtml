@@ -11,7 +11,7 @@
 			</a>
 			<ul class="nav nav-treeview">
 				<li class="nav-item">
-					<a asp-area="" asp-controller="Proteins" asp-action="All" class="nav-link active">
+					<a asp-area="" asp-controller="Protein" asp-action="All" class="nav-link active">
 						<i class="far fa-circle nav-icon"></i>
 						<p>Protein Page</p>
 					</a>
@@ -19,7 +19,7 @@
 				@if (User?.IsInRole("Manager") ?? false)
 				{
 					<li class="nav-item">
-						<a asp-area="" asp-controller="Proteins" asp-action="Add" class="nav-link">
+						<a asp-area="" asp-controller="Protein" asp-action="Add" class="nav-link">
 							<i class="far fa-circle nav-icon"></i>
 							<p>Add Protein</p>
 						</a>

@@ -1,12 +1,11 @@
-﻿using MuscleGain.Contracts;
+﻿using MuscleGain.Core.Contracts;
+using MuscleGain.Core.Services.Proteins;
+using MuscleGain.Core.Services.ShoppingCart;
+using MuscleGain.Core.Services.Statistics;
+using MuscleGain.Core.Services.User;
 using MuscleGain.Infrastructure.Data.Common;
-using MuscleGain.Infrastructure.Data.Models.Cart;
-using MuscleGain.Services.Proteins;
-using MuscleGain.Services.ShoppingCart;
-using MuscleGain.Services.Statistics;
-using MuscleGain.Services.User;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace MuscleGain.Extensions
 {
     public static class MuscleGainServiceCollectionExtension
     {

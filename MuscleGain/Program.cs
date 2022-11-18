@@ -1,12 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MuscleGain.Contracts;
 using MuscleGain.Core.Constants;
+using MuscleGain.Extensions;
 using MuscleGain.Infrastructure;
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Models.Account;
-using MuscleGain.Services.Proteins;
-using MuscleGain.Services.Statistics;
 
 var builder = WebApplication.CreateBuilder(args);
 

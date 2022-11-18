@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UserListViewModel>
+﻿@model IEnumerable<MuscleGain.Core.Models.Users.UserListViewModel>
 
 @{
     ViewData["Title"] = "Users Page";
@@ -42,7 +42,7 @@
                                 <td>@user.Email</td>
                                 <td>
                                     <a asp-area="Admin" asp-action="Edit" asp-controller="User" asp-route-id="@user.Id" type="button" class="btn btn-block btn-outline-info btn-xs">Edit</a>
-                                    <a asp-area="admin" asp-action="roles" asp-controller="user" asp-route-id="@user.Id" class="btn btn-block btn-outline-warning btn-xs">Roles</a>
+                                    <a asp-area="Admin" asp-action="Roles" asp-controller="User" asp-route-id="@user.Id" class="btn btn-block btn-outline-warning btn-xs">Roles</a>
                                 </td>
                             </tr>
 

@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using MuscleGain.Contracts;
 using MuscleGain.Core.Constants;
 using MuscleGain.Infrastructure.Data.Models.Account;
-using MuscleGain.Models.Users;
 using System.Data;
+using MuscleGain.Core.Contracts;
+using MuscleGain.Core.Models.Users;
 
 namespace MuscleGain.Areas.Admin.Controllers
 {

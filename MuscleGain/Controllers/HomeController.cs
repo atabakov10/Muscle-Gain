@@ -1,16 +1,14 @@
 ﻿
 using Microsoft.AspNetCore.Authorization;
 using MuscleGain.Core.Constants;
+using MuscleGain.Core.Contracts;
+using MuscleGain.Core.Models.Home;
 using MuscleGain.Infrastructure.Data;
-using MuscleGain.Models.Home;
-using MuscleGain.Models.Proteins;
 
 namespace MuscleGain.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using MuscleGain.Contracts;
     using MuscleGain.Models;
-    using MuscleGain.Services.Proteins;
     using System.Diagnostics;
 
     public class HomeController : BaseController

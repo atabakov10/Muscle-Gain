@@ -18,7 +18,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<link href="~/plugins/toastr/toastr.min.css" rel="stylesheet" />
 	<link href="~/plugins/toastr/toastr.css" rel="stylesheet" />
 
-	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css">
+
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	@await RenderSectionAsync("Head", false)
@@ -66,13 +67,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						{
 							<a type="submit" class="btn btn-outline-secondary" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
 								Hello, <strong>@ViewBag.UserFirstName</strong>!
-								</a>
+							</a>
 						}
 						else
 						{
 							<a asp-area="" asp-controller="Account" asp-action="Register" class="btn btn-outline-secondary">Please Register/Login</a>
 						}
-						
+
 					</div>
 				</div>
 
@@ -111,6 +112,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<!-- AdminLTE App -->
 	<script src="~/js/adminlte.min.js"></script>
 	<script src="plugins/toastr/toastr.min.js"></script>
+	<!--Loading screen-->
+	<script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
+
 	<partial name="_UserMessages" />
 	@await RenderSectionAsync("Scripts", false)
 </body>

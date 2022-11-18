@@ -2,12 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MuscleGain.Contracts;
 using MuscleGain.Core.Constants;
+using MuscleGain.Core.Contracts;
+using MuscleGain.Core.Models.Users;
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Models.Account;
-using MuscleGain.Models.Users;
-using MuscleGain.Services.User;
 
 namespace MuscleGain.Controllers
 {
