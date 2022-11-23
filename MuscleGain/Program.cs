@@ -5,6 +5,7 @@ using MuscleGain.Extensions;
 using MuscleGain.Infrastructure;
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Models.Account;
+using MuscleGain.ModelBinders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,7 +43,11 @@ builder.Services.AddAuthorization(options =>
                                            context.User.IsInRole(RoleConstants.Administrator)));
 });
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddMvcOptions(options =>
+    {
+        options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+    });
 
 builder.Services.AddApplicationServices();
 

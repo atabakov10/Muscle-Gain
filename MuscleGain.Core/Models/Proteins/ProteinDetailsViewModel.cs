@@ -24,6 +24,6 @@ namespace MuscleGain.Core.Models.Proteins
 
         public ICollection<ReviewViewModel> Reviews { get; set; } = new HashSet<ReviewViewModel>();
 
-        public int CategoryId { get; set; }
+        public string Category { get; set; }
 	}
 }

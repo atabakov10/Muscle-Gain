@@ -15,5 +15,8 @@
         //Account
         public const int FirstNameMaxLength = 20;
         public const int LastNameMaxLength = 20;
+        //Review
+        public const int CommentMaxLength = 500;
+        public const int RatingMaxLength = 5;
     }
 }

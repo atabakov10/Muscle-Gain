@@ -50,7 +50,7 @@ namespace MuscleGain.Areas.Admin.Controllers
                     Selected = userManager.IsInRoleAsync(user, r.Name).Result
                 }).ToList();
 
-            return View("Roles");
+            return View(model);
         }
 
         [HttpPost]
@@ -65,7 +65,7 @@ namespace MuscleGain.Areas.Admin.Controllers
                 await userManager.AddToRolesAsync(user, model.RoleNames);
             }
 
-            return RedirectToAction("Roles", "User");
+            return RedirectToAction(nameof(Index));
         }
     }
 }

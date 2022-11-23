@@ -2,16 +2,17 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MuscleGain.Infrastructure.Data.Models.Account;
 
+
 namespace MuscleGain.Infrastructure.Data.Configurations
 {
-	//internal class ShoppingCartConfiguration : IEntityTypeConfiguration<ShoppingCart>
+	//internal class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
 	//{
-	//	public void Configure(EntityTypeBuilder<ShoppingCart> builder)
+	//	public void Configure(EntityTypeBuilder<ApplicationUser> builder)
 	//	{
 	//		builder
-	//			.HasOne(x => x.User)
-	//			.WithOne(x => x.ShoppingCart)
-	//			.HasForeignKey<ApplicationUser>(x => x.ShoppingCartId)
+	//			.HasOne(x => x.ShoppingCart)
+	//			.WithOne(x => x.User)
+	//			.HasForeignKey<ShoppingCart>(x => x.UserId)
 	//			.OnDelete(DeleteBehavior.Restrict);
 	//	}
 	//}

@@ -15,7 +15,7 @@ namespace MuscleGain.Core.Models.Proteins
 
         [Required]
         [StringLength(ProteinGramsMaxLength, MinimumLength = ProteinGramsMinLength)]
-        public string Grams { get; init; }
+        public string Grams { get; init; } = null!;
 
         [Required]
         [Range(ProteinPriceMinLength, ProteinPriceMaxLength)]

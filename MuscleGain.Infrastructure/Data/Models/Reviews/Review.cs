@@ -13,15 +13,13 @@ namespace MuscleGain.Infrastructure.Data.Models.Reviews
 		public int Id { get; set; }
 
 		[Required]
-		[StringLength(500)]
+		[StringLength(DataConstants.CommentMaxLength)]
 		public string Comment { get; set; } = null!;
 
-		[MaxLength(5)]
+		[MaxLength(DataConstants.RatingMaxLength)]
 		public double Rating { get; set; }
 
-		public bool IsDeleted { get; set; }
-
-		public DateTime DateOfPublication { get; set; }
+        public DateTime DateOfPublication { get; set; }
 
 		public string UserId { get; set; } = null!;
 		public ApplicationUser User { get; set; } = null!;

@@ -15,20 +15,17 @@ namespace MuscleGain.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly MuscleGainDbContext data;
         private readonly IUserService service;
 
         public AccountController(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            MuscleGainDbContext data,
             IUserService service)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
             this._roleManager = roleManager;
-            this.data = data;
             this.service = service;
         }
 
@@ -137,35 +134,35 @@ namespace MuscleGain.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public async Task<IActionResult> CreateRoles()
-        {
-            await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Manager));
-            await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Supervisor));
-            await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Administrator));
+        //public async Task<IActionResult> CreateRoles()
+        //{
+        //    await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Manager));
+        //    await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Supervisor));
+        //    await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Administrator));
 
-            return RedirectToAction("Index", "Home");
-        }
+        //    return RedirectToAction("Index", "Home");
+        //}
 
-        public async Task<IActionResult> AddUsersToRoles()
-        {
-            string email4 = "atabakov99@abv.bg";
+        //public async Task<IActionResult> AddUsersToRoles()
+        //{
+        //    //string email4 = "atabakov99@abv.bg";
 
-            string email = "koko1926@abv.bg";
+        //    string email = "koko1926@abv.bg";
 
-            var user4 = await _userManager.FindByNameAsync(email);
-            var result = await _userManager.AddToRolesAsync(user4, new string[] { RoleConstants.Supervisor, RoleConstants.Manager, RoleConstants.Administrator });
+        //    var user4 = await _userManager.FindByNameAsync(email);
+        //    var result = await _userManager.AddToRolesAsync(user4, new string[] { RoleConstants.Supervisor, RoleConstants.Manager, RoleConstants.Administrator });
 
-            if (result.Succeeded)
-            {
-	            TempData[MessageConstant.SuccessMessage] = "Successfully added role to the user!";
-            }
-            else
-            {
-	            TempData[MessageConstant.ErrorMessage] = "Something went wrong...";
-            }
+        //    if (result.Succeeded)
+        //    {
+        //        TempData[MessageConstant.SuccessMessage] = "Successfully added role to the user!";
+        //    }
+        //    else
+        //    {
+        //        TempData[MessageConstant.ErrorMessage] = "Something went wrong...";
+        //    }
 
-            return RedirectToAction("Index", "Home");
-        }
+        //    return RedirectToAction("Index", "Home");
+        //}
         public async Task<IActionResult> MyProfile()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -190,11 +187,6 @@ namespace MuscleGain.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             model.Id = userId;
-
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(model);
-            //}
 
             await this.service.UpdateUser(model);
 

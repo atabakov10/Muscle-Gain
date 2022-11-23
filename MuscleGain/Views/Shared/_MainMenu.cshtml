@@ -28,16 +28,18 @@
 				}
 			</ul>
 		</li>
-	@if (User?.IsInRole("Manager") ?? false)
-	{
-		<li class="align-bottom">
-			<a asp-area="Admin" asp-controller="User" asp-action="Index" class="nav-link active align-bottom">
-				<p>
-					Account Management
-				</p>
-			</a>
-		</li>
-	}
+		@if (User?.IsInRole("Manager") ?? false)
+		{
+
+			<li class="align-bottom">
+				<a asp-area="Admin" asp-controller="User" asp-action="Index" class="nav-link active align-bottom">
+					<p>
+						Account Management
+					</p>
+				</a>
+			</li>
+
+		}
 	</ul>
 </nav>
 

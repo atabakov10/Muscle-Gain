@@ -4,6 +4,6 @@ namespace MuscleGain.Core.Contracts
 {
     public interface IStatisticsService
     {
-        StatisticsServiceModel Total();
+        Task<StatisticsServiceModel> Total();
     }
 }

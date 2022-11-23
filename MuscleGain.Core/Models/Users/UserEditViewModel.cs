@@ -8,7 +8,7 @@ namespace MuscleGain.Core.Models.Users
 
         [Url]
         [Display(Name = "Image URL")]
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
 
 		[Required]
         [StringLength(50, MinimumLength = 2)]

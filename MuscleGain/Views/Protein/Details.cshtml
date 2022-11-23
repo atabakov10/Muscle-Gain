@@ -28,8 +28,8 @@
 						@Model.Description
 					</p>
 					<div class="product_meta">
-						<span class="tagged_as"><strong>Flavour:</strong> <a>@Model.Flavour</a></span>
-						<span class="posted_in"> <strong>Category:</strong> @Model.CategoryId <a rel="tag" href="#"></a>, <a rel="tag" href="#">Men</a>, <a rel="tag" href="#">Shirts</a>, <a rel="tag" href="#">T-shirt</a>.</span>
+						<span><strong>Flavour:</strong> <a>@Model.Flavour</a></span>
+						<span><strong>Category:</strong> <a>@Model.Category</a></span>
 					</div>
 					<div class="m-bot15"> <strong>Price : </strong><span class="pro-price"> $@Model.Price</span></div>
 					<div class="form-group">
@@ -37,7 +37,7 @@
 						<input type="quantiy" placeholder="1" class="form-control quantity">
 					</div>
 					<p>
-						<a asp-controller="ShoppingCart" asp-action="Add" class="btn btn-round btn-danger" type="submit"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+						@*<a asp-controller="ShoppingCart" asp-action="Add" asp-route-proteinId="@Model.Id" class="btn btn-round btn-danger" type="submit"><i class="fa fa-shopping-cart"></i> Add to Cart</a>*@
 						<a asp-controller="Protein" asp-action="CreateReview" asp-route-id="@Model.Id" type="button" class="btn btn-info">Add Review</a>
 					</p>
 				</div>
@@ -58,15 +58,13 @@
 														<div class="d-flex flex-start align-items-start">
 															@if (review.ImageUrl == null)
 															{
-																<img class="rounded-circle me-3" src="~/img/6a5b3185c490202f2b693763a1f98abf.jpg"
-															 alt="avatar" width="60"
-															 height="60" />
+																<img src="~/img/6a5b3185c490202f2b693763a1f98abf.jpg" alt="avatar" width="60"
+															 height="60" class="brand-image img-circle elevation-3" style="opacity: .8">
 															}
 															else
 															{
-																<img class="rounded-circle me-3"
-															 src=@review.ImageUrl alt="avatar" width="60"
-															 height="60" />
+																<img src=@review.ImageUrl alt="profile picture" width="60"
+															 height="60" class="brand-image img-circle elevation-3" style="opacity: .8" />
 															}
 
 															<div>

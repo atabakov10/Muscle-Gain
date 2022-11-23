@@ -2,17 +2,18 @@
 using MuscleGain.Core.Models.Proteins;
 using MuscleGain.Core.Models.Reviews;
 using MuscleGain.Core.Services.Proteins;
+using MuscleGain.Infrastructure.Data.Models.Protein;
 
 namespace MuscleGain.Core.Contracts
 {
     public interface IProteinService
     {
         Task<ProteinQueryServiceModel> AllAsync(
-             string flavour,
-             string searchTerm,
-             ProteinSorting sorting,
-             int currentPage,
-             int proteinsPerPage);
+             string? flavour = null,
+             string? searchTerm = null,
+             ProteinSorting sorting = ProteinSorting.DateCreated,
+             int currentPage = 1,
+             int proteinsPerPage = 1);
 
         Task AddAsync(AddProtein protein);
 
@@ -30,5 +31,6 @@ namespace MuscleGain.Core.Contracts
 
         Task<IEnumerable<ProteinIndexViewModel>> LastThreeProteins();
 
+        Task<Protein> GetProteinById(int id);
     }
 }

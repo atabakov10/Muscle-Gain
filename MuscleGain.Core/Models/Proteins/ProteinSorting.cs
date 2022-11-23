@@ -3,6 +3,7 @@
 	public enum ProteinSorting
 	{
 		DateCreated = 0,
-        NameAndFlavour = 1
+        NameAndFlavour = 1,
+		Price = 2
 	}
 }

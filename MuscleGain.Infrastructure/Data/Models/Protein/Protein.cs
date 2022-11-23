@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using static MuscleGain.Infrastructure.Data.DataConstants;
 using Microsoft.AspNetCore.Identity;
 using MuscleGain.Infrastructure.Data.Models.Account;
-using MuscleGain.Infrastructure.Data.Models.Cart;
 using MuscleGain.Infrastructure.Data.Models.Reviews;
 
 namespace MuscleGain.Infrastructure.Data.Models.Protein
@@ -41,7 +40,6 @@ namespace MuscleGain.Infrastructure.Data.Models.Protein
 
         public ProteinsCategories ProteinCategory { get; init; }
 
-        public ICollection<ShoppingCart> ShoppingCart { get; set; } = new HashSet<ShoppingCart>();
 		public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
 
 	}

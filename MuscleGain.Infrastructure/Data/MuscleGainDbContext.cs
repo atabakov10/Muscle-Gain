@@ -1,11 +1,7 @@
-﻿using System.Globalization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MuscleGain.Infrastructure.Data.Configurations;
-using MuscleGain.Infrastructure.Data.Models;
 using MuscleGain.Infrastructure.Data.Models.Account;
-using MuscleGain.Infrastructure.Data.Models.Cart;
 using MuscleGain.Infrastructure.Data.Models.Protein;
 using MuscleGain.Infrastructure.Data.Models.Reviews;
 
@@ -23,18 +19,23 @@ namespace MuscleGain.Infrastructure.Data
 
         public DbSet<Review> Reviews { get; set; }
 
-        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
-		protected override void OnModelCreating(ModelBuilder builder)
+        //public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+
+        //public DbSet<ShoppingCartProtein> ShoppingCartProteins { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
 		{
-			builder.ApplyConfiguration(new UserConfiguration());
+			//builder.ApplyConfiguration(new ApplicationUserConfiguration());
 
 			builder.ApplyConfiguration(new ProteinConfiguration());
 
 			builder.ApplyConfiguration(new ReviewConfiguration());
 
-			builder.ApplyConfiguration(new ShoppingCartConfiguration());
+            //builder.ApplyConfiguration(new ShoppingCartConfiguration());
 
-			base.OnModelCreating(builder);
+            //builder.ApplyConfiguration(new ShoppingCartProteinConfiguration());
+
+            base.OnModelCreating(builder);
         }
     }
 }

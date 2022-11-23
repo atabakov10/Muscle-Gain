@@ -1,6 +1,5 @@
 ﻿using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Services.Proteins;
-using MuscleGain.Core.Services.ShoppingCart;
 using MuscleGain.Core.Services.Statistics;
 using MuscleGain.Core.Services.User;
 using MuscleGain.Infrastructure.Data.Common;
@@ -16,8 +15,6 @@ namespace MuscleGain.Extensions
             services.AddScoped<IStatisticsService, StatisticsService>();
 
             services.AddScoped<IProteinService, ProteinService>();
-
-            services.AddScoped<IShoppingCartService, ShoppingCartService>();
 
             services.AddScoped<IUserService, UserService>();
 

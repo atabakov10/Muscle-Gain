@@ -131,11 +131,11 @@ namespace MuscleGain.Controllers
 	        return RedirectToAction("Details", "Protein", new { id = model.ProteinId });
         }
 
-		[HttpPost, ActionName("Delete")]
+        [ActionName("Delete")]
         [Authorize(Policy = "CanDeleteProduct")]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Protein protein = data.Proteins.Find(id);
+            var protein = await data.Proteins.FindAsync(id);
             if (protein == null)
             {
                 return new NotFoundResult();

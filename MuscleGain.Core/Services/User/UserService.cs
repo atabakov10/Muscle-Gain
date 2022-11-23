@@ -1,23 +1,27 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Users;
 using MuscleGain.Infrastructure.Data;
+using MuscleGain.Infrastructure.Data.Common;
 using MuscleGain.Infrastructure.Data.Models.Account;
 
 namespace MuscleGain.Core.Services.User
 {
 	public class UserService : IUserService
 	{
-		private readonly MuscleGainDbContext data;
-
-		public UserService(MuscleGainDbContext data)
+        private readonly IRepository repo;
+        private readonly UserManager<ApplicationUser> userManager;
+		public UserService(IRepository repo,
+			UserManager<ApplicationUser> userManager)
 		{
-			this.data = data;
+            this.repo = repo;
+			this.userManager = userManager;
 		}
 
 		public async Task<ApplicationUser> GetUserById(string id)
 		{
-			return await this.data.Users.FirstOrDefaultAsync(context => context.Id == id);
+			return await this.repo.All<ApplicationUser>().FirstOrDefaultAsync(context => context.Id == id);
 		}
 
 		public async Task<UserProfileViewModel> GetUserProfile(string id)
@@ -49,7 +53,7 @@ namespace MuscleGain.Core.Services.User
 
 		public async Task<IEnumerable<UserListViewModel>> GetUsers()
 		{
-			var users = await this.data.Users
+			var users = await this.repo.All<ApplicationUser>()
 				.Select(u => new UserListViewModel()
 				{
 					Email = u.Email,
@@ -75,13 +79,17 @@ namespace MuscleGain.Core.Services.User
 				user.LastName = model.LastName;
 				user.ImageUrl = model.ImageUrl;
 
-				await this.data.SaveChangesAsync();
+				await this.repo.SaveChangesAsync();
 				result = true;
 			}
 
 			return result;
 		}
 
+		public async Task<ApplicationUser> GetUserByUsername(string username)
+		{
+			return await this.userManager.FindByNameAsync(username);
+		}
 
 	}
 }

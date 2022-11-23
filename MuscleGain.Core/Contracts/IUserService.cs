@@ -15,5 +15,7 @@ namespace MuscleGain.Core.Contracts
 
         Task<ApplicationUser> GetUserById(string id);
 
-    }
+       Task<ApplicationUser> GetUserByUsername(string username);
+
+	}
 }
