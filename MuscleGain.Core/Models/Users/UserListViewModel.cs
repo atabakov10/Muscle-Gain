@@ -9,6 +9,9 @@ namespace MuscleGain.Core.Models.Users
 
         public string Username { get; set; }
 
+        [Display(Name = "Phone number")]
+		public string PhoneNumber { get; set; }
+
         [Display(Name = "Full Name")]
         public string FullName { get; set; }
 

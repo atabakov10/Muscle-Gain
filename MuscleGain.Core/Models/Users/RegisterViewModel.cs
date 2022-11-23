@@ -4,9 +4,13 @@ namespace MuscleGain.Core.Models.Users
 {
     public class RegisterViewModel
     {
-        [Url]
+        [DataType(DataType.ImageUrl)]
         [Display(Name = "Image URL")]
 		public string? ImageUrl { get; set; }
+
+        [Phone]
+		[Display(Name = "Phone number")]
+        public string? PhoneNumber { get; set; }
 
         [Required]
         [EmailAddress]

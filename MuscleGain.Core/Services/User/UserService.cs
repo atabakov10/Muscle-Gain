@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MuscleGain.Core.Constants;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Users;
 using MuscleGain.Infrastructure.Data;
@@ -34,7 +36,8 @@ namespace MuscleGain.Core.Services.User
 				FirstName = user.FirstName,
 				LastName = user.LastName,
 				UserName = user.UserName,
-				Email = user.Email
+				Email = user.Email,
+				PhoneNumber = user.PhoneNumber
 			};
 		}
 
@@ -47,7 +50,8 @@ namespace MuscleGain.Core.Services.User
 				Id = user.Id,
 				ImageUrl = user.ImageUrl,
 				FirstName = user.FirstName,
-				LastName = user.LastName
+				LastName = user.LastName,
+				PhoneNumber = user.PhoneNumber
 			};
 		}
 
@@ -60,7 +64,8 @@ namespace MuscleGain.Core.Services.User
 					Id = u.Id,
 					ImageUrl = u.ImageUrl,
 					FullName = $"{u.FirstName} {u.LastName}",
-					Username = u.UserName
+					Username = u.UserName,
+					PhoneNumber = u.PhoneNumber
 				})
 				.ToListAsync();
 
@@ -78,7 +83,8 @@ namespace MuscleGain.Core.Services.User
 				user.FirstName = model.FirstName;
 				user.LastName = model.LastName;
 				user.ImageUrl = model.ImageUrl;
-
+				user.PhoneNumber = model.PhoneNumber;
+				
 				await this.repo.SaveChangesAsync();
 				result = true;
 			}

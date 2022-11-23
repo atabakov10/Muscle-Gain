@@ -28,7 +28,8 @@
                             <th>ID</th>
                             <th>Username</th>
                             <th>Full name</th>
-                            <th>E-mail</th>
+	                        <th>E-mail</th>
+	                        <th>Phone number</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -39,7 +40,8 @@
                                 <td>@user.Id</td>
                                 <td>@user.Username</td>
                                 <td>@user.FullName</td>
-                                <td>@user.Email</td>
+	                            <td>@user.Email</td>
+	                            <td>@user.PhoneNumber</td>
                                 <td>
                                     @*<a asp-area="Admin" asp-action="Edit" asp-controller="User" asp-route-id="@user.Id" type="button" class="btn btn-block btn-outline-info btn-xs">Edit</a>*@
                                     <a asp-area="Admin" asp-action="Roles" asp-controller="User" asp-route-id="@user.Id" type="submit" class="btn btn-block btn-outline-warning btn-xs">Roles</a>

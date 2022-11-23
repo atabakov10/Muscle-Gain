@@ -55,7 +55,8 @@ namespace MuscleGain.Controllers
                 FirstName = model.FirstName,
                 EmailConfirmed = true,
                 LastName = model.LastName,
-                UserName = model.Email
+                UserName = model.Email,
+                PhoneNumber = model.PhoneNumber
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -63,10 +64,9 @@ namespace MuscleGain.Controllers
             await _userManager
                 .AddClaimAsync(user, new Claim(ClaimTypeConstants.FirstName, user.FirstName ?? user.Email));
 
-            await _userManager
-	            .AddClaimAsync(user, new Claim(ClaimTypeConstants.ProfilePic, user.ImageUrl ?? String.Empty));
-
-            if (result.Succeeded)
+			await _userManager
+				.AddClaimAsync(user, new Claim(ClaimTypeConstants.ProfilePic, user.ImageUrl ?? String.Empty));
+			if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);
 
@@ -110,8 +110,8 @@ namespace MuscleGain.Controllers
             if (user != null)
             {
 	            var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
-
-                if (result.Succeeded)
+	            
+				if (result.Succeeded)
                 {
                     if (model.ReturnUrl != null)
                     {
@@ -190,7 +190,8 @@ namespace MuscleGain.Controllers
 
             await this.service.UpdateUser(model);
 
-            return RedirectToAction("MyProfile", "Account");
+
+			return RedirectToAction("MyProfile", "Account");
         }
 
     }
