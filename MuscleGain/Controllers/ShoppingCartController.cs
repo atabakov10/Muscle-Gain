@@ -43,7 +43,7 @@ namespace MuscleGain.Controllers
                 return this.RedirectToAction("All", "Protein");
             }
 
-            this.TempData[MessageConstant.SuccessMessage] = "Successfully added course to Shopping cart";
+            this.TempData[MessageConstant.SuccessMessage] = "Successfully added protein to Shopping cart";
 
             return this.RedirectToAction("All", "Protein");
         }
