@@ -5,6 +5,7 @@ using static MuscleGain.Infrastructure.Data.DataConstants;
 using Microsoft.AspNetCore.Identity;
 using MuscleGain.Infrastructure.Data.Models.Account;
 using MuscleGain.Infrastructure.Data.Models.Reviews;
+using MuscleGain.Infrastructure.Data.Models.Cart;
 
 namespace MuscleGain.Infrastructure.Data.Models.Protein
 {
@@ -27,7 +28,7 @@ namespace MuscleGain.Infrastructure.Data.Models.Protein
 
         [Required]
         [MaxLength(ProteinPriceMaxLength)]
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
 
         [Required]
         public string Description { get; set; }
@@ -40,7 +41,12 @@ namespace MuscleGain.Infrastructure.Data.Models.Protein
 
         public ProteinsCategories ProteinCategory { get; init; }
 
-		public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
+        [NotMapped]
+        public double Rating
+            => this.Reviews.Count > 0 ? this.Reviews.Average(x => x.Rating) : 0;
+        public ICollection<ShoppingCart> ShoppingCart { get; set; } = new HashSet<ShoppingCart>();
+
+        public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
 
 	}
 }

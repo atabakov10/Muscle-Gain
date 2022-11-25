@@ -1,0 +1,27 @@
+﻿@model LanguageViewModel
+
+@{
+	ViewData["Title"] = "Add Language";
+}
+
+<form asp-controller="Language" asp-action="Add" method="post">
+	<div class="form-group">
+		<label asp-for="Title"></label>
+		<input asp-for="Title" />
+		<span asp-validation-for="Title" class="small text-danger"></span>
+	</div>
+	<div class="row">
+		<div class="col-3">
+			<button type="submit" class="btn btn-block btn-success btn-xs">Add</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-3">
+			<a asp-area="Admin" asp-controller="Language" asp-action="Index" class="btn btn-block btn-danger btn-xs">Cancel</a>
+		</div>
+	</div>
+</form>
+
+@section Scripts{
+	<partial name="_ValidationScriptsPartial.cshtml" />
+}

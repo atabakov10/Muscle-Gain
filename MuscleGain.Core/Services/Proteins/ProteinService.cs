@@ -90,7 +90,7 @@ namespace MuscleGain.Core.Services.Proteins
                 Name = protein.Name,
                 Grams = protein.Grams,
                 Flavour = protein.Flavour,
-                Price = protein.Price,
+                Price = (decimal)protein.Price,
                 Description = protein.Description,
                 ImageUrl = protein.ImageUrl,
                 CategoryId = protein.CategoryId
@@ -147,7 +147,7 @@ namespace MuscleGain.Core.Services.Proteins
             entity.Name = model.Name;
             entity.Flavour = model.Flavour;
             entity.Grams = model.Grams;
-            entity.Price = model.Price;
+            entity.Price = (decimal)model.Price;
             entity.Description = model.Description;
             entity.ImageUrl = model.ImageUrl;
             entity.CategoryId = model.CategoryId;
@@ -192,34 +192,6 @@ namespace MuscleGain.Core.Services.Proteins
                     DateOfPublication = r.DateOfPublication.ToString()
                 }).ToList(),
             };
-        }
-        public async Task AddReview(AddReviewViewModel model)
-        {
-            var user = await this.repo.GetByIdAsync<ApplicationUser>(model.UserId);
-
-            if (user == null)
-            {
-                throw new Exception();
-            }
-
-            var course = await this.repo.GetByIdAsync<Protein>(model.ProteinId);
-
-            if (course == null)
-            {
-                throw new Exception();
-            }
-
-            var review = new Review()
-            {
-                Comment = model.Comment,
-                Rating = model.Rating,
-                ProteinId = model.ProteinId,
-                UserId = model.UserId,
-                DateOfPublication = model.DateOfPublication,
-            };
-
-            await this.repo.AddAsync(review);
-            await this.repo.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<ProteinIndexViewModel>> LastThreeProteins()

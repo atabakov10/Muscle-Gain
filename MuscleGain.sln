@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuscleGain", "MuscleGain\MuscleGain.csproj", "{F4993ADB-E1EA-4578-8C4B-05715B783AF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MuscleGain", "MuscleGain\MuscleGain.csproj", "{F4993ADB-E1EA-4578-8C4B-05715B783AF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuscleGain.Core", "MuscleGain.Core\MuscleGain.Core.csproj", "{9F7ED30B-5D8E-45A1-8582-488D96BA7D6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MuscleGain.Core", "MuscleGain.Core\MuscleGain.Core.csproj", "{9F7ED30B-5D8E-45A1-8582-488D96BA7D6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuscleGain.Infrastructure", "MuscleGain.Infrastructure\MuscleGain.Infrastructure.csproj", "{44DDB963-3562-4C8D-89F2-CA750B6DDECB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MuscleGain.Infrastructure", "MuscleGain.Infrastructure\MuscleGain.Infrastructure.csproj", "{44DDB963-3562-4C8D-89F2-CA750B6DDECB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuscleGain.UnitTests", "MuscleGain.UnitTests\MuscleGain.UnitTests.csproj", "{825B2122-29FF-4FD2-ACE7-7F2E6E3F35B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{44DDB963-3562-4C8D-89F2-CA750B6DDECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44DDB963-3562-4C8D-89F2-CA750B6DDECB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44DDB963-3562-4C8D-89F2-CA750B6DDECB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{825B2122-29FF-4FD2-ACE7-7F2E6E3F35B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{825B2122-29FF-4FD2-ACE7-7F2E6E3F35B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{825B2122-29FF-4FD2-ACE7-7F2E6E3F35B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{825B2122-29FF-4FD2-ACE7-7F2E6E3F35B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

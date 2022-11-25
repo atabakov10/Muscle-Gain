@@ -194,5 +194,90 @@ namespace MuscleGain.Controllers
 			return RedirectToAction("MyProfile", "Account");
         }
 
-    }
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginViewModel model, string? returnurl = null)
+        {
+	        returnurl = returnurl ?? this.Url.Content("~/");
+	        if (this.ModelState.IsValid)
+	        {
+		        //get the info about the user from external login provider
+		        var info = await this._signInManager.GetExternalLoginInfoAsync();
+		        if (info == null)
+		        {
+			        return this.View("Error");
+		        }
+
+		        var user = new ApplicationUser()
+		        {
+			        UserName = model.UserName,
+			        Email = model.Email,
+			        FirstName = model.FirstName,
+			        LastName = model.LastName,
+		        };
+
+		        var result = await this._userManager.CreateAsync(user);
+		        if (result.Succeeded)
+		        {
+			        result = await this._userManager.AddLoginAsync(user, info);
+			        if (result.Succeeded)
+			        {
+				        await this._signInManager.SignInAsync(user, isPersistent: false);
+				        await this._signInManager.UpdateExternalAuthenticationTokensAsync(info);
+				        return this.LocalRedirect(returnurl);
+			        }
+		        }
+
+		        this.ModelState.AddModelError("Email", "There was an error");
+	        }
+
+	        this.ViewData["ReturnUrl"] = returnurl;
+	        return this.View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ExternalLoginCallback(string returnurl = null, string remoteError = null)
+        {
+	        if (remoteError != null)
+	        {
+		        this.ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
+		        return this.View(nameof(this.Login));
+	        }
+
+	        var info = await this._signInManager.GetExternalLoginInfoAsync();
+	        if (info == null)
+	        {
+		        return this.RedirectToAction(nameof(this.Login));
+	        }
+
+	        //Sign in the user with this external login provider, if the user already has a login.
+	        var result = await this._signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
+	        if (result.Succeeded)
+	        {
+		        //update any authentication tokens
+		        await this._signInManager.UpdateExternalAuthenticationTokensAsync(info);
+		        return this.LocalRedirect(returnurl);
+	        }
+	        else
+	        {
+		        //If the user does not have account, then we will ask the user to create an account.
+		        this.ViewData["ReturnUrl"] = returnurl;
+		        this.ViewData["ProviderDisplayName"] = info.ProviderDisplayName;
+		        var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+		        return this.View("ExternalLoginConfirmation", new ExternalLoginViewModel { Email = email });
+	        }
+
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult ExternalLogin(string provider, string returnurl = null)
+        {
+	        returnurl = returnurl ?? this.Url.Content("~/");
+	        //request a redirect to the external login provider
+	        var redirecturl = this.Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnurl });
+	        var properties = this._signInManager.ConfigureExternalAuthenticationProperties(provider, redirecturl);
+	        return this.Challenge(properties, provider);
+        }
+	}
 }

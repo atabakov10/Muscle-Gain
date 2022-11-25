@@ -102,34 +102,6 @@ namespace MuscleGain.Controllers
             return View(data);
         }
 
-        public IActionResult CreateReview(int id)
-        {
-	        var userId = GetUserId();
-
-
-			var model = new AddReviewViewModel()
-	        {
-		        UserId = userId,
-		        ProteinId = id
-	        };
-
-	        return View(model);
-        }
-        [HttpPost]
-        public async Task<IActionResult> AddReview(AddReviewViewModel model)
-        {
-	        model.DateOfPublication = DateTime.Now;
-
-            if (!ModelState.IsValid)
-            {
-                return View("CreateReview", model);
-            }
-
-            await this.proteinService.AddReview(model);
-	        TempData[MessageConstant.SuccessMessage] = "Successfully added review";
-
-	        return RedirectToAction("Details", "Protein", new { id = model.ProteinId });
-        }
 
         [ActionName("Delete")]
         [Authorize(Policy = "CanDeleteProduct")]

@@ -108,6 +108,10 @@ body {
     margin-top: 20px;
     background:#28292d;
 }
+/*review*/
+.checked {
+    color: orange;
+}
 
 /*panel*/
 .panel {

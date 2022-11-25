@@ -1,4 +1,8 @@
-﻿@model LoginViewModel
+﻿@using MuscleGain.Infrastructure.Data.Models.Account
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model LoginViewModel
+@inject SignInManager<ApplicationUser> signInManager
 @{
 	ViewData["Title"] = "Login page";
 }
@@ -58,19 +62,29 @@
 						<!-- /.col -->
 					</div>
 				</form>
-
-				<div class="social-auth-links text-center mt-2 mb-3">
-					<a href="#" class="btn btn-block btn-primary">
-						<i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-					</a>
-					<a href="#" class="btn btn-block btn-danger">
-						<i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-					</a>
-				</div>
-
-				<p class="mb-0">
-					<a asp-action="Register" class="text-center">Register a new membership</a>
-				</p>
+				@{
+					var schemes = await this.signInManager.GetExternalAuthenticationSchemesAsync();
+					var loginProviders = schemes.ToList();
+				}
+				@if (loginProviders.Count() > 0)
+				{
+					<form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" role="form">
+						<div class="social-auth-links text-center mt-2 mb-3">
+							<button type="submit" class="btn btn-block btn-primary" name="provider" value="Facebook">
+								<i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+							</button>
+							@*<a href="#" class="btn btn-block btn-danger">
+                                <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                            </a>*@
+						</div>
+					</form>
+					<p class="mb-1">
+						<a href="~/pages/forgot-password.html">I forgot my password</a>
+					</p>
+					<p class="mb-0">
+						<a asp-controller="Account" asp-action="Register" class="text-center">Register a new membership</a>
+					</p>
+				}
 			</div>
 			<!-- /.card-body -->
 		</div>

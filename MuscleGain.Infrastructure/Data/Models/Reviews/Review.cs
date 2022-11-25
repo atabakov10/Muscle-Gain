@@ -21,7 +21,9 @@ namespace MuscleGain.Infrastructure.Data.Models.Reviews
 
         public DateTime DateOfPublication { get; set; }
 
-		public string UserId { get; set; } = null!;
+        public DateTime? LastUpdate { get; set; }
+
+        public string UserId { get; set; } = null!;
 		public ApplicationUser User { get; set; } = null!;
 
 		public int ProteinId { get; set; }
