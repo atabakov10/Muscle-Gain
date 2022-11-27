@@ -30,7 +30,7 @@ namespace MuscleGain.Controllers
             return this.View(shoppingCart);
         }
 
-        public async Task<IActionResult> Add([FromRoute] int id)
+        public async Task<IActionResult> Add(int id)
         {
             var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             try

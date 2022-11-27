@@ -1,0 +1,25 @@
+﻿@model ProteinCategoryViewModel
+
+<h2>Add Category</h2>
+
+<form asp-controller="Category" asp-action="AddCategory" method="post">
+	<div class="form-group">
+		<label asp-for="Name"></label>
+		<input asp-for="Name" />
+		<span asp-validation-for="Name" class="small text-danger"></span>
+	</div>
+	<div class="row">
+		<div class="col-3">
+			<button type="submit" class="btn btn-block btn-success btn-xs">Add</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-3">
+			<a asp-area="Admin" asp-controller="Category" asp-action="Index" class="btn btn-block btn-danger btn-xs">Cancel</a>
+		</div>
+	</div>
+</form>
+
+@section Scripts{
+	<partial name="_ValidationScriptsPartial.cshtml" />
+}

@@ -1,4 +1,5 @@
-﻿using MuscleGain.Core.Models.Home;
+﻿using MuscleGain.Core.Models.Category;
+using MuscleGain.Core.Models.Home;
 using MuscleGain.Core.Models.Proteins;
 using MuscleGain.Core.Models.Reviews;
 using MuscleGain.Core.Services.Proteins;
@@ -29,6 +30,11 @@ namespace MuscleGain.Core.Contracts
 
         Task<IEnumerable<ProteinIndexViewModel>> LastThreeProteins();
 
-        Task<Protein> GetProteinById(int id);
+        Task<Protein?> GetProteinById(int id);
+
+        Task<IEnumerable<ProteinListingViewModel>> GetAllNotApproved();
+
+        Task ApproveProtein(int proteinId);
+
     }
 }

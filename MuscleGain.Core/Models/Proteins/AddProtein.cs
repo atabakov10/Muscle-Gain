@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using MuscleGain.Core.Models.Category;
 using static MuscleGain.Infrastructure.Data.DataConstants;
 
 namespace MuscleGain.Core.Models.Proteins

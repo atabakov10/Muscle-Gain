@@ -1,5 +1,6 @@
 ﻿using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Services.Cart;
+using MuscleGain.Core.Services.Categories;
 using MuscleGain.Core.Services.Language;
 using MuscleGain.Core.Services.Proteins;
 using MuscleGain.Core.Services.Review;
@@ -26,6 +27,8 @@ namespace MuscleGain.Extensions
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
 
             services.AddScoped<IReviewService, ReviewService>();
+
+            services.AddScoped<ICategoryService, CategoryService>();
 
             return services;
         }

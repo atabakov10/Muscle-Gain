@@ -147,7 +147,7 @@ namespace MuscleGain.Controllers
         //{
         //    //string email4 = "atabakov99@abv.bg";
 
-        //    string email = "koko1926@abv.bg";
+        //    string email = "v_tosheva02@abv.bg";
 
         //    var user4 = await _userManager.FindByNameAsync(email);
         //    var result = await _userManager.AddToRolesAsync(user4, new string[] { RoleConstants.Supervisor, RoleConstants.Manager, RoleConstants.Administrator });

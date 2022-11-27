@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MuscleGain.Core.Contracts;
+using MuscleGain.Core.Models.Statistics;
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Common;
 using MuscleGain.Infrastructure.Data.Models.Account;

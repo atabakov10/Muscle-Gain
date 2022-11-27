@@ -37,7 +37,9 @@ namespace MuscleGain.Infrastructure.Data.Models.Protein
         [Url]
         public string ImageUrl { get; set; }
 
-        public int CategoryId { get; set; }
+        public bool IsDeleted { get; set; }
+        public bool IsApproved { get; set; }
+		public int CategoryId { get; set; }
 
         public ProteinsCategories ProteinCategory { get; init; }
 

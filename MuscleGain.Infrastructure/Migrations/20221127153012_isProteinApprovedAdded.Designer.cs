@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MuscleGain.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using MuscleGain.Infrastructure.Data;
 namespace MuscleGain.Infrastructure.Migrations
 {
     [DbContext(typeof(MuscleGainDbContext))]
-    partial class MuscleGainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221127153012_isProteinApprovedAdded")]
+    partial class isProteinApprovedAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -314,9 +316,6 @@ namespace MuscleGain.Infrastructure.Migrations
                     b.Property<bool>("IsApproved")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<int?>("LanguageId")
                         .HasColumnType("int");
 
@@ -347,9 +346,6 @@ namespace MuscleGain.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()

@@ -1,0 +1,47 @@
+﻿@model MuscleGain.Core.Models.Proteins.ProteinDetailsViewModel
+
+<div class="container border-dark">
+	<div class="jumbotron bg-indigo text-warning">
+		<h1>@ViewData["Name"] - $@ViewData["Price"]</h1>
+		<h2>@ViewData["Flavour"]</h2>
+	</div>
+</div>
+<div class="container border-dark">
+	<div class="row">
+		<div class="col-md-9">
+			<div class="container">
+				<div class="card card-indigo">
+					<div class="card-header">
+						<h3 class="card-title">Protein description</h3>
+					</div>
+					<div class="card-body">
+						<p>
+							@Model.Description
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="col-md-3 sticky-top">
+	<img src="@Model.ImageUrl" style="width: 18rem;height: 18rem" class="img-thumbnail">
+</div>
+<div class="row">
+	<form asp-action="Approve" asp-route-id="@Model.Id" method="post">
+		<button type="submit" class="btn btn-block btn-success btn-lg">Approve</button>
+	</form>
+</div>
+<br />
+<div class="row">
+	<form asp-controller="Email" asp-action="SendToEmail" asp-route-id="@Model.Id" method="post">
+		<button type="submit" class="btn btn-block btn-warning btn-lg">Send Email</button>
+	</form>
+</div>
+<br />
+<div class="row md-12">
+	<form asp-action="Unapprove" asp-route-id="@Model.Id" method="post">
+		<button type="submit" class="btn btn-block btn-danger btn-lg">Unapprove</button>
+	</form>
+</div>
+

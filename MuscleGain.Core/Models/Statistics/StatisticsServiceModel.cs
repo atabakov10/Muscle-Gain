@@ -1,4 +1,4 @@
-﻿namespace MuscleGain.Core.Services.Statistics
+﻿namespace MuscleGain.Core.Models.Statistics
 {
     public class StatisticsServiceModel
     {

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.Configuration;
 using MuscleGain.Core.Contracts;
+using MuscleGain.Core.Models.Category;
 using MuscleGain.Core.Models.Home;
 using MuscleGain.Core.Models.Proteins;
 using MuscleGain.Core.Models.Reviews;
@@ -31,7 +32,9 @@ namespace MuscleGain.Core.Services.Proteins
             int currentPage = 1,
             int proteinsPerPage = 1)
         {
-            var proteinsQuery = repo.AllReadonly<Protein>();
+            var proteinsQuery = repo.AllReadonly<Protein>()
+                .Include(c => c.Reviews)
+                .Where(x => x.IsDeleted == false && x.IsApproved == true);
 
             if (!string.IsNullOrEmpty(category))
             {
@@ -83,7 +86,52 @@ namespace MuscleGain.Core.Services.Proteins
             };
         }
 
-        public async Task AddAsync(AddProtein protein)
+        public async Task Delete(int proteinId, string userId)
+        {
+            var proteinById = await this.GetProteinById(proteinId);
+            if (proteinById == null)
+            {
+                throw new Exception("Invalid Id");
+            }
+
+            var user = await this.repo.GetByIdAsync<ApplicationUser>(userId);
+            if (user == null)
+            {
+                throw new Exception("Invalid Id");
+            }
+
+            proteinById.IsDeleted = true;
+            await this.repo.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<ProteinListingViewModel>> GetAllNotApproved()
+        {
+	        var allCourses = await this.repo.AllReadonly<Protein>()
+		        .Where(c =>c.IsDeleted== false && c.IsApproved == false)
+		        .Select(c => new ProteinListingViewModel()
+		        {
+			        Id = c.Id,
+			        Name = c.Name,
+			        ImageUrl = c.ImageUrl,
+			        Price = c.Price,
+		        }).ToListAsync();
+
+	        return allCourses;
+        }
+
+		public async Task ApproveProtein(int proteinId)
+        {
+	        var protein = await this.GetProteinById(proteinId);
+	        if (protein == null)
+	        {
+		        throw new Exception("not exist");
+	        }
+
+	        protein.IsApproved = true;
+	        await this.repo.SaveChangesAsync();
+        }
+
+		public async Task AddAsync(AddProtein protein)
         {
             var product = new Protein()
             {
@@ -166,6 +214,7 @@ namespace MuscleGain.Core.Services.Proteins
 
 
 
+
             if (protein == null)
             {
                 throw new ArgumentException("Invalid protein Id");
@@ -210,12 +259,8 @@ namespace MuscleGain.Core.Services.Proteins
                 .Take(3)
                 .ToListAsync();
         }
-        public async Task<Protein> GetProteinById(int id)
-        {
-	        return await this.repo.AllReadonly<Protein>().Include(p => p.ProteinCategory)
-		        .Include(x => x.ImageUrl)
-		        .Include(x => x.Reviews)
-		        .FirstOrDefaultAsync(x => x.Id == id);
-        }
-	}
+
+        public async Task<Protein?> GetProteinById(int id)
+            => await this.repo.GetByIdAsync<Protein>(id);
+    }
 }
