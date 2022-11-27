@@ -21,10 +21,9 @@ namespace MuscleGain.Core.Services.User
 			this.userManager = userManager;
 		}
 
-		public async Task<ApplicationUser> GetUserById(string id)
-		{
-			return await this.repo.All<ApplicationUser>().FirstOrDefaultAsync(context => context.Id == id);
-		}
+		public async Task<ApplicationUser> GetUserById(string id) 
+			=> await this.repo.GetByIdAsync<ApplicationUser>(id);
+		
 
 		public async Task<UserProfileViewModel> GetUserProfile(string id)
 		{

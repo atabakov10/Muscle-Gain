@@ -19,7 +19,7 @@ namespace MuscleGain.Core.Services.Statistics
 
         public async Task<StatisticsServiceModel> Total()
         {
-            var totalProteins = await this.repo.AllReadonly<Protein>().CountAsync();
+            var totalProteins = await this.repo.AllReadonly<Protein>().Where(x=> x.IsDeleted == false).CountAsync();
             var totalUsers = await this.repo.AllReadonly<ApplicationUser>().CountAsync();
 
             return new StatisticsServiceModel

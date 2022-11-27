@@ -18,5 +18,8 @@ namespace MuscleGain.Core.Contracts
         Task Update(EditCategoryViewModel model);
 
         Task Delete(int id);
+
+        Task CheckForCategory(int categoryId);
+
     }
 }

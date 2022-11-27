@@ -36,5 +36,7 @@ namespace MuscleGain.Core.Contracts
 
         Task ApproveProtein(int proteinId);
 
+        Task Delete(int proteinId);
+
     }
 }

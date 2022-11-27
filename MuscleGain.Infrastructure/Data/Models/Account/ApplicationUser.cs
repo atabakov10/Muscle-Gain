@@ -1,9 +1,8 @@
 ﻿
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Identity;
 using MuscleGain.Infrastructure.Data.Models.Cart;
 using MuscleGain.Infrastructure.Data.Models.Reviews;
+using System.ComponentModel.DataAnnotations;
 
 namespace MuscleGain.Infrastructure.Data.Models.Account
 {

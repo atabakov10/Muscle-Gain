@@ -16,32 +16,31 @@ namespace MuscleGain.Infrastructure.Data.Models.Protein
         
         [Required]
         [StringLength(ProteinNameMaxLength)]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         [Required]
         [StringLength(ProteinGramsMaxLength)]
-        public string Grams { get; set; }
+        public string Grams { get; set; } = null!;
 
         [Required]
         [StringLength(ProteinFlavorMaxLength)]
-        public string Flavour { get; set; }
+        public string Flavour { get; set; } = null!;
 
         [Required]
         [MaxLength(ProteinPriceMaxLength)]
         public decimal Price { get; set; }
 
-        [Required]
-        public string Description { get; set; }
+        [Required] public string Description { get; set; } = null!;
 
         [Required]
         [Url]
-        public string ImageUrl { get; set; }
+        public string ImageUrl { get; set; } = null!;
 
         public bool IsDeleted { get; set; }
         public bool IsApproved { get; set; }
 		public int CategoryId { get; set; }
 
-        public ProteinsCategories ProteinCategory { get; init; }
+		public ProteinsCategories ProteinCategory { get; init; } = null!;
 
         [NotMapped]
         public double Rating

@@ -7,12 +7,12 @@ namespace MuscleGain.Core.Models.Proteins
     public class AddProtein
     {
         [Required]
-        [StringLength(ProteinNameMaxLength,MinimumLength = ProteinNameMinLength)]
-        public string Name { get; set; }
+        [StringLength(ProteinNameMaxLength, MinimumLength = ProteinNameMinLength)]
+        public string Name { get; set; } = null!;
 
         [Required]
         [StringLength(ProteinFlavorMaxLength, MinimumLength = ProteinFlavorMinLength)]
-        public string Flavour { get; init; }
+        public string Flavour { get; init; } = null!;
 
         [Required]
         [StringLength(ProteinGramsMaxLength, MinimumLength = ProteinGramsMinLength)]
@@ -24,12 +24,12 @@ namespace MuscleGain.Core.Models.Proteins
 
         [Required]
         [StringLength(int.MaxValue, MinimumLength = ProteinDescriptionMinLength)]
-        public string Description { get; init; }
+        public string Description { get; init; } = null!;
 
         [Required]
         [Display(Name = "Image URL")]
         [Url]
-        public string ImageUrl { get; init; }
+        public string ImageUrl { get; init; } = null!;
 
         [Display(Name = "Category")]
         public int CategoryId { get; init; }

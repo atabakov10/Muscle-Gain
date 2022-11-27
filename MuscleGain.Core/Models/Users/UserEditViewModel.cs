@@ -17,11 +17,11 @@ namespace MuscleGain.Core.Models.Users
 		[Required]
         [StringLength(50, MinimumLength = 2)]
         [Display(Name = "First Name")]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 2)]
         [Display(Name = "Last Name")]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
     }
 }

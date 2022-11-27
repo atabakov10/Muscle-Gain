@@ -13,16 +13,21 @@ namespace MuscleGain.Controllers
 	public class ProteinController : BaseController
 	{
 		private readonly IProteinService proteinService;
-		private readonly MuscleGainDbContext data;
+		//private readonly MuscleGainDbContext data;
 		private readonly IUserService userService;
+		private readonly ICategoryService categoryService;
+		private readonly ILogger logger;
 
-		public ProteinController(IProteinService proteinService,
+		public ProteinController(
+			IProteinService proteinService,
 			MuscleGainDbContext data,
-			IUserService userService)
+			IUserService userService,
+			ICategoryService categoryService)
 		{
 			this.proteinService = proteinService;
-			this.data = data;
+			//this.data = data;
 			this.userService = userService;
+			this.categoryService = categoryService;
 		}
 
 		public async Task<IActionResult> All([FromQuery] ProteinsQueryModel query)
@@ -43,6 +48,10 @@ namespace MuscleGain.Controllers
 			return View(query);
 		}
 
+		/// <summary>
+		/// checks your authorization to add a protein
+		/// </summary>
+		/// <returns> the view to add a protein</returns>
 
 		[HttpGet]
 		[Authorize(Roles = $"{RoleConstants.Manager}, {RoleConstants.Supervisor}")]
@@ -51,10 +60,20 @@ namespace MuscleGain.Controllers
 			Categories = await this.proteinService.GetProteinCategoriesAsync()
 		});
 
+		/// <summary>
+		/// Checks your input data for add
+		/// </summary>
+		/// <returns>
+		///	the model state needs to be valid and the product needs to get approved,
+		/// otherwise the error will be given  
+		/// </returns>
+
 		[HttpPost]
 		public async Task<IActionResult> Add(AddProtein protein)
 		{
-			if (!this.data.ProteinsCategories.Any(x => x.Id == protein.CategoryId))
+			int id = protein.CategoryId;
+
+			if (!categoryService.CheckForCategory(id).IsFaulted)
 			{
 				this.ModelState.AddModelError(nameof(protein.CategoryId), "Category does not exist!");
 			}
@@ -64,11 +83,28 @@ namespace MuscleGain.Controllers
 				TempData[MessageConstant.ErrorMessage] = "Something went wrong!";
 				return View();
 			}
-			await proteinService.AddAsync(protein);
+
+			try
+			{
+				await proteinService.AddAsync(protein);
+
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
 			TempData[MessageConstant.SuccessMessage] = "Successfully added protein";
 
 			return RedirectToAction(nameof(All));
 		}
+
+		/// <summary>
+		/// Gets the protein by id 
+		/// </summary>
+		/// <returns>
+		///	a view with all the details about the protein which can be edited
+		/// </returns>
 
 		[HttpGet]
 		public async Task<IActionResult> Edit(int id)
@@ -82,6 +118,13 @@ namespace MuscleGain.Controllers
 
 			return View(model);
 		}
+
+		/// <summary>
+		/// Posts the view with the details of the protein
+		/// </summary>
+		/// <returns>
+		///	the all view with the changes made on the protein
+		/// </returns>
 
 		[HttpPost]
 		public async Task<IActionResult> Edit(EditProteinViewModel model)
@@ -97,6 +140,13 @@ namespace MuscleGain.Controllers
 
 			return RedirectToAction(nameof(All));
 		}
+
+		/// <summary>
+		/// Shows the details with the given id
+		/// </summary>
+		/// <returns>
+		/// A view with the protein details
+		/// </returns>
 
 		[HttpGet]
 		[AllowAnonymous]
@@ -117,28 +167,26 @@ namespace MuscleGain.Controllers
 			return View(data);
 		}
 
+		/// <summary>
+		/// Deletes the protein with the given id
+		/// </summary>
+		/// <returns>
+		///	All other proteins
+		/// </returns>
 
 		[ActionName("Delete")]
 		[Authorize(Policy = "CanDeleteProduct")]
-		public async Task<IActionResult> DeleteConfirmed(int id)
+		public async Task<IActionResult> Delete(int id)
 		{
-			var protein = await data.Proteins.FindAsync(id);
-			if (protein == null)
-			{
-				return new NotFoundResult();
-			}
-
 			if (id == null)
 			{
 				return new NotFoundResult();
 			}
-			data.Proteins.Remove(protein);
-			TempData[MessageConstant.SuccessMessage] = "Successfully deleted the protein";
-			await data.SaveChangesAsync();
+
+			await proteinService.Delete(id);
+
 			return RedirectToAction(nameof(All));
 		}
-		private string GetUserId()
-			=> this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 	}
 
 }

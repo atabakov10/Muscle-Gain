@@ -5,129 +5,145 @@ using System.Security.Claims;
 
 namespace MuscleGain.Controllers
 {
-    public class ShoppingCartController : BaseController
-    {
+	public class ShoppingCartController : BaseController
+	{
 
-        private readonly IShoppingCartService shoppingCartService;
-        //private readonly IOrderService orderService;
-        private readonly IProteinService proteinService;
+		private readonly IShoppingCartService shoppingCartService;
+		//private readonly IOrderService orderService;
+		private readonly IProteinService proteinService;
+		private readonly ILogger logger;
 
-        public ShoppingCartController(
-            IShoppingCartService shoppingCartService,
-            //IOrderService orderService,
-            IProteinService proteinService)
-        {
-            this.shoppingCartService = shoppingCartService;
-            //this.orderService = orderService;
-            this.proteinService = proteinService;
-        }
+		public ShoppingCartController(
+			IShoppingCartService shoppingCartService,
+			//IOrderService orderService,
+			IProteinService proteinService,
+			ILogger<ShoppingCartController> logger)
+		{
+			this.shoppingCartService = shoppingCartService;
+			//this.orderService = orderService;
+			this.proteinService = proteinService;
+			this.logger = logger;
+		}
 
-        public async Task<IActionResult> Index()
-        {
-            var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            var shoppingCart = await this.shoppingCartService.GetShoppingCart(userId);
+		public async Task<IActionResult> Index()
+		{
+			var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+			var shoppingCart = await this.shoppingCartService.GetShoppingCart(userId);
 
-            return this.View(shoppingCart);
-        }
+			return this.View(shoppingCart);
+		}
 
-        public async Task<IActionResult> Add(int id)
-        {
-            var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            try
-            {
-                await this.shoppingCartService.AddProteinInShoppingCart(id, userId);
-            }
-            catch (Exception ex)
-            {
-                this.TempData[MessageConstant.ErrorMessage] = ex.Message;
-                return this.RedirectToAction("All", "Protein");
-            }
+		public async Task<IActionResult> Add(int id)
+		{
+			var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
-            this.TempData[MessageConstant.SuccessMessage] = "Successfully added protein to Shopping cart";
+			if (userId == null)
+			{
+				logger.LogError("Invalid user id");
+				this.TempData[MessageConstant.ErrorMessage] = "Something went wrong..";
+				return this.RedirectToAction("All", "Protein");
+			}
 
-            return this.RedirectToAction("All", "Protein");
-        }
+			await this.shoppingCartService.AddProteinInShoppingCart(id, userId);
 
-        public async Task<IActionResult> Delete(int id)
-        {
 
-            var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            await this.shoppingCartService.DeleteProteinFromShoppingCart(id, userId);
+			this.TempData[MessageConstant.SuccessMessage] = "Successfully added protein to Shopping cart";
 
-            return this.RedirectToAction(nameof(this.Index));
-        }
+			return this.RedirectToAction("All", "Protein");
+		}
 
-        public async Task<IActionResult> DeleteAll()
-        {
-            var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            await this.shoppingCartService.DeleteAllProteinsFromShoppingCart(userId);
+		public async Task<IActionResult> Delete(int id)
+		{
 
-            return this.RedirectToAction(nameof(this.Index));
-        }
+			var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+			if (userId == null)
+			{
+				logger.LogError("Invalid protein Id");
+				TempData[MessageConstant.ErrorMessage] = "Something went wrong..";
+				throw new Exception();
+			}
+			await this.shoppingCartService.DeleteProteinFromShoppingCart(id, userId);
 
-        //public async Task<IActionResult> Summary()
-        //{
-        //    var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+			return this.RedirectToAction(nameof(this.Index));
+		}
 
-        //    var shoppingCart = await this.shoppingCartService.GetShoppingCart(userId);
+		public async Task<IActionResult> DeleteAll()
+		{
+			var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+			if (userId == null)
+			{
+				logger.LogError("Invalid user id");
+				this.TempData[MessageConstant.ErrorMessage] = "Something went wrong..";
+				return this.RedirectToAction("All", "Protein");
+			}
+			await this.shoppingCartService.DeleteAllProteinsFromShoppingCart(userId);
 
-        //    return this.View(shoppingCart);
-        //}
+			return this.RedirectToAction(nameof(this.Index));
+		}
 
-        //[HttpPost]
-        //public async Task<IActionResult> Summary(string stripeToken)
-        //{
-        //    var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-        //    var shoppingCart = await this.shoppingCartService.GetShoppingCart(userId);
-        //    var order = new OrderViewModel()
-        //    {
-        //        Courses = shoppingCart.Courses,
-        //        TotalPrice = shoppingCart.TotalPrice,
-        //        OrderDate = DateTime.Now,
-        //        OrderStatus = "pending",
-        //        PaymentStatus = "pending",
-        //    };
+		//public async Task<IActionResult> Summary()
+		//{
+		//    var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
-        //    order.Id = await this.orderService.AddOrder(order, userId);
-        //    var options = new ChargeCreateOptions
-        //    {
-        //        Amount = Convert.ToInt32(order.TotalPrice * 100),
-        //        Currency = "bgn",
-        //        Description = "Order ID : " + order.Id,
-        //        Source = stripeToken,
-        //    };
+		//    var shoppingCart = await this.shoppingCartService.GetShoppingCart(userId);
 
-        //    var service = new ChargeService();
-        //    Charge charge = service.Create(options);
-        //    if (charge.Id == null)
-        //    {
-        //        order.PaymentStatus = "rejected";
-        //    }
-        //    else
-        //    {
-        //        order.TransactionId = charge.Id;
-        //    }
+		//    return this.View(shoppingCart);
+		//}
 
-        //    if (charge.Status.ToLower() == "succeeded")
-        //    {
-        //        order.PaymentStatus = "approved";
-        //        order.OrderStatus = "approved";
-        //        order.OrderDate = DateTime.Now;
-        //    }
+		//[HttpPost]
+		//public async Task<IActionResult> Summary(string stripeToken)
+		//{
+		//    var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+		//    var shoppingCart = await this.shoppingCartService.GetShoppingCart(userId);
+		//    var order = new OrderViewModel()
+		//    {
+		//        Courses = shoppingCart.Courses,
+		//        TotalPrice = shoppingCart.TotalPrice,
+		//        OrderDate = DateTime.Now,
+		//        OrderStatus = "pending",
+		//        PaymentStatus = "pending",
+		//    };
 
-        //    await this.orderService.UpdateOrder(order);
-        //    foreach (var course in shoppingCart.Courses)
-        //    {
-        //        await this.proteinService.AddStudentToCourse(course.Id, userId);
-        //    }
+		//    order.Id = await this.orderService.AddOrder(order, userId);
+		//    var options = new ChargeCreateOptions
+		//    {
+		//        Amount = Convert.ToInt32(order.TotalPrice * 100),
+		//        Currency = "bgn",
+		//        Description = "Order ID : " + order.Id,
+		//        Source = stripeToken,
+		//    };
 
-        //    await this.shoppingCartService.DeleteAllCoursesFromShoppingCart(userId);
-        //    return this.RedirectToAction("OrderConfirmation", "ShoppingCart", new { id = order.Id });
-        //}
+		//    var service = new ChargeService();
+		//    Charge charge = service.Create(options);
+		//    if (charge.Id == null)
+		//    {
+		//        order.PaymentStatus = "rejected";
+		//    }
+		//    else
+		//    {
+		//        order.TransactionId = charge.Id;
+		//    }
 
-        //public IActionResult OrderConfirmation(int id)
-        //{
-        //    return this.View(id);
-        //}
-    }
+		//    if (charge.Status.ToLower() == "succeeded")
+		//    {
+		//        order.PaymentStatus = "approved";
+		//        order.OrderStatus = "approved";
+		//        order.OrderDate = DateTime.Now;
+		//    }
+
+		//    await this.orderService.UpdateOrder(order);
+		//    foreach (var course in shoppingCart.Courses)
+		//    {
+		//        await this.proteinService.AddStudentToCourse(course.Id, userId);
+		//    }
+
+		//    await this.shoppingCartService.DeleteAllCoursesFromShoppingCart(userId);
+		//    return this.RedirectToAction("OrderConfirmation", "ShoppingCart", new { id = order.Id });
+		//}
+
+		//public IActionResult OrderConfirmation(int id)
+		//{
+		//    return this.View(id);
+		//}
+	}
 }
