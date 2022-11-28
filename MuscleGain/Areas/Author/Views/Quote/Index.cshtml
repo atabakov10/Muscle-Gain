@@ -1,0 +1,52 @@
+﻿@model IEnumerable<QuoteViewModel>
+
+@{
+    ViewData["Title"] = "Quotes";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"]</h3>
+               @* <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-default">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+	        <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+	                        <th>Quote</th>
+	                        <th>Author</th>
+	                        <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var quote in Model)
+                        {
+                            <tr>
+	                            <td>@quote.Text</td>
+	                            <td>@quote.AuthorName</td>
+                                <td>
+                                    <a asp-area="Author" asp-action="Edit" asp-controller="Quote" asp-route-id="@quote.Id" class="btn btn-block btn-outline-info btn-xs">Edit</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<a asp-area="Author" asp-controller="Quote" asp-action="Add" class="btn btn-block btn-success btn-sm">Add Quote</a>

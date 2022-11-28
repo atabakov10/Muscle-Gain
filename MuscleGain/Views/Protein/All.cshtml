@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MuscleGain.Core.Constants
 @model ProteinsQueryModel
 
 @{
@@ -77,11 +78,11 @@
 				<div class="card-body text-center">
 					<h5 class="card-title text-center center">@protein.Name (@protein.Flavour) - @protein.Grams</h5>
 					<div class="btn-group mt-1" role="group" aria-label="Basic mixed styles example">
-						@if (User.IsInRole("Supervisor"))
+						@if (User.IsInRole(RoleConstants.Administrator))
 						{
 							<a asp-controller="Protein" asp-action="Delete" asp-route-id="@protein.Id" class="btn btn-danger">Delete</a>
 						}
-						@if (User.IsInRole("Manager") || User.IsInRole("Administrator"))
+						@if (User.IsInRole(RoleConstants.Author))
 						{
 							<a asp-controller="Protein" asp-action="Edit" asp-route-id="@protein.Id" class="btn btn-warning">Edit</a>
 						}

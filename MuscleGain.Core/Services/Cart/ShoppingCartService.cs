@@ -31,7 +31,7 @@ namespace MuscleGain.Core.Services.Cart
 
             if (protein == null || user == null)
             {
-                throw new Exception();
+                throw new Exception("Protein Id or User Id is null");
             }
 
 

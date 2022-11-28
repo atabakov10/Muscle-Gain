@@ -1,8 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@model IEnumerable<LanguageViewModel>
+@model IEnumerable<QuoteViewModel>
 
 @{
-    ViewData["Title"] = "Languages";
+    ViewData["Title"] = "Quotes";
 }
 
 <div class="row">
@@ -10,7 +10,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">@ViewData["Title"]</h3>
-                <div class="card-tools">
+                @*<div class="card-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
                         <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
                         <div class="input-group-append">
@@ -19,28 +19,28 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </div>*@
             </div>
 
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Language</th>
-                            <th>Actions</th>
+	                        <th>Quote</th>
+	                        <th>Author</th>
+	                        <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var language in Model)
+                        @foreach (var quote in Model)
                         {
                             <tr>
-                                <td>@language.Id</td>
-                                <td>@language.Title</td>
+	                            <td>@quote.Text</td>
+	                            <td>@quote.AuthorName</td>
                                 <td>
-                                    <a asp-area="Admin" asp-action="Edit" asp-controller="Language" asp-route-id="@language.Id" class="btn btn-block btn-outline-info btn-xs">Edit</a>
-                                    <form asp-area="Admin" asp-action="Delete" asp-controller="Language" method="post">
-                                        <input name="id" type="hidden" value="@language.Id" />
+                                    <a asp-area="Admin" asp-action="Edit" asp-controller="Quote" asp-route-id="@quote.Id" class="btn btn-block btn-outline-info btn-xs">Edit</a>
+                                    <form asp-area="Admin" asp-action="Delete" asp-controller="Quote" method="post">
+                                        <input name="id" type="hidden" value="@quote.Id" />
                                         <button type="submit" class="btn btn-block btn-outline-danger btn-xs">Delete</button>
                                     </form>
                                 </td>
@@ -54,5 +54,3 @@
 
     </div>
 </div>
-
-<a asp-area="Admin" asp-controller="Language" asp-action="Add" class="btn btn-block btn-success btn-sm">Add Language</a>

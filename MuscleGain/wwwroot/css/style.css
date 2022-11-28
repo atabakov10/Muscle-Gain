@@ -127,6 +127,21 @@ body {
 #page-content {
     flex: 1 0 auto;
 }
+/*Access Denied css*/
+body {
+    background-color: black;
+    color: white;
+}
+
+h1 {
+    color: red;
+}
+
+h6 {
+    color: red;
+    text-decoration: underline;
+}
+
 
 /* Other Classes for Page Styling */
 

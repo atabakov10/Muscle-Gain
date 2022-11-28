@@ -6,7 +6,7 @@
 		<li class="nav-item mb-2">
 			<a href="#" class="nav-link active text-center">
 				<p>
-					Protein
+					Proteins
 					<i class="right fas fa-angle-left"></i>
 				</p>
 			</a>
@@ -14,10 +14,10 @@
 				<li class="nav-item">
 					<a asp-area="" asp-controller="Protein" asp-action="All" class="nav-link active">
 						<i class="far fa-circle nav-icon"></i>
-						<p>Protein Page</p>
+						<p>Protein's Page</p>
 					</a>
 				</li>
-				@if (User.IsInRole(RoleConstants.Administrator) || User.IsInRole(RoleConstants.Supervisor))
+				@if (User.IsInRole(RoleConstants.Seller))
 				{
 					<li class="nav-item">
 						<a asp-area="" asp-controller="Protein" asp-action="Add" class="nav-link">
@@ -28,18 +28,53 @@
 				}
 			</ul>
 		</li>
-		@if (User?.IsInRole("Manager") ?? false)
+		<li class="nav-item mb-2">
+			<a href="#" class="nav-link active text-center">
+				<p>
+					Quotes
+					<i class="right fas fa-angle-left"></i>
+				</p>
+			</a>
+			<ul class="nav nav-treeview">
+				<li class="nav-item">
+					<a asp-area="" asp-controller="Quote" asp-action="Index" class="nav-link active">
+						<i class="far fa-circle nav-icon"></i>
+						<p>Quote's Page</p>
+					</a>
+				</li>
+				@if (User.IsInRole(RoleConstants.Author))
+				{
+					<li class="nav-item">
+						<a asp-area="Admin" asp-controller="Quote" asp-action="Add" class="nav-link">
+							<i class="fas fa-plus-circle"></i>
+							<p>Add Quote</p>
+						</a>
+					</li>
+				}
+			</ul>
+		</li>
+		@if (User?.IsInRole(RoleConstants.Manager) ?? false)
 		{
-
 			<li class="align-bottom">
-				<a asp-area="Admin" asp-controller="" asp-action="Index" class="nav-link active align-bottom">
+				<a asp-area="Admin" asp-controller="" asp-action="Index" class="nav-link active text-center">
 					<p>
-						Account Management
+						Management
 					</p>
 				</a>
 			</li>
-
 		}
+		
+		@if (User?.IsInRole(RoleConstants.Author) ?? false)
+		 {
+			 <li class="align-bottom center">
+				<a asp-area="Author" asp-controller="Quote" asp-action="Index" class="nav-link active text-center">
+					 <p>
+						 Author
+					 </p>
+				 </a>
+			 </li>
+
+		 }
 	</ul>
 </nav>
 

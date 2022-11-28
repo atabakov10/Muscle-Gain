@@ -1,0 +1,31 @@
+﻿@model QuoteViewModel
+
+@{
+	ViewData["Title"] = "Add Quote";
+}
+
+<form asp-controller="Quote" asp-action="Add" method="post">
+	<div class="form-group">
+		<label asp-for="Text"></label>
+		<input asp-for="Text" />
+		<span asp-validation-for="Text" class="small text-danger"></span>
+		
+		<label asp-for="AuthorName"></label>
+		<input asp-for="AuthorName" />
+		<span asp-validation-for="AuthorName" class="small text-danger"></span>
+	</div>
+	<div class="row">
+		<div class="col-3">
+			<button type="submit" class="btn btn-block btn-success btn-xs">Add</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-3">
+			<a asp-area="Author" asp-controller="Quote" asp-action="Index" class="btn btn-block btn-danger btn-xs">Cancel</a>
+		</div>
+	</div>
+</form>
+
+@section Scripts{
+	<partial name="_ValidationScriptsPartial.cshtml" />
+}

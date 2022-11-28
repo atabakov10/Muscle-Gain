@@ -4,6 +4,7 @@ using MuscleGain.Infrastructure.Data.Configurations;
 using MuscleGain.Infrastructure.Data.Models.Account;
 using MuscleGain.Infrastructure.Data.Models.Cart;
 using MuscleGain.Infrastructure.Data.Models.Protein;
+using MuscleGain.Infrastructure.Data.Models.Quotes;
 using MuscleGain.Infrastructure.Data.Models.Reviews;
 
 namespace MuscleGain.Infrastructure.Data
@@ -20,7 +21,7 @@ namespace MuscleGain.Infrastructure.Data
 
         public DbSet<Review> Reviews { get; set; }
 
-        public DbSet<Language> Languages { get; set; }
+        public DbSet<Quote> Quotes { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         
         protected override void OnModelCreating(ModelBuilder builder)

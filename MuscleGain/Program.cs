@@ -40,6 +40,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Account/Login";
     options.LogoutPath = "/Account/Logout";
+    options.AccessDeniedPath = "/Account/AccessDenied";
 });
 
 builder.Services.AddAuthorization(options =>
@@ -57,6 +58,8 @@ builder.Services.AddControllersWithViews()
     });
 
 builder.Services.AddApplicationServices();
+
+builder.Services.AddResponseCaching();
 
 var app = builder.Build();
 
@@ -98,4 +101,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapRazorPages();
+app.UseResponseCaching();
+
 app.Run();

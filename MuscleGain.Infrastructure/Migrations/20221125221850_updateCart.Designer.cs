@@ -260,7 +260,7 @@ namespace MuscleGain.Infrastructure.Migrations
                     b.ToTable("ShoppingCarts");
                 });
 
-            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.Language", b =>
+            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.Quote", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -480,7 +480,7 @@ namespace MuscleGain.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("MuscleGain.Infrastructure.Data.Models.Protein.Language", null)
+                    b.HasOne("MuscleGain.Infrastructure.Data.Models.Protein.Quote", null)
                         .WithMany("Proteins")
                         .HasForeignKey("LanguageId");
 
@@ -533,7 +533,7 @@ namespace MuscleGain.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.Language", b =>
+            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.Quote", b =>
                 {
                     b.Navigation("Proteins");
                 });

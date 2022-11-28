@@ -113,7 +113,7 @@ namespace MuscleGain.Controllers
 	            
 				if (result.Succeeded)
                 {
-                    if (model.ReturnUrl != null)
+	                if (model.ReturnUrl != null)
                     {
                         return Redirect(model.ReturnUrl);
                     }
@@ -139,6 +139,7 @@ namespace MuscleGain.Controllers
         //    await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Manager));
         //    await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Supervisor));
         //    await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Administrator));
+        //    await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Author));
 
         //    return RedirectToAction("Index", "Home");
         //}
@@ -192,6 +193,11 @@ namespace MuscleGain.Controllers
 
 
 			return RedirectToAction("MyProfile", "Account");
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return this.View();
         }
 
         //[HttpPost]

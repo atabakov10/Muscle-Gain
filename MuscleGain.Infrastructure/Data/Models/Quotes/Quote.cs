@@ -1,20 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MuscleGain.Infrastructure.Data.Models.Account;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MuscleGain.Infrastructure.Data.Models.Quotes
 {
-	public class Quote
-	{
-		//[Key]
-		//public int Id { get; set; }
+    public class Quote
+    {
+        [Key]
+        public int Id { get; set; }
 
-		//[Required]
-		//public string Content { get; set; }
+        [Required]
+        [StringLength(2046)]
+        public string Text { get; set; } = null!;
 
-		//public virtual Author Author { get; set; }
-	}
+        
+        [StringLength(30)]
+        public string? AuthorName { get; set; }
+        public string? UserId { get; set; }
+        [ForeignKey(nameof(UserId))]
+        public ApplicationUser? User { get; set; }
+        public bool IsDeleted { get; set; }
+    }
 }

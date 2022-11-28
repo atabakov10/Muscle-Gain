@@ -151,6 +151,7 @@ namespace MuscleGain.Core.Services.Proteins
 
 		public async Task<IEnumerable<string>> AllProteinCategoriesAsync()
 		=> await repo.AllReadonly<ProteinsCategories>()
+			.Where(x => x.IsDeleted == false)
 				.Select(p => p.Name)
 				.Distinct()
 				.OrderBy(n => n)
@@ -160,6 +161,7 @@ namespace MuscleGain.Core.Services.Proteins
 		public async Task<IEnumerable<ProteinCategoryViewModel>> GetProteinCategoriesAsync()
 		{
 			return await repo.AllReadonly<ProteinsCategories>()
+				.Where(x => x.IsDeleted == false)
 				.Select(x => new ProteinCategoryViewModel
 				{
 					Id = x.Id,
@@ -172,7 +174,7 @@ namespace MuscleGain.Core.Services.Proteins
 		{
 			var protein = await repo.GetByIdAsync<Protein>(id);
 
-			var model = new EditProteinViewModel()
+			var model = new EditProteinViewModel
 			{
 				Id = id,
 				Name = protein.Name,
@@ -181,10 +183,9 @@ namespace MuscleGain.Core.Services.Proteins
 				Price = protein.Price,
 				Description = protein.Description,
 				ImageUrl = protein.ImageUrl,
-				CategoryId = protein.CategoryId
+				CategoryId = protein.CategoryId,
+				Categories = await GetProteinCategoriesAsync()
 			};
-
-			model.Categories = await GetProteinCategoriesAsync();
 
 			return model;
 		}
@@ -247,6 +248,7 @@ namespace MuscleGain.Core.Services.Proteins
 		public async Task<IEnumerable<ProteinIndexViewModel>> LastThreeProteins()
 		{
 			return await repo.AllReadonly<Protein>()
+				.Where(x => x.IsDeleted == false)
 				.OrderByDescending(p => p.Id)
 				.Select(p => new ProteinIndexViewModel()
 				{

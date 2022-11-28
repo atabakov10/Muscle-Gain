@@ -54,7 +54,7 @@ namespace MuscleGain.Controllers
 		/// <returns> the view to add a protein</returns>
 
 		[HttpGet]
-		[Authorize(Roles = $"{RoleConstants.Manager}, {RoleConstants.Supervisor}")]
+		[Authorize(Roles = RoleConstants.Seller)]
 		public async Task<IActionResult> Add() => View(new AddProtein
 		{
 			Categories = await this.proteinService.GetProteinCategoriesAsync()

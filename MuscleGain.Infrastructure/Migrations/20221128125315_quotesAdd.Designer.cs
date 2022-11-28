@@ -12,8 +12,8 @@ using MuscleGain.Infrastructure.Data;
 namespace MuscleGain.Infrastructure.Migrations
 {
     [DbContext(typeof(MuscleGainDbContext))]
-    [Migration("20221127181726_IsDeletedProtein")]
-    partial class IsDeletedProtein
+    [Migration("20221128125315_quotesAdd")]
+    partial class quotesAdd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -260,27 +260,6 @@ namespace MuscleGain.Infrastructure.Migrations
                     b.ToTable("ShoppingCarts");
                 });
 
-            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.Quote", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Languages");
-                });
-
             modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.Protein", b =>
                 {
                     b.Property<int>("Id")
@@ -319,9 +298,6 @@ namespace MuscleGain.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("LanguageId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -336,8 +312,6 @@ namespace MuscleGain.Infrastructure.Migrations
                     b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("LanguageId");
 
                     b.ToTable("Proteins");
                 });
@@ -360,6 +334,32 @@ namespace MuscleGain.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProteinsCategories");
+                });
+
+            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.Quote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(2046)
+                        .HasColumnType("nvarchar(2046)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Quotes");
                 });
 
             modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Reviews.Review", b =>
@@ -489,10 +489,6 @@ namespace MuscleGain.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("MuscleGain.Infrastructure.Data.Models.Protein.Quote", null)
-                        .WithMany("Proteins")
-                        .HasForeignKey("LanguageId");
-
                     b.Navigation("ProteinCategory");
                 });
 
@@ -540,11 +536,6 @@ namespace MuscleGain.Infrastructure.Migrations
             modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Cart.ShoppingCart", b =>
                 {
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.Quote", b =>
-                {
-                    b.Navigation("Proteins");
                 });
 
             modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.Protein", b =>

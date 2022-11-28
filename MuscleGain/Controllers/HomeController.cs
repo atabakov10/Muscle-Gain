@@ -25,7 +25,7 @@ namespace MuscleGain.Controllers
             proteinService = _proteinService;
             logger = _logger;
         }
-
+        
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {

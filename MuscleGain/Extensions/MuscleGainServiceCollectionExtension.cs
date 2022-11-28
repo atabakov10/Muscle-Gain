@@ -1,8 +1,9 @@
 ﻿using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Services.Cart;
 using MuscleGain.Core.Services.Categories;
-using MuscleGain.Core.Services.Language;
+//using MuscleGain.Core.Services.Language;
 using MuscleGain.Core.Services.Proteins;
+using MuscleGain.Core.Services.Quote;
 using MuscleGain.Core.Services.Review;
 using MuscleGain.Core.Services.Statistics;
 using MuscleGain.Core.Services.User;
@@ -22,7 +23,7 @@ namespace MuscleGain.Extensions
 
             services.AddScoped<IUserService, UserService>();
 
-            services.AddScoped<ILanguageService, LanguageService>();
+            services.AddScoped<IQuotesService, QuotesService>();
 
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
 
