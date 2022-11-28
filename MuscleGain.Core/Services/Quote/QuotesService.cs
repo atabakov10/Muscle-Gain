@@ -2,6 +2,7 @@
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Quotes;
 using MuscleGain.Infrastructure.Data.Common;
+using MuscleGain.Infrastructure.Data.Models.Account;
 
 namespace MuscleGain.Core.Services.Quote
 {
@@ -16,10 +17,17 @@ namespace MuscleGain.Core.Services.Quote
 
         public async Task Add(QuoteViewModel quoteModel)
         {
-            var quote = new Infrastructure.Data.Models.Quotes.Quote
+	        var user = await this.repo.GetByIdAsync<ApplicationUser>(quoteModel.UserId);
+
+	        if (user == null)
+	        {
+		        throw new Exception();
+	        }
+			var quote = new Infrastructure.Data.Models.Quotes.Quote
             {
                 Text = quoteModel.Text,
-                AuthorName = quoteModel.AuthorName
+                AuthorName = quoteModel.AuthorName,
+                UserId = quoteModel.UserId,
             };
 
             await this.repo.AddAsync(quote);
@@ -28,7 +36,7 @@ namespace MuscleGain.Core.Services.Quote
 
         public async Task Delete(int id)
         {
-            var quote = await this.repo.GetByIdAsync<Infrastructure.Data.Models.Quotes.Quote>(id);
+	        var quote = await this.repo.GetByIdAsync<Infrastructure.Data.Models.Quotes.Quote>(id);
 
             if (quote == null)
             {
@@ -48,6 +56,7 @@ namespace MuscleGain.Core.Services.Quote
                 {
                     Id = l.Id,
                     Text = l.Text,
+                    UserId = l.UserId,
                     AuthorName = l.AuthorName,
                 }).ToListAsync();
         }

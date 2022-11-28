@@ -34,7 +34,9 @@ namespace MuscleGain.Infrastructure.Data
 
             builder.ApplyConfiguration(new ShoppingCartConfiguration());
 
-            base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new QuoteConfiguration());
+
+			base.OnModelCreating(builder);
         }
     }
 }

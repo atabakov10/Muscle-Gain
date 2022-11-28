@@ -4,6 +4,8 @@ using MuscleGain.Areas.Admin.Controllers;
 using MuscleGain.Core.Constants;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Quotes;
+using MuscleGain.Core.Models.Reviews;
+using System.Security.Claims;
 
 namespace MuscleGain.Areas.Author.Controllers
 {
@@ -26,7 +28,13 @@ namespace MuscleGain.Areas.Author.Controllers
 		
 		public IActionResult Add()
 		{
-			var model = new QuoteViewModel();
+
+			var userId = this.GetUserId();
+
+			var model = new QuoteViewModel()
+			{
+				UserId = userId
+			};
 
 			return View(model);
 		}
@@ -42,7 +50,7 @@ namespace MuscleGain.Areas.Author.Controllers
 			await this._quotesService.Add(model);
 			return this.RedirectToAction(nameof(this.Index));
 		}
-
+		
 		public async Task<IActionResult> Edit(int id)
 		{
 			var model = await this._quotesService.GetQuoteForEdit(id);
@@ -60,5 +68,7 @@ namespace MuscleGain.Areas.Author.Controllers
 			await this._quotesService.Update(model);
 			return this.RedirectToAction("Index", "Quote");
 		}
+		private string GetUserId()
+			=> this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 	}
 }

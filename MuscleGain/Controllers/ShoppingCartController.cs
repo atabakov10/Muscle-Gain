@@ -44,6 +44,7 @@ namespace MuscleGain.Controllers
 				return this.RedirectToAction("All", "Protein");
 			}
 
+
 			await this.shoppingCartService.AddProteinInShoppingCart(id, userId);
 
 

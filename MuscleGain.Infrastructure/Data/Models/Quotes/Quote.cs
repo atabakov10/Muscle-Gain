@@ -16,9 +16,10 @@ namespace MuscleGain.Infrastructure.Data.Models.Quotes
         
         [StringLength(30)]
         public string? AuthorName { get; set; }
-        public string? UserId { get; set; }
-        [ForeignKey(nameof(UserId))]
-        public ApplicationUser? User { get; set; }
-        public bool IsDeleted { get; set; }
+
+        [Required]
+        public string UserId { get; set; } = null!;
+		public ApplicationUser User { get; set; } = null!;
+		public bool IsDeleted { get; set; }
     }
 }

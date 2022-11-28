@@ -21,23 +21,23 @@
                     </div>
                 </div>
 
-                <div class="card-body">
-                    @foreach (var course in Model.Proteins)
+	            <div class="card-body">
+                    @foreach (var protein in Model.Proteins)
                     {
                         <div class="row">
-                            <div class="d-none d-lg-block col-lg-1 text-center py-2">
-                                <a asp-area="" asp-controller="Protein" asp-action="Details" asp-route-id="@course.Id">
-                                    <img src="@course.ImageUrl" class="rounded" width="100%" />
-                                </a>
-                            </div>
-                            <div class="col-12 text-sm-center col-lg-6 text-lg-left">
-                                <a asp-area="" asp-controller="Protein" asp-action="Details" asp-route-id="@course.Id">
-                                    <h5><strong>@course.Name</strong></h5>
+	                        <div class="d-none d-lg-block col-lg-1 text-center py-2">
+		                        <a asp-area="" asp-controller="Protein" asp-action="Details" asp-route-id="@protein.Id">
+			                        <img src="@protein.ImageUrl" class="rounded" width="100%" />
+		                        </a>
+	                        </div>
+	                        <div class="col-12 text-sm-center col-lg-6 text-lg-left">
+                                <a asp-area="" asp-controller="Protein" asp-action="Details" asp-route-id="@protein.Id">
+                                    <h5><strong>@protein.Name</strong></h5>
                                 </a>
                             </div>
                             <div class="col-12 text-sm-center col-lg-5 text-lg-right row">
                                 <div class="col-4 text-md-right" style="padding-top:5px;">
-                                    <h6><strong>$@course.Price<span class="text-muted"></span></strong></h6>
+                                    <h6><strong>$@protein.Price<span class="text-muted"></span></strong></h6>
                                 </div>
                                 <div class="col-6 col-sm-4 col-lg-6">
                                     @*<div class="float-right mx-1">
@@ -46,7 +46,7 @@
                                         </a>
                                     </div>*@
                                     <div class="float-right mx-1">
-                                        <a asp-controller="Protein" asp-action="Details" asp-route-id="@course.Id" class="btn btn-primary btn-sm">
+                                        <a asp-controller="Protein" asp-action="Details" asp-route-id="@protein.Id" class="btn btn-primary btn-sm">
                                             <i class="fas fa-folder">
                                             </i>
                                             View
@@ -57,7 +57,7 @@
                                     </div>
                                 </div>
                                 <div class="col-2 col-sm-4 col-lg-2 text-right">
-                                    <a asp-controller="ShoppingCart" asp-action="Delete" asp-route-id="@course.Id" class="btn btn-danger">
+                                    <a asp-controller="ShoppingCart" asp-action="Delete" asp-route-id="@protein.Id" class="btn btn-danger">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </div>

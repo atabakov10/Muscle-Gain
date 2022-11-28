@@ -12,7 +12,6 @@ namespace MuscleGain.Core.Models.Cart
         public string UserName { get; set; } = null!;
 
         public string Email { get; set; } = null!;
-
         public string UserFullName { get; set; } = null!;
 
         public decimal TotalPrice => Proteins.Sum(c => c.Price);

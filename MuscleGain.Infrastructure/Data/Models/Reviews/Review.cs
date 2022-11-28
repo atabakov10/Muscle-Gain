@@ -23,6 +23,7 @@ namespace MuscleGain.Infrastructure.Data.Models.Reviews
 
         public DateTime? LastUpdate { get; set; }
 
+		public bool IsDeleted { get; set; }
         public string UserId { get; set; } = null!;
 		public ApplicationUser User { get; set; } = null!;
 

@@ -2,6 +2,7 @@
 {
 	public class ReviewViewModel
 	{
+		public int ReviewId { get; set; }
 		public string Comment { get; set; } = null!;
 
 		public double Rating { get; set; }
