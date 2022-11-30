@@ -15,6 +15,7 @@ namespace MuscleGain.Infrastructure.Data.Configurations
 				.WithOne(x => x.User)
 				.HasForeignKey<ShoppingCart>(x => x.UserId)
 				.OnDelete(DeleteBehavior.Restrict);
+
 		}
 	}
 }

@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MuscleGain.Core.Constants;
+using MuscleGain.Core.Services.Payments;
 using MuscleGain.Extensions;
 using MuscleGain.Infrastructure;
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Models.Account;
 using MuscleGain.ModelBinders;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,12 +32,12 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     .AddEntityFrameworkStores<MuscleGainDbContext>();
 
 
-builder.Services.AddAuthentication()
-    .AddFacebook(options =>
-    {
-        options.AppId = "1432800920459702";
-        options.AppSecret = "412639861b83dfb0266c0edb515fc6ef";
-    });
+//builder.Services.AddAuthentication()
+//    .AddFacebook(options =>
+//    {
+//        options.AppId = "1432800920459702";
+//        options.AppSecret = "412639861b83dfb0266c0edb515fc6ef";
+//    });
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -51,13 +54,19 @@ builder.Services.AddAuthorization(options =>
                                            context.User.IsInRole(RoleConstants.Administrator)));
 });
 
+
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(options =>
     {
+        options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
         options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
     });
 
+
+
 builder.Services.AddApplicationServices();
+
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
 builder.Services.AddResponseCaching();
 
@@ -86,6 +95,9 @@ app.Use(async (context, next) =>
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 
 app.UseRouting();
 

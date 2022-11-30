@@ -13,6 +13,7 @@ namespace MuscleGain.Controllers
 	public class ProteinController : BaseController
 	{
 		private readonly IProteinService proteinService;
+
 		//private readonly MuscleGainDbContext data;
 		private readonly IUserService userService;
 		private readonly ICategoryService categoryService;
@@ -22,12 +23,14 @@ namespace MuscleGain.Controllers
 			IProteinService proteinService,
 			MuscleGainDbContext data,
 			IUserService userService,
-			ICategoryService categoryService)
+			ICategoryService categoryService,
+			ILogger<ProteinController> logger)
 		{
 			this.proteinService = proteinService;
 			//this.data = data;
 			this.userService = userService;
 			this.categoryService = categoryService;
+			this.logger = logger;
 		}
 
 		public async Task<IActionResult> All([FromQuery] ProteinsQueryModel query)
@@ -55,10 +58,16 @@ namespace MuscleGain.Controllers
 
 		[HttpGet]
 		[Authorize(Roles = RoleConstants.Seller)]
-		public async Task<IActionResult> Add() => View(new AddProtein
+		public async Task<IActionResult> Add()
 		{
-			Categories = await this.proteinService.GetProteinCategoriesAsync()
-		});
+			var user = this.GetUserId();
+
+			return View(new AddProtein
+			{
+				Categories = await this.categoryService.GetAllCategories(),
+				UserId = user
+			});
+		}
 
 		/// <summary>
 		/// Checks your input data for add
@@ -69,36 +78,29 @@ namespace MuscleGain.Controllers
 		/// </returns>
 
 		[HttpPost]
-		public async Task<IActionResult> Add(AddProtein protein)
+		public async Task<IActionResult> Add(AddProtein model)
 		{
-			int id = protein.CategoryId;
-
-			if (!categoryService.CheckForCategory(id).IsFaulted)
+			var categories = await this.categoryService.GetAllCategories();
+			if (!categories.Any(b => b.Id == model.CategoryId))
 			{
-				this.ModelState.AddModelError(nameof(protein.CategoryId), "Category does not exist!");
+				this.ModelState.AddModelError(nameof(model.CategoryId), "Category does not exist");
 			}
 
-			if (!ModelState.IsValid)
+			var currentUserId = this.GetUserId();
+
+			//model.UserId = currentUserId;
+
+			if (!this.ModelState.IsValid)
 			{
-				TempData[MessageConstant.ErrorMessage] = "Something went wrong!";
-				return View();
+				model.Categories = categories;
+				return this.View(model);
 			}
 
-			try
-			{
-				await proteinService.AddAsync(protein);
-
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-			TempData[MessageConstant.SuccessMessage] = "Successfully added protein";
-
-			return RedirectToAction(nameof(All));
+			await this.proteinService.AddAsync(model);
+			TempData[MessageConstant.ErrorMessage] =
+				"The protein will be approved by the administrator and then will be published.";
+			return this.RedirectToAction(nameof(this.All));
 		}
-
 		/// <summary>
 		/// Gets the protein by id 
 		/// </summary>
@@ -109,6 +111,7 @@ namespace MuscleGain.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Edit(int id)
 		{
+
 			if (id == null)
 			{
 				return new NotFoundResult();
@@ -129,8 +132,13 @@ namespace MuscleGain.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Edit(EditProteinViewModel model)
 		{
+			var categories = await this.categoryService.GetAllCategories();
+
+			
+
 			if (!ModelState.IsValid)
 			{
+				model.Categories = categories;
 				return View(model);
 			}
 
@@ -187,7 +195,11 @@ namespace MuscleGain.Controllers
 
 			return RedirectToAction(nameof(All));
 		}
+
+		private string GetUserId()
+			=> this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 	}
 
 }
+
 

@@ -8,6 +8,7 @@
 	<div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
 		<h2 class="heading-margin text-center">Add Protein</h2>
 		<form method="post">
+			<input asp-for="@Model.UserId" hidden>
 			<div class="mb-3">
 				<label asp-for="Name" class="form-label"></label>
 				<input asp-for="Name" class="form-control" placeholder="Whey Protein, Clear Protein, etc...">
@@ -44,15 +45,20 @@
 				<input asp-for="ImageUrl" class="form-control" placeholder="Put your URL here...">
 				<span asp-validation-for="ImageUrl" class="small text-danger"></span>
 			</div>
-			<label asp-for="CategoryId"></label>
-			<select asp-for="CategoryId" class="form-select">
-				@foreach (var category in Model.Categories)
-				{
-					<option value="@category.Id">@category.Name</option>
-				}
-			</select>
+			<div class="col md-3">
+				<div class="form-group">
+					<label asp-for="CategoryId" class="form-label"></label>
+					<select asp-for="CategoryId" class="form-select">
+						@foreach (var category in Model.Categories)
+						{
+							<option value="@category.Id">@category.Name</option>
+						}
+					</select>
+					<span asp-validation-for="CategoryId" class="small text-danger"></span>
+				</div>
+			</div>
 			<div class="col-6">
-				<button type="submit" class="btn btn-primary mt-2 mb-2">Save</button>
+				<button type="submit" class="btn btn-primary mt-2 mb-2">Add</button>
 			</div>
 		</form>
 	</div>

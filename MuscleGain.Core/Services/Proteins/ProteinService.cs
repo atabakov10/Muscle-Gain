@@ -20,15 +20,17 @@ namespace MuscleGain.Core.Services.Proteins
 	public class ProteinService : IProteinService
 	{
 		private readonly IRepository repo;
-
+		private readonly ICategoryService categoryService;
 		private readonly ILogger logger;
 
 		public ProteinService(
 			IRepository _repo,
-			ILogger<ProteinService> _logger)
+			ILogger<ProteinService> _logger,
+			ICategoryService categoryService)
 		{
 			repo = _repo;
 			logger = _logger;
+			this.categoryService = categoryService;
 		}
 
 		public async Task<ProteinQueryServiceModel> AllAsync(
@@ -141,7 +143,8 @@ namespace MuscleGain.Core.Services.Proteins
 				Price = (decimal)protein.Price,
 				Description = protein.Description,
 				ImageUrl = protein.ImageUrl,
-				CategoryId = protein.CategoryId
+				CategoryId = protein.CategoryId,
+				ApplicationUserId = protein.UserId
 			};
 
 			await repo.AddAsync(product);
@@ -184,7 +187,8 @@ namespace MuscleGain.Core.Services.Proteins
 				Description = protein.Description,
 				ImageUrl = protein.ImageUrl,
 				CategoryId = protein.CategoryId,
-				Categories = await GetProteinCategoriesAsync()
+				Categories = await categoryService.GetAllCategories(),
+				UserId = protein.ApplicationUserId
 			};
 
 			return model;
@@ -193,7 +197,7 @@ namespace MuscleGain.Core.Services.Proteins
 		public async Task EditAsync(EditProteinViewModel model)
 		{
 			var entity = await repo.GetByIdAsync<Protein>(model.Id);
-
+			
 			entity.Name = model.Name;
 			entity.Flavour = model.Flavour;
 			entity.Grams = model.Grams;
@@ -201,6 +205,7 @@ namespace MuscleGain.Core.Services.Proteins
 			entity.Description = model.Description;
 			entity.ImageUrl = model.ImageUrl;
 			entity.CategoryId = model.CategoryId;
+			entity.ApplicationUserId = model.UserId;
 
 			await repo.SaveChangesAsync();
 		}
@@ -212,6 +217,7 @@ namespace MuscleGain.Core.Services.Proteins
 				.Include(r => r.Reviews)
 				.ThenInclude(u => u.User)
 				.Include(x => x.ProteinCategory)
+				.Include(x=> x.ApplicationUser)
 				.FirstOrDefaultAsync(x => x.Id == id);
 
 
@@ -233,6 +239,8 @@ namespace MuscleGain.Core.Services.Proteins
 				Description = protein.Description,
 				ImageUrl = protein.ImageUrl,
 				Category = protein.ProteinCategory.Name,
+				CreatorFullName = $"{protein.ApplicationUser.FirstName} {protein.ApplicationUser.LastName}",
+				Email = protein.ApplicationUser.Email,
 
 				Reviews = protein.Reviews.Select(r => new ReviewViewModel()
 				{
@@ -248,7 +256,7 @@ namespace MuscleGain.Core.Services.Proteins
 		public async Task<IEnumerable<ProteinIndexViewModel>> LastThreeProteins()
 		{
 			return await repo.AllReadonly<Protein>()
-				.Where(x => x.IsDeleted == false)
+				.Where(x => x.IsDeleted == false && x.IsApproved== true)
 				.OrderByDescending(p => p.Id)
 				.Select(p => new ProteinIndexViewModel()
 				{

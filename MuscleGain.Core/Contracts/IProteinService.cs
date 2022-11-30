@@ -9,8 +9,8 @@ namespace MuscleGain.Core.Contracts
 {
     public interface IProteinService
     {
-        Task<ProteinQueryServiceModel> AllAsync(
-             string? flavour = null,
+		Task<ProteinQueryServiceModel> AllAsync(
+			 string? flavour = null,
              string? searchTerm = null,
              ProteinSorting sorting = ProteinSorting.DateCreated,
              int currentPage = 1,

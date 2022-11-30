@@ -22,9 +22,12 @@ namespace MuscleGain.Infrastructure.Data
         public DbSet<Review> Reviews { get; set; }
 
         public DbSet<Quote> Quotes { get; set; }
+
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
-        
-        protected override void OnModelCreating(ModelBuilder builder)
+
+        public DbSet<Order> Orders { get; set; }
+
+		protected override void OnModelCreating(ModelBuilder builder)
 		{
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
 

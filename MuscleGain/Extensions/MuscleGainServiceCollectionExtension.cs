@@ -1,6 +1,7 @@
 ﻿using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Services.Cart;
 using MuscleGain.Core.Services.Categories;
+using MuscleGain.Core.Services.Orders;
 //using MuscleGain.Core.Services.Language;
 using MuscleGain.Core.Services.Proteins;
 using MuscleGain.Core.Services.Quote;
@@ -30,6 +31,8 @@ namespace MuscleGain.Extensions
             services.AddScoped<IReviewService, ReviewService>();
 
             services.AddScoped<ICategoryService, CategoryService>();
+
+            services.AddScoped<IOrderService, OrderService>();
 
             return services;
         }

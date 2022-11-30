@@ -28,6 +28,7 @@
                         <tr>
 	                        <th>Quote</th>
 	                        <th>Author</th>
+	                        <th>Published by</th>
 	                        <th>Actions</th>
                         </tr>
                     </thead>
@@ -37,8 +38,9 @@
                             <tr>
 	                            <td>@quote.Text</td>
 	                            <td>@quote.AuthorName</td>
-                                <td>
-                                    <a asp-area="Admin" asp-action="Edit" asp-controller="Quote" asp-route-id="@quote.Id" class="btn btn-block btn-outline-info btn-xs">Edit</a>
+	                            <td>@quote.PublisherFullName</td>
+	                            <td>
+                                    <a asp-area="Admin" asp-action="Edit" asp-controller="Quote" asp-route-id="@quote.Id" class="btn btn-block btn-outline-info btn-xs mb-1">Edit</a>
                                     <form asp-area="Admin" asp-action="Delete" asp-controller="Quote" method="post">
                                         <input name="id" type="hidden" value="@quote.Id" />
                                         <button type="submit" class="btn btn-block btn-outline-danger btn-xs">Delete</button>

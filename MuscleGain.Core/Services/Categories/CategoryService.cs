@@ -29,6 +29,7 @@ namespace MuscleGain.Core.Services.Categories
 			var category = new ProteinsCategories()
 			{
 				Name = model.Name,
+				ParentId = model.ParentId
 			};
 
 			await this.repo.AddAsync(category);
@@ -63,25 +64,26 @@ namespace MuscleGain.Core.Services.Categories
 		public async Task<IEnumerable<ProteinCategoryViewModel>> GetAllCategories()
 		{
 			var categories = await this.repo.AllReadonly<ProteinsCategories>()
-				.Where(c => c.IsDeleted == false)
+				.Where(c => c.IsDeleted == false && c.ParentId == null)
 				.Select(c => new ProteinCategoryViewModel()
 				{
 					Id = c.Id,
 					Name = c.Name,
+					ParentId = c.ParentId
 				}).ToListAsync();
 
-			var categoriesToReturn = new List<ProteinCategoryViewModel>();
-			foreach (var mainCategory in categories)
-			{
-				foreach (var proteinCategory in categories)
-				{
-					mainCategory.ProteinCategories.Add(proteinCategory);
-				}
+			//var categoriesToReturn = new List<ProteinCategoryViewModel>();
+			//foreach (var mainCategory in categories)
+			//{
+			//	foreach (var proteinCategory in categories)
+			//	{
+			//		mainCategory.ProteinCategories.Add(proteinCategory);
+			//	}
 
-				categoriesToReturn.Add(mainCategory);
-			}
+			//	categoriesToReturn.Add(mainCategory);
+			//}
 
-			return categoriesToReturn;
+			return categories;
 		}
 
 		public async Task<EditCategoryViewModel> GetCategoryForEdit(int id)

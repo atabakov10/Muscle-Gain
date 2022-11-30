@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using Microsoft.Build.Globbing
+@using MuscleGain.Core.Constants
 @model ProteinDetailsViewModel
 
 @{
@@ -16,6 +16,8 @@
 				<div class="col-md-6">
 					<div class="pro-img-details">
 						<img src=@Model.ImageUrl>
+						<h2>Created by: @Model.CreatorFullName</h2>
+						<h3>Email address: @Model.Email</h3>
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -32,12 +34,12 @@
 						<span><strong>Category:</strong> <a>@Model.Category</a></span>
 					</div>
 					<div class="m-bot15"> <strong>Price : </strong><span class="pro-price"> $@Model.Price</span></div>
-					<div class="form-group">
-						<label>Quantity</label>
-						<input type="quantiy" placeholder="1" class="form-control quantity">
-					</div>
 					<p>
-						<a asp-controller="ShoppingCart" asp-action="Add" type="button" class="btn btn-block btn-primary btn-lg">Add to Cart</a>
+						@*@if (!User.IsInRole(RoleConstants.Manager) && !User.IsInRole(RoleConstants.Seller) && !User.IsInRole(RoleConstants.Administrator) && User.IsInRole(RoleConstants.Supervisor))
+						{
+						}*@
+							<a asp-controller="ShoppingCart" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-round btn-danger" type="button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+
 						<a asp-controller="Review" asp-action="CreateReview" asp-route-id="@Model.Id" type="button" class="btn btn-info">Add Review</a>
 					</p>
 				</div>

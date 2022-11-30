@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MuscleGain.Core.Constants;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Quotes;
+using System.Security.Claims;
 
 namespace MuscleGain.Areas.Admin.Controllers
 {
@@ -24,7 +25,9 @@ namespace MuscleGain.Areas.Admin.Controllers
 
 		public async Task<IActionResult> Edit(int id)
 		{
-			var model = await this._quotesService.GetQuoteForEdit(id);
+			var user = this.GetUserId();
+
+			var model = await this._quotesService.GetQuoteForEdit(id, user);
 			return this.View(model);
 		}
 
@@ -46,5 +49,7 @@ namespace MuscleGain.Areas.Admin.Controllers
 			await this._quotesService.Delete(id);
 			return this.RedirectToAction("Index", "Quote");
 		}
+		private string GetUserId()
+			=> this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 	}
 }

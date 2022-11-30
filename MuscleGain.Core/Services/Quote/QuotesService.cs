@@ -51,18 +51,22 @@ namespace MuscleGain.Core.Services.Quote
         public async Task<IEnumerable<QuoteViewModel>> GetAll()
         {
             return await this.repo.AllReadonly<Infrastructure.Data.Models.Quotes.Quote>()
-                .Where(l => l.IsDeleted == false)
-                .Select(l => new QuoteViewModel
+                .Where(q => q.IsDeleted == false)
+                .Include(x=> x.User)
+                .Select(q => new QuoteViewModel
                 {
-                    Id = l.Id,
-                    Text = l.Text,
-                    UserId = l.UserId,
-                    AuthorName = l.AuthorName,
+                    Id = q.Id,
+                    Text = q.Text,
+                    UserId = q.UserId,
+                    PublisherFullName = $"{q.User.FirstName} {q.User.LastName}",
+                    AuthorName = q.AuthorName,
                 }).ToListAsync();
         }
 
-        public async Task<QuoteViewModel> GetQuoteForEdit(int id)
+        public async Task<QuoteViewModel> GetQuoteForEdit(int id, string userId)
         {
+	        var user = await this.repo.GetByIdAsync<ApplicationUser>(userId);
+
             var model = await this.repo.GetByIdAsync<Infrastructure.Data.Models.Quotes.Quote>(id);
 
             if (model == null)
@@ -75,6 +79,7 @@ namespace MuscleGain.Core.Services.Quote
                 Id = model.Id,
                 Text = model.Text,
                 AuthorName = model.AuthorName,
+                UserId = user.Id,
             };
         }
 

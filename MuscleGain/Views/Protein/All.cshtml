@@ -82,12 +82,15 @@
 						{
 							<a asp-controller="Protein" asp-action="Delete" asp-route-id="@protein.Id" class="btn btn-danger">Delete</a>
 						}
-						@if (User.IsInRole(RoleConstants.Author))
+						@if (User.IsInRole(RoleConstants.Seller))
 						{
 							<a asp-controller="Protein" asp-action="Edit" asp-route-id="@protein.Id" class="btn btn-warning">Edit</a>
 						}
 						<a asp-controller="Protein" asp-action="Details" asp-route-id="@protein.Id" class="btn btn-success">Details</a>
-						<a asp-controller="ShoppingCart" asp-action="Add" class="btn btn-round btn-danger" type="button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+							<a asp-controller="ShoppingCart" asp-action="Add" asp-route-id="@protein.Id" class="btn btn-round btn-danger" type="button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+						@*@if (User.IsInRole(RoleConstants.Author))
+						{
+						}*@
 					</div>
 				</div>
 			</div>

@@ -6,7 +6,7 @@ namespace MuscleGain.Core.Contracts
 	{
 		Task Add(QuoteViewModel quoteModel);
 
-		Task<QuoteViewModel> GetQuoteForEdit(int id);
+		Task<QuoteViewModel> GetQuoteForEdit(int id, string userId);
 
 		Task Update(QuoteViewModel quoteModel);
 

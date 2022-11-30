@@ -53,7 +53,9 @@ namespace MuscleGain.Areas.Author.Controllers
 		
 		public async Task<IActionResult> Edit(int id)
 		{
-			var model = await this._quotesService.GetQuoteForEdit(id);
+			var userId = this.GetUserId();
+
+			var model = await this._quotesService.GetQuoteForEdit(id, userId);
 			return this.View(model);
 		}
 

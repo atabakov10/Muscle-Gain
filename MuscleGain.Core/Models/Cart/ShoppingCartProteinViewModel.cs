@@ -15,5 +15,7 @@ namespace MuscleGain.Core.Models.Cart
 		public string ImageUrl { get; set; }
 
 		public decimal Price { get; set; }
+
+		public string CreatorFullName { get; set; }
 	}
 }

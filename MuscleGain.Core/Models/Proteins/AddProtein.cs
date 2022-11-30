@@ -27,6 +27,10 @@ namespace MuscleGain.Core.Models.Proteins
         public string Description { get; init; } = null!;
 
         [Required]
+        public string UserId { get; set; } = null!;
+
+
+        [Required]
         [Display(Name = "Image URL")]
         [Url]
         public string ImageUrl { get; init; } = null!;

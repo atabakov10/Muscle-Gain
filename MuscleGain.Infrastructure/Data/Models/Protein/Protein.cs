@@ -42,6 +42,12 @@ namespace MuscleGain.Infrastructure.Data.Models.Protein
 
 		public ProteinsCategories ProteinCategory { get; init; } = null!;
 
+        [Required]
+        public string ApplicationUserId { get; set; } = null!;
+
+        [ForeignKey(nameof(ApplicationUserId))]
+        public ApplicationUser ApplicationUser { get; set; } = null!;
+
         [NotMapped]
         public double Rating
             => this.Reviews.Count > 0 ? this.Reviews.Average(x => x.Rating) : 0;

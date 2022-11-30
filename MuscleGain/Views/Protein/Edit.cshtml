@@ -9,7 +9,8 @@
 	<div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
 		<h2 class="heading-margin text-center">Edit Protein</h2>
 		<form method="post">
-			@Html.HiddenFor(p=>p.Id)
+			<input asp-for="@Model.UserId" hidden>
+			@Html.HiddenFor(p => p.Id)
 			<div class="mb-3">
 				<label asp-for="Name" class="form-label"></label>
 				<input asp-for="Name" class="form-control" placeholder="Whey Protein, Clear Protein, etc...">
