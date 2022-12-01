@@ -28,9 +28,9 @@ namespace MuscleGain.Core.Services.Orders
 
 			var proteins = new List<Protein>();
 
-			foreach (var course in model.Proteins)
+			foreach (var protein in model.Proteins)
 			{
-				proteins.Add(await this.repo.GetByIdAsync<Protein>(course.Id));
+				proteins.Add(await this.repo.GetByIdAsync<Protein>(protein.Id));
 			}
 
 			if (string.IsNullOrEmpty(model.TransactionId))

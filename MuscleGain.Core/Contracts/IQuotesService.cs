@@ -4,11 +4,11 @@ namespace MuscleGain.Core.Contracts
 {
 	public interface IQuotesService
 	{
-		Task Add(QuoteViewModel quoteModel);
+		Task Add(AddQuoteViewModel quoteModel);
 
-		Task<QuoteViewModel> GetQuoteForEdit(int id, string userId);
+		Task<AddQuoteViewModel> GetQuoteForEdit(int id, string userId);
 
-		Task Update(QuoteViewModel quoteModel);
+		Task Update(AddQuoteViewModel quoteModel);
 
 		Task Delete(int id);
 

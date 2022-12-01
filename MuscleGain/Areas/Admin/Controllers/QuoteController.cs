@@ -32,7 +32,7 @@ namespace MuscleGain.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Update(QuoteViewModel model)
+		public async Task<IActionResult> Update(AddQuoteViewModel model)
 		{
 			if (!this.ModelState.IsValid)
 			{

@@ -1,8 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace MuscleGain.Core.Models.Quotes
 {
-	public class QuoteViewModel
+	public class AddQuoteViewModel
 	{
 		public int Id { get; set; }
 
@@ -12,9 +18,6 @@ namespace MuscleGain.Core.Models.Quotes
 
 		[Required]
 		public string UserId { get; set; } = null!;
-
-		[Display(Name = "Full name")]
-		public string PublisherFullName { get; set; } = null!;
 
 		[StringLength(30)]
 		[Display(Name = "Author")]

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MuscleGain.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using MuscleGain.Infrastructure.Data;
 namespace MuscleGain.Infrastructure.Migrations
 {
     [DbContext(typeof(MuscleGainDbContext))]
-    partial class MuscleGainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221201093329_userFullName")]
+    partial class userFullName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -255,7 +257,7 @@ namespace MuscleGain.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShoppingCarts", (string)null);
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.Order", b =>
@@ -295,7 +297,7 @@ namespace MuscleGain.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.Protein", b =>
@@ -357,7 +359,7 @@ namespace MuscleGain.Infrastructure.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("Proteins", (string)null);
+                    b.ToTable("Proteins");
                 });
 
             modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Protein.ProteinsCategories", b =>
@@ -382,7 +384,7 @@ namespace MuscleGain.Infrastructure.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("ProteinsCategories", (string)null);
+                    b.ToTable("ProteinsCategories");
                 });
 
             modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Quotes.Quote", b =>
@@ -405,6 +407,10 @@ namespace MuscleGain.Infrastructure.Migrations
                         .HasMaxLength(2046)
                         .HasColumnType("nvarchar(2046)");
 
+                    b.Property<string>("UserFullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -413,7 +419,7 @@ namespace MuscleGain.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Quotes", (string)null);
+                    b.ToTable("Quotes");
                 });
 
             modelBuilder.Entity("MuscleGain.Infrastructure.Data.Models.Reviews.Review", b =>
@@ -455,7 +461,7 @@ namespace MuscleGain.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reviews", (string)null);
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("ProteinShoppingCart", b =>
@@ -470,7 +476,7 @@ namespace MuscleGain.Infrastructure.Migrations
 
                     b.HasIndex("ShoppingCartProteinsId");
 
-                    b.ToTable("ProteinShoppingCart", (string)null);
+                    b.ToTable("ProteinShoppingCart");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

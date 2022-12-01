@@ -14,12 +14,14 @@ namespace MuscleGain.Infrastructure.Data.Models.Quotes
         public string Text { get; set; } = null!;
 
         
+        
         [StringLength(30)]
         public string? AuthorName { get; set; }
 
         [Required]
         public string UserId { get; set; } = null!;
 		public ApplicationUser User { get; set; } = null!;
+
 		public bool IsDeleted { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Quotes;
 using MuscleGain.Core.Models.Reviews;
 using System.Security.Claims;
+using MuscleGain.Infrastructure.Data.Models.Account;
 
 namespace MuscleGain.Areas.Author.Controllers
 {
@@ -30,7 +31,7 @@ namespace MuscleGain.Areas.Author.Controllers
 		{
 
 			var userId = this.GetUserId();
-
+			
 			var model = new QuoteViewModel()
 			{
 				UserId = userId
@@ -40,8 +41,9 @@ namespace MuscleGain.Areas.Author.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Add(QuoteViewModel model)
+		public async Task<IActionResult> Add(AddQuoteViewModel model)
 		{
+
 			if (!this.ModelState.IsValid)
 			{
 				return this.View(model);
@@ -60,7 +62,7 @@ namespace MuscleGain.Areas.Author.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Update(QuoteViewModel model)
+		public async Task<IActionResult> Update(AddQuoteViewModel model)
 		{
 			if (!this.ModelState.IsValid)
 			{

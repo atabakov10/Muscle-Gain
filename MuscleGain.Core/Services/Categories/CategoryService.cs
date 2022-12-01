@@ -16,12 +16,10 @@ namespace MuscleGain.Core.Services.Categories
 	public class CategoryService : ICategoryService
 	{
 		private readonly IRepository repo;
-		private readonly ILogger logger;
-		public CategoryService(IRepository repo,
-			ILogger<CategoryService> logger)
+
+		public CategoryService(IRepository repo)
 		{
 			this.repo = repo;
-			this.logger = logger;
 		}
 
 		public async Task CreateCategory(ProteinCategoryViewModel model)
@@ -43,7 +41,6 @@ namespace MuscleGain.Core.Services.Categories
 
 			if (idExist == null)
 			{
-				logger.LogError($"Category Id - {categoryId} does not exist! ");
 				throw new ApplicationException();
 			}
 
@@ -71,17 +68,6 @@ namespace MuscleGain.Core.Services.Categories
 					Name = c.Name,
 					ParentId = c.ParentId
 				}).ToListAsync();
-
-			//var categoriesToReturn = new List<ProteinCategoryViewModel>();
-			//foreach (var mainCategory in categories)
-			//{
-			//	foreach (var proteinCategory in categories)
-			//	{
-			//		mainCategory.ProteinCategories.Add(proteinCategory);
-			//	}
-
-			//	categoriesToReturn.Add(mainCategory);
-			//}
 
 			return categories;
 		}

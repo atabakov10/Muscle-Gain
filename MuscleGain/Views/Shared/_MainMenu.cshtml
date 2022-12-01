@@ -42,15 +42,6 @@
 						<p>Quote's Page</p>
 					</a>
 				</li>
-				@if (User.IsInRole(RoleConstants.Author))
-				{
-					<li class="nav-item">
-						<a asp-area="Admin" asp-controller="Quote" asp-action="Add" class="nav-link">
-							<i class="fas fa-plus-circle"></i>
-							<p>Add Quote</p>
-						</a>
-					</li>
-				}
 			</ul>
 		</li>
 		@if (User?.IsInRole(RoleConstants.Manager) ?? false)

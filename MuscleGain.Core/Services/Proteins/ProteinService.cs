@@ -42,7 +42,7 @@ namespace MuscleGain.Core.Services.Proteins
 		{
 			var proteinsQuery = repo.AllReadonly<Protein>()
 				.Include(c => c.Reviews)
-				.Where(x => x.IsDeleted == false && x.IsApproved == true);
+				.Where(x => x.IsDeleted == false && x.IsApproved == true && x.OrderId == null);
 
 			if (!string.IsNullOrEmpty(category))
 			{
@@ -130,6 +130,19 @@ namespace MuscleGain.Core.Services.Proteins
 			}
 
 			protein.IsApproved = true;
+			await this.repo.SaveChangesAsync();
+		}
+
+		public async Task UnapproveAprotein(int proteinId)
+		{
+			var protein = await this.GetProteinById(proteinId);
+
+			if(protein == null)
+			{
+				throw new Exception("not exist");
+			}
+
+			protein.IsDeleted = true;
 			await this.repo.SaveChangesAsync();
 		}
 

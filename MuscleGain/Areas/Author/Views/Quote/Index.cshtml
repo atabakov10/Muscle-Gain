@@ -26,6 +26,7 @@
                         <tr>
 	                        <th>Quote</th>
 	                        <th>Author</th>
+                            <th>Made by:</th>
 	                        <th>Actions</th>
                         </tr>
                     </thead>
@@ -35,7 +36,8 @@
                             <tr>
 	                            <td>@quote.Text</td>
 	                            <td>@quote.AuthorName</td>
-                                <td>
+                                <td>@quote.PublisherFullName</td>
+	                            <td>
                                     <a asp-area="Author" asp-action="Edit" asp-controller="Quote" asp-route-id="@quote.Id" class="btn btn-block btn-outline-info btn-xs">Edit</a>
                                 </td>
                             </tr>

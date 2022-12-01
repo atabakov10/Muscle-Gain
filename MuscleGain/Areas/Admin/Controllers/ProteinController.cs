@@ -33,7 +33,15 @@ namespace MuscleGain.Areas.Admin.Controllers
 		public async Task<IActionResult> Approve(int id)
 		{
 			await this.proteinService.ApproveProtein(id);
-			this.TempData[MessageConstant.SuccessMessage] = "Protein approved successfully";
+			this.TempData[MessageConstant.SuccessMessage] = "Protein is approved successfully";
+			return this.RedirectToAction("Index", "Protein", new { area = "admin" });
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Unapprove(int id)
+		{
+			await this.proteinService.UnapproveAprotein(id);
+			this.TempData[MessageConstant.SuccessMessage] = "Protein is unnaproved successfully";
 			return this.RedirectToAction("Index", "Protein", new { area = "admin" });
 		}
 	}
