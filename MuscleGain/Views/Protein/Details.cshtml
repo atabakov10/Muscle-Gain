@@ -35,8 +35,10 @@
 					<div class="m-bot15"> <strong>Price : </strong><span class="pro-price"> $@Model.Price</span></div>
 					<p>
 
-						<a asp-controller="ShoppingCart" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-round btn-danger" type="button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
-
+						@if (!User.IsInRole(RoleConstants.Seller))
+						{
+							<a asp-controller="ShoppingCart" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-round btn-danger" type="button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+						}
 						<a asp-controller="Review" asp-action="CreateReview" asp-route-id="@Model.Id" type="button" class="btn btn-info">Add Review</a>
 					</p>
 				</div>

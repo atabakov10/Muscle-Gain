@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Category;
 using MuscleGain.Core.Models.Home;
@@ -127,7 +129,7 @@ namespace MuscleGain.Core.Services.Proteins
 		{
 			var protein = await this.GetProteinById(proteinId);
 
-			if(protein == null)
+			if (protein == null)
 			{
 				throw new Exception("not exist");
 			}
@@ -180,6 +182,13 @@ namespace MuscleGain.Core.Services.Proteins
 		{
 			var protein = await dbContext.FindAsync<Protein>(id);
 
+
+
+			if (protein.IsDeleted != false || protein.IsApproved != true || protein.OrderId != null)
+			{
+				throw new Exception();
+			}
+
 			var model = new EditProteinViewModel
 			{
 				Id = id,
@@ -200,7 +209,7 @@ namespace MuscleGain.Core.Services.Proteins
 		public async Task EditAsync(EditProteinViewModel model)
 		{
 			var entity = await dbContext.FindAsync<Protein>(model.Id);
-			
+
 			entity.Name = model.Name;
 			entity.Flavour = model.Flavour;
 			entity.Grams = model.Grams;
@@ -217,10 +226,11 @@ namespace MuscleGain.Core.Services.Proteins
 		{
 			var protein = await this.dbContext
 				.Proteins
+				.Where(x=> x.IsDeleted == false && x.IsApproved == true && x.OrderId == null)
 				.Include(r => r.Reviews)
 				.ThenInclude(u => u.User)
 				.Include(x => x.ProteinCategory)
-				.Include(x=> x.ApplicationUser)
+				.Include(x => x.ApplicationUser)
 				.FirstOrDefaultAsync(x => x.Id == id);
 
 
@@ -259,7 +269,7 @@ namespace MuscleGain.Core.Services.Proteins
 		public async Task<IEnumerable<ProteinIndexViewModel>> LastThreeProteins()
 		{
 			return await dbContext.Proteins
-				.Where(x => x.IsDeleted == false && x.IsApproved== true)
+				.Where(x => x.IsDeleted == false && x.IsApproved == true && x.OrderId == null)
 				.OrderByDescending(p => p.Id)
 				.Select(p => new ProteinIndexViewModel()
 				{

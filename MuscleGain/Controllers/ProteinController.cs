@@ -21,13 +21,11 @@ namespace MuscleGain.Controllers
 
 		public ProteinController(
 			IProteinService proteinService,
-			MuscleGainDbContext data,
 			IUserService userService,
 			ICategoryService categoryService,
 			ILogger<ProteinController> logger)
 		{
 			this.proteinService = proteinService;
-			//this.data = data;
 			this.userService = userService;
 			this.categoryService = categoryService;
 			this.logger = logger;
@@ -109,17 +107,27 @@ namespace MuscleGain.Controllers
 		/// </returns>
 
 		[HttpGet]
+		[Authorize(Roles = RoleConstants.Seller)]
 		public async Task<IActionResult> Edit(int id)
 		{
+
 
 			if (id == null)
 			{
 				return new NotFoundResult();
 			}
 
-			var model = await proteinService.GetForEditAsync(id);
+			try
+			{
+				var model = await proteinService.GetForEditAsync(id);
+				return View(model);
+			}
+			catch (Exception e)
+			{
+				TempData[MessageConstant.ErrorMessage] = "Oops, something went wrong...";
+				return RedirectToAction("All", "Protein");
+			}
 
-			return View(model);
 		}
 
 		/// <summary>
@@ -134,7 +142,7 @@ namespace MuscleGain.Controllers
 		{
 			var categories = await this.categoryService.GetAllCategories();
 
-			
+
 
 			if (!ModelState.IsValid)
 			{
@@ -165,14 +173,20 @@ namespace MuscleGain.Controllers
 				return new NotFoundResult();
 			}
 
-			var data = await proteinService.GetForDetailsAsync(id);
 
-			if (data == null)
+			try
 			{
-				return new NotFoundResult();
+				var data = await proteinService.GetForDetailsAsync(id);
+
+				return View(data);
+			}
+			catch (ArgumentException ae)
+			{
+				TempData[MessageConstant.ErrorMessage] = ae.Message;
+				return RedirectToAction("All", "Protein");
 			}
 
-			return View(data);
+
 		}
 
 		/// <summary>
