@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Quotes;
+using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Common;
 using MuscleGain.Infrastructure.Data.Models.Account;
 
@@ -8,16 +9,16 @@ namespace MuscleGain.Core.Services.Quote
 {
 	public class QuotesService : IQuotesService
 	{
-		private readonly IRepository repo;
+		private readonly MuscleGainDbContext dbContext;
 
-		public QuotesService(IRepository repo)
+		public QuotesService(MuscleGainDbContext dbContext)
 		{
-			this.repo = repo;
+			this.dbContext = dbContext;
 		}
 
 		public async Task Add(AddQuoteViewModel quoteModel)
 		{
-			var user = await this.repo.GetByIdAsync<ApplicationUser>(quoteModel.UserId);
+			var user = await this.dbContext.FindAsync<ApplicationUser>(quoteModel.UserId);
 
 			if (user == null)
 			{
@@ -30,13 +31,13 @@ namespace MuscleGain.Core.Services.Quote
 				UserId = quoteModel.UserId,
 			};
 
-			await this.repo.AddAsync(quote);
-			await this.repo.SaveChangesAsync();
+			await this.dbContext.AddAsync(quote);
+			await this.dbContext.SaveChangesAsync();
 		}
 
 		public async Task Delete(int id)
 		{
-			var quote = await this.repo.GetByIdAsync<Infrastructure.Data.Models.Quotes.Quote>(id);
+			var quote = await this.dbContext.FindAsync<Infrastructure.Data.Models.Quotes.Quote>(id);
 
 			if (quote == null)
 			{
@@ -45,12 +46,12 @@ namespace MuscleGain.Core.Services.Quote
 
 			quote.IsDeleted = true;
 
-			await this.repo.SaveChangesAsync();
+			await this.dbContext.SaveChangesAsync();
 		}
 
 		public async Task<IEnumerable<QuoteViewModel>> GetAll()
 		{
-			return await this.repo.AllReadonly<Infrastructure.Data.Models.Quotes.Quote>()
+			return await this.dbContext.Quotes
 				.Where(q => q.IsDeleted == false)
 				.Include(x => x.User)
 				.Select(q => new QuoteViewModel
@@ -64,10 +65,10 @@ namespace MuscleGain.Core.Services.Quote
 		}
 
 		public async Task<AddQuoteViewModel> GetQuoteForEdit(int id, string userId)
-		{
-			var user = await this.repo.GetByIdAsync<ApplicationUser>(userId);
+        {
+            var user = await this.dbContext.FindAsync<ApplicationUser>();
 
-			var model = await this.repo.GetByIdAsync<Infrastructure.Data.Models.Quotes.Quote>(id);
+			var model = await this.dbContext.FindAsync<Infrastructure.Data.Models.Quotes.Quote>(id);
 
 			if (model == null)
 			{
@@ -85,7 +86,7 @@ namespace MuscleGain.Core.Services.Quote
 
 		public async Task Update(AddQuoteViewModel model)
 		{
-			var quote = await this.repo.GetByIdAsync<Infrastructure.Data.Models.Quotes.Quote>(model.Id);
+			var quote = await this.dbContext.FindAsync<Infrastructure.Data.Models.Quotes.Quote>(model.Id);
 
 			if (quote == null)
 			{
@@ -95,7 +96,7 @@ namespace MuscleGain.Core.Services.Quote
             quote.Text = model.Text;
 			quote.AuthorName = model.AuthorName;
 
-			await this.repo.SaveChangesAsync();
+			await this.dbContext.SaveChangesAsync();
 		}
 	}
 }

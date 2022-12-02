@@ -1,17 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Category;
 using MuscleGain.Core.Models.Home;
 using MuscleGain.Core.Models.Proteins;
 using MuscleGain.Core.Models.Reviews;
 using MuscleGain.Infrastructure.Data;
-using MuscleGain.Infrastructure.Data.Common;
-using MuscleGain.Infrastructure.Data.Models.Account;
 using MuscleGain.Infrastructure.Data.Models.Protein;
-using MuscleGain.Infrastructure.Data.Models.Reviews;
 
 
 
@@ -19,17 +13,13 @@ namespace MuscleGain.Core.Services.Proteins
 {
 	public class ProteinService : IProteinService
 	{
-		private readonly IRepository repo;
+		private readonly MuscleGainDbContext dbContext;
 		private readonly ICategoryService categoryService;
-		private readonly ILogger logger;
-
 		public ProteinService(
-			IRepository _repo,
-			ILogger<ProteinService> _logger,
+			MuscleGainDbContext dbContext,
 			ICategoryService categoryService)
 		{
-			repo = _repo;
-			logger = _logger;
+			this.dbContext = dbContext;
 			this.categoryService = categoryService;
 		}
 
@@ -40,7 +30,7 @@ namespace MuscleGain.Core.Services.Proteins
 			int currentPage = 1,
 			int proteinsPerPage = 1)
 		{
-			var proteinsQuery = repo.AllReadonly<Protein>()
+			var proteinsQuery = dbContext.Proteins
 				.Include(c => c.Reviews)
 				.Where(x => x.IsDeleted == false && x.IsApproved == true && x.OrderId == null);
 
@@ -103,12 +93,12 @@ namespace MuscleGain.Core.Services.Proteins
 			}
 
 			proteinById.IsDeleted = true;
-			await this.repo.SaveChangesAsync();
+			await this.dbContext.SaveChangesAsync();
 		}
 
 		public async Task<IEnumerable<ProteinListingViewModel>> GetAllNotApproved()
 		{
-			var allCourses = await this.repo.AllReadonly<Protein>()
+			var allCourses = await this.dbContext.Proteins
 				.Where(c => c.IsDeleted == false && c.IsApproved == false)
 				.Select(c => new ProteinListingViewModel()
 				{
@@ -130,7 +120,7 @@ namespace MuscleGain.Core.Services.Proteins
 			}
 
 			protein.IsApproved = true;
-			await this.repo.SaveChangesAsync();
+			await this.dbContext.SaveChangesAsync();
 		}
 
 		public async Task UnapproveAprotein(int proteinId)
@@ -143,7 +133,7 @@ namespace MuscleGain.Core.Services.Proteins
 			}
 
 			protein.IsDeleted = true;
-			await this.repo.SaveChangesAsync();
+			await this.dbContext.SaveChangesAsync();
 		}
 
 		public async Task AddAsync(AddProtein protein)
@@ -160,13 +150,13 @@ namespace MuscleGain.Core.Services.Proteins
 				ApplicationUserId = protein.UserId
 			};
 
-			await repo.AddAsync(product);
-			await repo.SaveChangesAsync();
+			await this.dbContext.AddAsync(product);
+			await this.dbContext.SaveChangesAsync();
 
 		}
 
 		public async Task<IEnumerable<string>> AllProteinCategoriesAsync()
-		=> await repo.AllReadonly<ProteinsCategories>()
+		=> await dbContext.ProteinsCategories
 			.Where(x => x.IsDeleted == false)
 				.Select(p => p.Name)
 				.Distinct()
@@ -176,7 +166,7 @@ namespace MuscleGain.Core.Services.Proteins
 
 		public async Task<IEnumerable<ProteinCategoryViewModel>> GetProteinCategoriesAsync()
 		{
-			return await repo.AllReadonly<ProteinsCategories>()
+			return await dbContext.ProteinsCategories
 				.Where(x => x.IsDeleted == false)
 				.Select(x => new ProteinCategoryViewModel
 				{
@@ -188,7 +178,7 @@ namespace MuscleGain.Core.Services.Proteins
 
 		public async Task<EditProteinViewModel> GetForEditAsync(int id)
 		{
-			var protein = await repo.GetByIdAsync<Protein>(id);
+			var protein = await dbContext.FindAsync<Protein>(id);
 
 			var model = new EditProteinViewModel
 			{
@@ -209,7 +199,7 @@ namespace MuscleGain.Core.Services.Proteins
 
 		public async Task EditAsync(EditProteinViewModel model)
 		{
-			var entity = await repo.GetByIdAsync<Protein>(model.Id);
+			var entity = await dbContext.FindAsync<Protein>(model.Id);
 			
 			entity.Name = model.Name;
 			entity.Flavour = model.Flavour;
@@ -220,13 +210,13 @@ namespace MuscleGain.Core.Services.Proteins
 			entity.CategoryId = model.CategoryId;
 			entity.ApplicationUserId = model.UserId;
 
-			await repo.SaveChangesAsync();
+			await this.dbContext.SaveChangesAsync();
 		}
 
 		public async Task<ProteinDetailsViewModel> GetForDetailsAsync(int id)
 		{
-			var protein = await this.repo
-				.AllReadonly<Protein>()
+			var protein = await this.dbContext
+				.Proteins
 				.Include(r => r.Reviews)
 				.ThenInclude(u => u.User)
 				.Include(x => x.ProteinCategory)
@@ -268,7 +258,7 @@ namespace MuscleGain.Core.Services.Proteins
 
 		public async Task<IEnumerable<ProteinIndexViewModel>> LastThreeProteins()
 		{
-			return await repo.AllReadonly<Protein>()
+			return await dbContext.Proteins
 				.Where(x => x.IsDeleted == false && x.IsApproved== true)
 				.OrderByDescending(p => p.Id)
 				.Select(p => new ProteinIndexViewModel()
@@ -285,6 +275,6 @@ namespace MuscleGain.Core.Services.Proteins
 		}
 
 		public async Task<Protein?> GetProteinById(int id)
-			=> await this.repo.GetByIdAsync<Protein>(id);
+			=> await this.dbContext.FindAsync<Protein>(id);
 	}
 }
