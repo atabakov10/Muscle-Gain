@@ -9,17 +9,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Models.Protein;
 
 namespace MuscleGain.Core.Services.Categories
 {
 	public class CategoryService : ICategoryService
 	{
-		private readonly IRepository repo;
+		private readonly MuscleGainDbContext dbContext;
 
-		public CategoryService(IRepository repo)
+		public CategoryService(MuscleGainDbContext dbContext)
 		{
-			this.repo = repo;
+			this.dbContext = dbContext;
 		}
 
 		public async Task CreateCategory(ProteinCategoryViewModel model)
@@ -27,54 +28,52 @@ namespace MuscleGain.Core.Services.Categories
 			var category = new ProteinsCategories()
 			{
 				Name = model.Name,
-				ParentId = model.ParentId
-			};
+            };
 
-			await this.repo.AddAsync(category);
-			await this.repo.SaveChangesAsync();
+			await this.dbContext.AddAsync(category);
+			await this.dbContext.SaveChangesAsync();
 		}
 
 		public async Task CheckForCategory(int categoryId)
 		{
 
-			var idExist = await repo.GetByIdAsync<ProteinsCategories>(categoryId);
+			var idExist = await dbContext.FindAsync<ProteinsCategories>(categoryId);
 
 			if (idExist == null)
 			{
-				throw new ApplicationException();
+				throw new NullReferenceException();
 			}
 
 		}
 
 		public async Task Delete(int id)
-		{
-			var category = await this.repo.GetByIdAsync<ProteinsCategories>(id);
+        {
+            var category = await this.dbContext.FindAsync<ProteinsCategories>(id);
 			if (category == null)
 			{
-				throw new Exception();
+				throw new NullReferenceException();
 			}
 
 			category.IsDeleted = true;
-			await this.repo.SaveChangesAsync();
+			await this.dbContext.SaveChangesAsync();
 		}
 
 		public async Task<IEnumerable<ProteinCategoryViewModel>> GetAllCategories()
 		{
-			var categories = await this.repo.AllReadonly<ProteinsCategories>()
-				.Where(c => c.IsDeleted == false && c.ParentId == null)
+			var categories = await this.dbContext.ProteinsCategories
+				.Where(c => c.IsDeleted == false)
 				.Select(c => new ProteinCategoryViewModel()
 				{
 					Id = c.Id,
 					Name = c.Name,
-					ParentId = c.ParentId
-				}).ToListAsync();
+                }).ToListAsync();
 
 			return categories;
 		}
 
 		public async Task<EditCategoryViewModel> GetCategoryForEdit(int id)
 		{
-			var model = await this.repo.GetByIdAsync<ProteinsCategories>(id);
+			var model = await this.dbContext.FindAsync<ProteinsCategories>(id);
 			if (model == null)
 			{
 				throw new Exception();
@@ -89,14 +88,14 @@ namespace MuscleGain.Core.Services.Categories
 
 		public async Task Update(EditCategoryViewModel model)
 		{
-			var category = await this.repo.GetByIdAsync<ProteinsCategories>(model.Id);
+			var category = await this.dbContext.FindAsync<ProteinsCategories>(model.Id);
 			if (category == null)
 			{
 				throw new Exception();
 			}
 
 			category.Name = model.Name;
-			await this.repo.SaveChangesAsync();
+			await this.dbContext.SaveChangesAsync();
 		}
 	}
 }

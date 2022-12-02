@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MuscleGain.Infrastructure",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MuscleGain.WebApi", "MuscleGain.WebApi\MuscleGain.WebApi.csproj", "{A6BC1068-CBE0-486F-A22A-B23C99FF4CE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuscleGain.Test", "MuscleGain.Test\MuscleGain.Test.csproj", "{A5FC36DE-CC68-4E31-B06A-DE28FCCD6582}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuscleGain.Tests", "MuscleGain.Tests\MuscleGain.Tests.csproj", "{8C99617E-A932-49BF-A99D-8B76DBE8CC20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{A6BC1068-CBE0-486F-A22A-B23C99FF4CE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6BC1068-CBE0-486F-A22A-B23C99FF4CE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6BC1068-CBE0-486F-A22A-B23C99FF4CE9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A5FC36DE-CC68-4E31-B06A-DE28FCCD6582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A5FC36DE-CC68-4E31-B06A-DE28FCCD6582}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A5FC36DE-CC68-4E31-B06A-DE28FCCD6582}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A5FC36DE-CC68-4E31-B06A-DE28FCCD6582}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C99617E-A932-49BF-A99D-8B76DBE8CC20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C99617E-A932-49BF-A99D-8B76DBE8CC20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C99617E-A932-49BF-A99D-8B76DBE8CC20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C99617E-A932-49BF-A99D-8B76DBE8CC20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

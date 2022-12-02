@@ -10,8 +10,6 @@ namespace MuscleGain.Core.Models.Category
         [StringLength(20)]
         public string Name { get; set; } = null!;
 
-        public int? ParentId { get; set; }
-
-		public virtual ICollection<ProteinCategoryViewModel> ProteinCategories { get; set; } = new HashSet<ProteinCategoryViewModel>();
+        //public virtual ICollection<ProteinCategoryViewModel> ProteinCategories { get; set; } = new HashSet<ProteinCategoryViewModel>();
     }
 }

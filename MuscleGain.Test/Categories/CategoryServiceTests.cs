@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MuscleGain.Core.Models.Category;
+using MuscleGain.Infrastructure.Data.Models.Protein;
 
 namespace MuscleGain.Test.Categories
 {
@@ -24,7 +26,14 @@ namespace MuscleGain.Test.Categories
         public async Task GetByIdAsync_ShouldReturnCategory_WhenCategoryExists()
         {
             //Arrange
-            var categoryId = Guid.NewGuid;
+            var categoryName = "Tough Protein";
+            int categoryId = new();
+            var categoryService = new ProteinCategoryViewModel()
+            {
+                Id = categoryId,
+                Name = categoryName
+            };
+            categoryMock.Setup(x => x.GetByIdAsync<CategoryService>(categoryId)).ReturnsAsync(this.categoryService);
             //Act
             var category = await categoryService.CheckForCategory(categoryId);
 

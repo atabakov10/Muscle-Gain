@@ -11,12 +11,6 @@ namespace MuscleGain.Core.Contracts
     {
         Task AddReview(AddReviewViewModel model);
 
-        Task DeleteReview(int id, string userId);
-
-        Task<EditReviewViewModel> GetReviewForEdit(int id, string userId);
-
-        Task Update(EditReviewViewModel model, string userId);
-
         double GetAverageRating(int courseId);
     }
 }
