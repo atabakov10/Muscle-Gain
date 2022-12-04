@@ -40,7 +40,7 @@ namespace MuscleGain.Controllers
 				query.CurrentPage,
 				ProteinsQueryModel.ProteinsPerPage);
 
-			var proteinCategories = await this.proteinService.AllProteinCategoriesAsync();
+			var proteinCategories = await this.categoryService.AllProteinCategoriesAsync();
 
 			query.Categories = proteinCategories;
 			query.TotalProteins = queryResult.TotalProteins;

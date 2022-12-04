@@ -18,10 +18,6 @@ namespace MuscleGain.Core.Contracts
 
         Task AddAsync(AddProtein protein);
 
-		Task<IEnumerable<string>> AllProteinCategoriesAsync();
-
-        Task<IEnumerable<ProteinCategoryViewModel>> GetProteinCategoriesAsync();
-
         Task<EditProteinViewModel> GetForEditAsync(int id);
 
         Task EditAsync(EditProteinViewModel model);

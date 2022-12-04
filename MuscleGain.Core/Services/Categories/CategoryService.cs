@@ -70,6 +70,13 @@ namespace MuscleGain.Core.Services.Categories
 
 			return categories;
 		}
+		public async Task<IEnumerable<string>> AllProteinCategoriesAsync()
+			=> await dbContext.ProteinsCategories
+				.Where(x => x.IsDeleted == false)
+				.Select(p => p.Name)
+				.Distinct()
+				.OrderBy(n => n)
+				.ToListAsync();
 
 		public async Task<EditCategoryViewModel> GetCategoryForEdit(int id)
 		{

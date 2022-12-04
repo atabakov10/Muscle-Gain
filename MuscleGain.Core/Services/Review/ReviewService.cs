@@ -49,8 +49,14 @@ namespace MuscleGain.Core.Services.Review
             await this.dbContext.SaveChangesAsync();
         }
 
-        public double GetAverageRating(int proteinId)
+        public double? GetAverageRating(int proteinId)
         {
+	        var protein = dbContext.FindAsync<Protein>(proteinId);
+	        if (protein.Result.Reviews.Count == 0)
+	        {
+		        return 0;
+	        }
+
             var averageRating = this.dbContext
                 .Reviews
                 .Where(c => c.ProteinId == proteinId)

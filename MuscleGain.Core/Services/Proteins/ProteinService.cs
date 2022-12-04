@@ -17,12 +17,15 @@ namespace MuscleGain.Core.Services.Proteins
 	{
 		private readonly MuscleGainDbContext dbContext;
 		private readonly ICategoryService categoryService;
+		private readonly IReviewService reviewService;
 		public ProteinService(
 			MuscleGainDbContext dbContext,
-			ICategoryService categoryService)
+			ICategoryService categoryService,
+			IReviewService reviewService)
 		{
 			this.dbContext = dbContext;
 			this.categoryService = categoryService;
+			this.reviewService = reviewService;
 		}
 
 		public async Task<ProteinQueryServiceModel> AllAsync(
@@ -157,26 +160,26 @@ namespace MuscleGain.Core.Services.Proteins
 
 		}
 
-		public async Task<IEnumerable<string>> AllProteinCategoriesAsync()
-		=> await dbContext.ProteinsCategories
-			.Where(x => x.IsDeleted == false)
-				.Select(p => p.Name)
-				.Distinct()
-				.OrderBy(n => n)
-				.ToListAsync();
+		//public async Task<IEnumerable<string>> AllProteinCategoriesAsync()
+		//=> await dbContext.ProteinsCategories
+		//	.Where(x => x.IsDeleted == false)
+		//		.Select(p => p.Name)
+		//		.Distinct()
+		//		.OrderBy(n => n)
+		//		.ToListAsync();
 
 
-		public async Task<IEnumerable<ProteinCategoryViewModel>> GetProteinCategoriesAsync()
-		{
-			return await dbContext.ProteinsCategories
-				.Where(x => x.IsDeleted == false)
-				.Select(x => new ProteinCategoryViewModel
-				{
-					Id = x.Id,
-					Name = x.Name
-				})
-				.ToListAsync();
-		}
+		//public async Task<IEnumerable<ProteinCategoryViewModel>> GetProteinCategoriesAsync()
+		//{
+		//	return await dbContext.ProteinsCategories
+		//		.Where(x => x.IsDeleted == false)
+		//		.Select(x => new ProteinCategoryViewModel
+		//		{
+		//			Id = x.Id,
+		//			Name = x.Name
+		//		})
+		//		.ToListAsync();
+		//}
 
 		public async Task<EditProteinViewModel> GetForEditAsync(int id)
 		{
@@ -226,7 +229,7 @@ namespace MuscleGain.Core.Services.Proteins
 		{
 			var protein = await this.dbContext
 				.Proteins
-				.Where(x=> x.IsDeleted == false && x.IsApproved == true && x.OrderId == null)
+				.Where(x=> x.IsDeleted == false && x.OrderId == null)
 				.Include(r => r.Reviews)
 				.ThenInclude(u => u.User)
 				.Include(x => x.ProteinCategory)
@@ -254,7 +257,7 @@ namespace MuscleGain.Core.Services.Proteins
 				Category = protein.ProteinCategory.Name,
 				CreatorFullName = $"{protein.ApplicationUser.FirstName} {protein.ApplicationUser.LastName}",
 				Email = protein.ApplicationUser.Email,
-
+				AvgRating = reviewService.GetAverageRating(id) ,
 				Reviews = protein.Reviews.Select(r => new ReviewViewModel()
 				{
 					UserFullName = $"{r.User.FirstName} {r.User.LastName}",

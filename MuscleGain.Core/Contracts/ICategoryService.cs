@@ -19,7 +19,9 @@ namespace MuscleGain.Core.Contracts
 
         Task Delete(int id);
 
-        Task CheckForCategory(int categoryId);
+        Task<IEnumerable<string>> AllProteinCategoriesAsync();
+
+		Task CheckForCategory(int categoryId);
 
     }
 }

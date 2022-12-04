@@ -17,8 +17,9 @@ namespace MuscleGain.Core.Models.Proteins
         public string Email { get; set; } = null!;
         public decimal? Price { get; init; }
 
-     
-        public string Description { get; init; } = null!;
+        public double? AvgRating { get; set; }
+
+		public string Description { get; init; } = null!;
         
         public string ImageUrl { get; init; } = null!;
 
