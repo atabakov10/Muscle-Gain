@@ -1,6 +1,7 @@
 ﻿@model ProteinCategoryViewModel
-
-<h2>Add Category</h2>
+@{
+	ViewData["Title"] = "Add category";
+}
 
 <form asp-controller="Category" asp-action="AddCategory" method="post">
 	<div class="form-group">
@@ -8,7 +9,7 @@
 		<input asp-for="Name" />
 		<span asp-validation-for="Name" class="small text-danger"></span>
 	</div>
-	<div class="row">
+	<div class="row mb-2">
 		<div class="col-3">
 			<button type="submit" class="btn btn-block btn-success btn-xs">Add</button>
 		</div>

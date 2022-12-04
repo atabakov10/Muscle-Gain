@@ -95,5 +95,125 @@ namespace MuscleGain.Tests.Category
             Assert.AreEqual("testName", result.FirstOrDefault().Name);
             Assert.AreEqual(5, result.FirstOrDefault().Id);
         }
+
+        [Test]
+        public async Task ChecksForCategoryShouldReturnCategoryIfCorrectElseShouldThrowNullReferenceException()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<MuscleGainDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString());
+            var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
+
+            var categoryService = new CategoryService(dbContext);
+
+
+            var firstCategory = new ProteinsCategories()
+            {
+                Id = 5,
+                Name = "testName",
+                IsDeleted = false
+            };
+
+            await dbContext.ProteinsCategories.AddAsync(firstCategory);
+            await dbContext.SaveChangesAsync();
+
+
+            Assert.That(categoryService.CheckForCategory(5), Is.Not.Null);
+            Assert.That(
+                async () => await categoryService.CheckForCategory(7),
+                Throws.Exception.TypeOf<NullReferenceException>());
+        }
+
+        [Test]
+        public async Task AllProteinCategoriesAsyncShouldReturnAllCategories()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<MuscleGainDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString());
+            var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
+
+            var categoryService = new CategoryService(dbContext);
+
+
+            var firstCategory = new ProteinsCategories()
+            {
+                Id = 5,
+                Name = "testName",
+                IsDeleted = false
+            };
+
+            var secondCategory = new ProteinsCategories()
+            {
+                Id = 6,
+                Name = "testNameTwo",
+                IsDeleted = true
+            };
+
+            await dbContext.ProteinsCategories.AddAsync(firstCategory);
+            await dbContext.ProteinsCategories.AddAsync(secondCategory);
+            await dbContext.SaveChangesAsync();
+
+            var result = await categoryService.AllProteinCategoriesAsync();
+
+            Assert.That(result.Count(), Is.EqualTo(1));
+        }
+
+        [Test]
+        public async Task GetCategoryForEditShouldThrowExceptionIfIdNotFoundElseShouldReturnEditView()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<MuscleGainDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString());
+            var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
+
+            var categoryService = new CategoryService(dbContext);
+
+            var firstCategory = new ProteinsCategories()
+            {
+                Id = 5,
+                Name = "testName",
+                IsDeleted = false
+            };
+
+            await dbContext.ProteinsCategories.AddAsync(firstCategory);
+            await dbContext.SaveChangesAsync();
+
+            var result = await categoryService.GetCategoryForEdit(5);
+
+            Assert.NotNull(result);
+
+
+            Assert.That(
+                async () => await categoryService.GetCategoryForEdit(6),
+                Throws.Exception.TypeOf<Exception>());
+        }
+
+        [Test]
+        public async Task UpdateShouldReturnUpdatedCategoryIfIdFoundElseThrowsException()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<MuscleGainDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString());
+            var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
+
+            var categoryService = new CategoryService(dbContext);
+
+            var firstCategory = new ProteinsCategories()
+            {
+                Id = 5,
+                Name = "testName",
+            };
+
+            var editedCategory = new EditCategoryViewModel()
+            {
+                Id = 5,
+                Name = "testNameEdit"
+            };
+
+            await dbContext.ProteinsCategories.AddAsync(firstCategory);
+            await dbContext.SaveChangesAsync();
+
+            await categoryService.Update(editedCategory);
+
+            Assert.NotNull(dbContext.ProteinsCategories.CountAsync());
+            Assert.That(dbContext.ProteinsCategories.FirstOrDefaultAsync().Result.Name, Is.EqualTo("testNameEdit"));
+
+        }
     }
 }

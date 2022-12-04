@@ -66,7 +66,7 @@ namespace MuscleGain.Core.Services.Quote
 
 		public async Task<AddQuoteViewModel> GetQuoteForEdit(int id, string userId)
         {
-            var user = await this.dbContext.FindAsync<ApplicationUser>();
+            var user = await this.dbContext.FindAsync<ApplicationUser>(userId);
 
 			var model = await this.dbContext.FindAsync<Infrastructure.Data.Models.Quotes.Quote>(id);
 

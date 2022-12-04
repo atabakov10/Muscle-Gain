@@ -9,7 +9,7 @@ namespace MuscleGain.Core.Contracts
 
         Task DeleteAllProteinsFromShoppingCart(string userId);
 
-        Task DeleteProteinFromShoppingCart(int courseId, string userId);
+        Task DeleteProteinFromShoppingCart(int proteinId, string userId);
 
         Task<ShoppingCartViewModel> GetShoppingCart(string userId);
     }

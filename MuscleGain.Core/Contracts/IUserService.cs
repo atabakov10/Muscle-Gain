@@ -14,8 +14,5 @@ namespace MuscleGain.Core.Contracts
         Task<bool> UpdateUser(UserEditViewModel model);
 
         Task<ApplicationUser> GetUserById(string id);
-
-       Task<ApplicationUser> GetUserByUsername(string username);
-
-	}
+    }
 }

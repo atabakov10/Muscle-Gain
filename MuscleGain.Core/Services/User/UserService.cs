@@ -1,31 +1,31 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MuscleGain.Core.Constants;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Users;
 using MuscleGain.Infrastructure.Data;
-using MuscleGain.Infrastructure.Data.Common;
 using MuscleGain.Infrastructure.Data.Models.Account;
 
 namespace MuscleGain.Core.Services.User
 {
 	public class UserService : IUserService
 	{
-        private readonly IRepository repo;
-        private readonly UserManager<ApplicationUser> userManager;
-		public UserService(IRepository repo,
-			UserManager<ApplicationUser> userManager)
+        private readonly MuscleGainDbContext dbContext;
+		public UserService(MuscleGainDbContext dbContext)
 		{
-            this.repo = repo;
-			this.userManager = userManager;
+            this.dbContext = dbContext;
 		}
 
-		public async Task<ApplicationUser> GetUserById(string id) 
-			=> await this.repo.GetByIdAsync<ApplicationUser>(id);
-		
+        public async Task<ApplicationUser> GetUserById(string id)
+        {
+            if (id == null)
+            {
+                throw new NullReferenceException();
+            }
 
-		public async Task<UserProfileViewModel> GetUserProfile(string id)
+            return await this.dbContext.FindAsync<ApplicationUser>(id);
+        }
+
+        public async Task<UserProfileViewModel> GetUserProfile(string id)
 		{
 			var user = await GetUserById(id);
 			return new UserProfileViewModel()
@@ -56,7 +56,7 @@ namespace MuscleGain.Core.Services.User
 
 		public async Task<IEnumerable<UserListViewModel>> GetUsers()
 		{
-			var users = await this.repo.All<ApplicationUser>()
+			var users = await this.dbContext.Users
 				.Select(u => new UserListViewModel()
 				{
 					Email = u.Email,
@@ -84,17 +84,13 @@ namespace MuscleGain.Core.Services.User
 				user.ImageUrl = model.ImageUrl;
 				user.PhoneNumber = model.PhoneNumber;
 				
-				await this.repo.SaveChangesAsync();
+				await this.dbContext.SaveChangesAsync();
 				result = true;
 			}
 
 			return result;
 		}
 
-		public async Task<ApplicationUser> GetUserByUsername(string username)
-		{
-			return await this.userManager.FindByNameAsync(username);
-		}
 
 	}
 }

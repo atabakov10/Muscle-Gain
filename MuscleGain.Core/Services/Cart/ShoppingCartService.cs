@@ -7,23 +7,24 @@ using MuscleGain.Infrastructure.Data.Models.Cart;
 using MuscleGain.Infrastructure.Data.Models.Protein;
 using System.Linq.Expressions;
 using System.Security.Claims;
+using MuscleGain.Infrastructure.Data;
 
 namespace MuscleGain.Core.Services.Cart
 {
 	public class ShoppingCartService : IShoppingCartService
 	{
-		private readonly IRepository repository;
+		private readonly MuscleGainDbContext dbContext;
 
-		public ShoppingCartService(IRepository repository)
+		public ShoppingCartService(MuscleGainDbContext dbContext)
 		{
-			this.repository = repository;
+			this.dbContext = dbContext;
 		}
 
 		public async Task AddProteinInShoppingCart(int proteinId, string userId)
-		{
-			var protein = await this.repository.GetByIdAsync<Protein>(proteinId);
-			var user = await this.repository
-				.All<ApplicationUser>()
+        {
+            var protein = await this.dbContext.FindAsync<Protein>(proteinId);
+			var user = await this.dbContext
+				.Users
 				.Where(u => u.Id == userId)
 				.Include(sc => sc.ShoppingCart)
 				.ThenInclude(c => c.ShoppingCartProteins)
@@ -43,7 +44,7 @@ namespace MuscleGain.Core.Services.Cart
 				};
 
 				user.ShoppingCart = shoppingCart;
-				await this.repository.AddAsync(shoppingCart);
+				await this.dbContext.AddAsync(shoppingCart);
 			}
 
 			if (user.ShoppingCart.ShoppingCartProteins.Any(c => c.Id == proteinId))
@@ -52,13 +53,13 @@ namespace MuscleGain.Core.Services.Cart
 			}
 
 			user.ShoppingCart.ShoppingCartProteins.Add(protein);
-			await this.repository.SaveChangesAsync();
+			await this.dbContext.SaveChangesAsync();
 		}
 
 		public async Task DeleteAllProteinsFromShoppingCart(string userId)
 		{
-			var user = await this.repository
-				 .All<ApplicationUser>()
+			var user = await this.dbContext
+				 .Users
 				 .Where(u => u.Id == userId)
 				 .Include(sc => sc.ShoppingCart)
 				 .ThenInclude(c => c.ShoppingCartProteins)
@@ -70,33 +71,33 @@ namespace MuscleGain.Core.Services.Cart
 			}
 
 			user.ShoppingCart.ShoppingCartProteins.Clear();
-			await this.repository.SaveChangesAsync();
+			await this.dbContext.SaveChangesAsync();
 		}
 
-		public async Task DeleteProteinFromShoppingCart(int courseId, string userId)
+		public async Task DeleteProteinFromShoppingCart(int proteinId, string userId)
 		{
-			var user = await this.repository
-				.All<ApplicationUser>()
+			var user = await this.dbContext
+				.Users
 				.Where(u => u.Id == userId)
 				.Include(sc => sc.ShoppingCart)
 				.ThenInclude(c => c.ShoppingCartProteins)
 				.FirstOrDefaultAsync();
 
-			var course = user.ShoppingCart.ShoppingCartProteins.FirstOrDefault(c => c.Id == courseId);
+			var protein = user.ShoppingCart.ShoppingCartProteins.FirstOrDefault(c => c.Id == proteinId);
 
-			if (user == null || course == null)
+			if (user == null || protein == null)
 			{
 				return;
 			}
 
-			user.ShoppingCart.ShoppingCartProteins.Remove(course);
-			await this.repository.SaveChangesAsync();
+			user.ShoppingCart.ShoppingCartProteins.Remove(protein);
+			await this.dbContext.SaveChangesAsync();
 		}
 
 		public async Task<ShoppingCartViewModel> GetShoppingCart(string userId)
 		{
-			var user = await this.repository
-				.All<ApplicationUser>()
+			var user = await this.dbContext
+				.Users
 				.Where(u => u.Id == userId)
 				.Include(sc => sc.ShoppingCart)
 				.ThenInclude(c => c.ShoppingCartProteins)

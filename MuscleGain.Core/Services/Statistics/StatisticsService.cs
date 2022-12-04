@@ -10,17 +10,17 @@ namespace MuscleGain.Core.Services.Statistics
 {
     public class StatisticsService : IStatisticsService
     {
-        private readonly IRepository repo;
+        private readonly MuscleGainDbContext dbContext;
 
-        public StatisticsService(IRepository repo)
+        public StatisticsService(MuscleGainDbContext dbContext)
         {
-            this.repo = repo;
+            this.dbContext = dbContext;
         }
 
         public async Task<StatisticsServiceModel> Total()
         {
-            var totalProteins = await this.repo.AllReadonly<Protein>().Where(x=> x.IsDeleted == false).CountAsync();
-            var totalUsers = await this.repo.AllReadonly<ApplicationUser>().CountAsync();
+            var totalProteins = await this.dbContext.Proteins.Where(x=> x.IsDeleted == false).CountAsync();
+            var totalUsers = await this.dbContext.Users.CountAsync();
 
             return new StatisticsServiceModel
             {
