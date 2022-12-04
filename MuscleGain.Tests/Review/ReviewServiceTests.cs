@@ -38,7 +38,7 @@ namespace MuscleGain.Tests.Review
             var commentList = new List<Infrastructure.Data.Models.Reviews.Review>();
             commentList.Add(comment);
 
-            var article = new Protein()
+            var protein = new Infrastructure.Data.Models.Protein.Protein()
             {
                 Id = 1,
                 Name = "WheyProtein",
@@ -55,7 +55,7 @@ namespace MuscleGain.Tests.Review
                 Reviews = commentList,
             };
 
-            await dbContext.Proteins.AddAsync(article);
+            await dbContext.Proteins.AddAsync(protein);
 
             var user = new ApplicationUser
             {
