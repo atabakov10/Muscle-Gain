@@ -257,7 +257,7 @@ namespace MuscleGain.Core.Services.Proteins
 				Category = protein.ProteinCategory.Name,
 				CreatorFullName = $"{protein.ApplicationUser.FirstName} {protein.ApplicationUser.LastName}",
 				Email = protein.ApplicationUser.Email,
-				AvgRating = reviewService.GetAverageRating(id) ,
+				AvgRating = await reviewService.GetAverageRating(id) ,
 				Reviews = protein.Reviews.Select(r => new ReviewViewModel()
 				{
 					UserFullName = $"{r.User.FirstName} {r.User.LastName}",

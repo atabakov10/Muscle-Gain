@@ -6,6 +6,6 @@ namespace MuscleGain.Core.Contracts
     {
         Task AddReview(AddReviewViewModel model);
 
-        double? GetAverageRating(int courseId);
+        Task<double>? GetAverageRating(int courseId);
     }
 }

@@ -118,11 +118,11 @@ namespace MuscleGain.Tests.Review
 			await dbContext.Reviews.AddAsync(reviewTwo);
 			await dbContext.SaveChangesAsync();
 
-			var result = reviewService.GetAverageRating(2);
+			var result = await reviewService.GetAverageRating(2);
 
 
 			Assert.NotNull(result);
-			Assert.That(result.Value, Is.EqualTo(3.5));
+			Assert.That(result, Is.EqualTo(3.5));
 		}
 
 	}
