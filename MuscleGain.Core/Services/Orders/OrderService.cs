@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using MuscleGain.Core.Contracts;
-using MuscleGain.Core.Models.Cart;
+﻿using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Order;
-using MuscleGain.Infrastructure.Data.Common;
+using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Models.Account;
 using MuscleGain.Infrastructure.Data.Models.Protein;
 
@@ -15,22 +8,21 @@ namespace MuscleGain.Core.Services.Orders
 {
 	public class OrderService : IOrderService
 	{
-		private readonly IRepository repo;
+		private readonly MuscleGainDbContext dbContext;
 
-		public OrderService(IRepository repo)
+		public OrderService(MuscleGainDbContext dbContext)
 		{
-			this.repo = repo;
+			this.dbContext = dbContext;
 		}
 
 		public async Task<int> AddOrder(OrderViewModel model, string userId)
 		{
-			var user = await this.repo.GetByIdAsync<ApplicationUser>(userId);
-
+			var user = await this.dbContext.FindAsync<ApplicationUser>(userId);
 			var proteins = new List<Protein>();
 
 			foreach (var protein in model.Proteins)
 			{
-				proteins.Add(await this.repo.GetByIdAsync<Protein>(protein.Id));
+				proteins.Add(await this.dbContext.FindAsync<Protein>(protein.Id));
 			}
 
 			if (string.IsNullOrEmpty(model.TransactionId))
@@ -49,47 +41,16 @@ namespace MuscleGain.Core.Services.Orders
 				Proteins = proteins,
 			};
 
-			await this.repo.AddAsync(order);
-			await this.repo.SaveChangesAsync();
+			await this.dbContext.AddAsync(order);
+			await this.dbContext.SaveChangesAsync();
 
 			return order.Id;
 		}
 
-		public async Task<OrderViewModel> GetOrderById(int orderId)
-		{
-			var order = await this.repo.All<Order>().Where(o => o.Id == orderId).Include(o => o.Proteins).Select(o => new OrderViewModel()
-			{
-				Id = o.Id,
-				OrderDate = o.OrderDate,
-				TotalPrice = o.OrderTotal,
-				PaymentStatus = o.PaymentStatus,
-				OrderStatus = o.OrderStatus,
-				Proteins = o.Proteins.Select(c => new ShoppingCartProteinViewModel()
-				{
-					Id = c.Id,
-					ImageUrl = c.ImageUrl,
-					Name = c.Name,
-					Price = c.Price,
-					CreatorFullName = $"{c.ApplicationUser.FirstName} {c.ApplicationUser.LastName}",
-				}).ToList(),
-			}).FirstOrDefaultAsync();
-
-			return order;
-		}
-
-		public Task<IEnumerable<Order>> GetUserOrders(string name)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task<IEnumerable<Order>> OrderProductsByOrderId(int id)
-		{
-			throw new NotImplementedException();
-		}
 
 		public async Task UpdateOrder(OrderViewModel model)
 		{
-			var order = await this.repo.GetByIdAsync<Order>(model.Id);
+			var order = await this.dbContext.FindAsync<Order>(model.Id);
 
 			order.PaymentStatus = model.PaymentStatus;
 			order.OrderStatus = model.OrderStatus;
@@ -97,8 +58,8 @@ namespace MuscleGain.Core.Services.Orders
 			order.TransactionId = model.TransactionId;
 			order.OrderTotal = model.TotalPrice;
 
-			this.repo.Update(order);
-			await this.repo.SaveChangesAsync();
+			this.dbContext.Update(order);
+			await this.dbContext.SaveChangesAsync();
 		}
 	}
 }

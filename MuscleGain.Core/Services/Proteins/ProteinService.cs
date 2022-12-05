@@ -121,20 +121,20 @@ namespace MuscleGain.Core.Services.Proteins
 			var protein = await this.GetProteinById(proteinId);
 			if (protein == null)
 			{
-				throw new Exception("not exist");
+				throw new Exception("Id does not exist.");
 			}
 
 			protein.IsApproved = true;
 			await this.dbContext.SaveChangesAsync();
 		}
 
-		public async Task UnapproveAprotein(int proteinId)
+		public async Task UnapproveProtein(int proteinId)
 		{
 			var protein = await this.GetProteinById(proteinId);
 
 			if (protein == null)
 			{
-				throw new Exception("not exist");
+				throw new Exception("Id does not exist.");
 			}
 
 			protein.IsDeleted = true;
@@ -160,32 +160,15 @@ namespace MuscleGain.Core.Services.Proteins
 
 		}
 
-		//public async Task<IEnumerable<string>> AllProteinCategoriesAsync()
-		//=> await dbContext.ProteinsCategories
-		//	.Where(x => x.IsDeleted == false)
-		//		.Select(p => p.Name)
-		//		.Distinct()
-		//		.OrderBy(n => n)
-		//		.ToListAsync();
-
-
-		//public async Task<IEnumerable<ProteinCategoryViewModel>> GetProteinCategoriesAsync()
-		//{
-		//	return await dbContext.ProteinsCategories
-		//		.Where(x => x.IsDeleted == false)
-		//		.Select(x => new ProteinCategoryViewModel
-		//		{
-		//			Id = x.Id,
-		//			Name = x.Name
-		//		})
-		//		.ToListAsync();
-		//}
 
 		public async Task<EditProteinViewModel> GetForEditAsync(int id)
 		{
 			var protein = await dbContext.FindAsync<Protein>(id);
 
-
+			if (id == null)
+			{
+				throw new Exception();
+			}
 
 			if (protein.IsDeleted != false || protein.IsApproved != true || protein.OrderId != null)
 			{
@@ -237,7 +220,10 @@ namespace MuscleGain.Core.Services.Proteins
 				.FirstOrDefaultAsync(x => x.Id == id);
 
 
-
+			if (id == null)
+			{
+				throw new ArgumentException("Id does not exist.");
+			}
 
 			if (protein == null)
 			{

@@ -27,6 +27,11 @@ namespace MuscleGain.Core.Services.User
 
         public async Task<UserProfileViewModel> GetUserProfile(string id)
 		{
+			if (id == null)
+			{
+				throw new NullReferenceException("Id is invalid");
+			}
+
 			var user = await GetUserById(id);
 			return new UserProfileViewModel()
 			{
@@ -42,6 +47,11 @@ namespace MuscleGain.Core.Services.User
 
 		public async Task<UserEditViewModel> GetUserForEdit(string id)
 		{
+			if (id == null)
+			{
+				throw new NullReferenceException("Invalid Id");
+			}
+
 			var user = await GetUserById(id);
 
 			return new UserEditViewModel()
@@ -79,6 +89,7 @@ namespace MuscleGain.Core.Services.User
 
 			if (user != null)
 			{
+				user.Id = model.Id;
 				user.FirstName = model.FirstName;
 				user.LastName = model.LastName;
 				user.ImageUrl = model.ImageUrl;
@@ -86,6 +97,10 @@ namespace MuscleGain.Core.Services.User
 				
 				await this.dbContext.SaveChangesAsync();
 				result = true;
+			}
+			else
+			{
+				throw new NullReferenceException("Invalid user");
 			}
 
 			return result;

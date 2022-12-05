@@ -41,7 +41,7 @@ namespace MuscleGain.Core.Services.Quote
 
 			if (quote == null)
 			{
-				throw new Exception();
+				throw new Exception("Invalid quote.");
 			}
 
 			quote.IsDeleted = true;

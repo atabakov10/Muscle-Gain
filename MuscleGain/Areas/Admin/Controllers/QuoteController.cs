@@ -26,9 +26,16 @@ namespace MuscleGain.Areas.Admin.Controllers
 		public async Task<IActionResult> Edit(int id)
 		{
 			var user = this.GetUserId();
-
-			var model = await this._quotesService.GetQuoteForEdit(id, user);
-			return this.View(model);
+			try
+			{
+				var model = await this._quotesService.GetQuoteForEdit(id, user);
+				return this.View(model);
+			}
+			catch (Exception e)
+			{
+				TempData[MessageConstant.ErrorMessage] = "The quote doesn't exist!";
+				return RedirectToAction("Index", "Quote");
+			}
 		}
 
 		[HttpPost]

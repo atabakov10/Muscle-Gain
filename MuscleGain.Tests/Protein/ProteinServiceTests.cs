@@ -289,7 +289,7 @@ namespace MuscleGain.Tests.Protein
 			await dbContext.Proteins.AddAsync(protein);
 			await dbContext.SaveChangesAsync();
 
-			await proteinService.UnapproveAprotein(1);
+			await proteinService.UnapproveProtein(1);
 
 			Assert.That(dbContext.Proteins.Where(x => x.IsDeleted == true).Count(), Is.EqualTo(1));
 		}

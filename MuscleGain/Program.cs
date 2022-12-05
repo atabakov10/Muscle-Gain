@@ -32,13 +32,6 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     .AddEntityFrameworkStores<MuscleGainDbContext>();
 
 
-//builder.Services.AddAuthentication()
-//    .AddFacebook(options =>
-//    {
-//        options.AppId = "1432800920459702";
-//        options.AppSecret = "412639861b83dfb0266c0edb515fc6ef";
-//    });
-
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Account/Login";

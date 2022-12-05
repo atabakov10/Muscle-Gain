@@ -40,21 +40,13 @@
                                     <h6><strong>$@protein.Price<span class="text-muted"></span></strong></h6>
                                 </div>
                                 <div class="col-6 col-sm-4 col-lg-6">
-                                    @*<div class="float-right mx-1">
-                                        <a asp-action="plus" asp-route-cartId="@course.Id" class="btn btn-primary">
-                                            <i class="fas fa-plus"></i>
-                                        </a>
-                                    </div>*@
-                                    <div class="float-right mx-1">
+	                                <div class="float-right mx-1">
                                         <a asp-controller="Protein" asp-action="Details" asp-route-id="@protein.Id" class="btn btn-primary btn-sm">
                                             <i class="fas fa-folder">
                                             </i>
                                             View
                                         </a>
-                                        @*<a asp-action="minus" asp-route-cartId="@course.Id" class="btn btn-danger">
-                                <i class="fas fa-minus"></i>
-                                </a>*@
-                                    </div>
+	                                </div>
                                 </div>
                                 <div class="col-2 col-sm-4 col-lg-2 text-right">
                                     <a asp-controller="ShoppingCart" asp-action="Delete" asp-route-id="@protein.Id" class="btn btn-danger">
@@ -78,7 +70,7 @@
                     </div>
 
                     <div class="card-footer">
-                        <div class="col-sm-12 col-lg-4 col-md-6 offset-lg-8 offset-md-6 ">
+                        <div class="col-sm-12 col-lg-4 col-md-6 offset-lg-8 offset-md-6 mb-2">
                             <a asp-controller="ShoppingCart" asp-action="DeleteAll" class="btn btn-danger form-control">Clear Cart</a>
                         </div>
                         <div class="col-sm-12 col-lg-4 col-md-6 offset-lg-8 offset-md-6 ">

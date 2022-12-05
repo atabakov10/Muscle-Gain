@@ -4,6 +4,7 @@ namespace MuscleGain.Core.Models.Users
 {
     public class UserEditViewModel
     {
+        [Key]
         public string Id { get; set; }
 
         [Url]

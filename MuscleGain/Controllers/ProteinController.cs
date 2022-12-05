@@ -14,21 +14,14 @@ namespace MuscleGain.Controllers
 	{
 		private readonly IProteinService proteinService;
 
-		//private readonly MuscleGainDbContext data;
-		private readonly IUserService userService;
 		private readonly ICategoryService categoryService;
-		private readonly ILogger logger;
 
 		public ProteinController(
 			IProteinService proteinService,
-			IUserService userService,
-			ICategoryService categoryService,
-			ILogger<ProteinController> logger)
+			ICategoryService categoryService)
 		{
 			this.proteinService = proteinService;
-			this.userService = userService;
 			this.categoryService = categoryService;
-			this.logger = logger;
 		}
 
 		public async Task<IActionResult> All([FromQuery] ProteinsQueryModel query)
@@ -84,10 +77,6 @@ namespace MuscleGain.Controllers
 				this.ModelState.AddModelError(nameof(model.CategoryId), "Category does not exist");
 			}
 
-			var currentUserId = this.GetUserId();
-
-			//model.UserId = currentUserId;
-
 			if (!this.ModelState.IsValid)
 			{
 				model.Categories = categories;
@@ -110,13 +99,6 @@ namespace MuscleGain.Controllers
 		[Authorize(Roles = RoleConstants.Seller)]
 		public async Task<IActionResult> Edit(int id)
 		{
-
-
-			if (id == null)
-			{
-				return new NotFoundResult();
-			}
-
 			try
 			{
 				var model = await proteinService.GetForEditAsync(id);
@@ -168,12 +150,6 @@ namespace MuscleGain.Controllers
 		[AllowAnonymous]
 		public async Task<IActionResult> Details(int id)
 		{
-			if (id == null)
-			{
-				return new NotFoundResult();
-			}
-
-
 			try
 			{
 				var data = await proteinService.GetForDetailsAsync(id);
@@ -200,14 +176,18 @@ namespace MuscleGain.Controllers
 		[Authorize(Policy = "CanDeleteProduct")]
 		public async Task<IActionResult> Delete(int id)
 		{
-			if (id == null)
+			try
 			{
-				return new NotFoundResult();
+				await proteinService.Delete(id);
+				return RedirectToAction(nameof(All));
+
+			}
+			catch (Exception e)
+			{
+				TempData[MessageConstant.ErrorMessage] = e.Message;
+				return RedirectToAction("All", "Protein");
 			}
 
-			await proteinService.Delete(id);
-
-			return RedirectToAction(nameof(All));
 		}
 
 		private string GetUserId()
