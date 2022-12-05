@@ -12,7 +12,7 @@ namespace MuscleGain.Tests.Review
 	{
 
 		[Test]
-		public async Task CreateMethodShouldAddCorrectNewCommentToDbAndToArticle()
+		public async Task CreateMethodShouldAddCorrectNewReviewToDbAndToProtein()
 		{
 			var optionsBuilder = new DbContextOptionsBuilder<MuscleGainDbContext>()
 				.UseInMemoryDatabase(Guid.NewGuid().ToString());
