@@ -56,8 +56,11 @@ namespace MuscleGain.Tests.Statistics
 
 
             Assert.That(statisticsService.Total(), Is.Not.Null);
-            Assert.That(allUsers,Is.EqualTo(1));
-            Assert.That(allProteins, Is.EqualTo(1));
+            Assert.Multiple(() =>
+            {
+                Assert.That(allUsers, Is.EqualTo(1));
+                Assert.That(allProteins, Is.EqualTo(1));
+            });
         }
     }
 }
