@@ -16,8 +16,8 @@ namespace MuscleGain.Areas.Admin.Controllers
 
 		public async Task<IActionResult> Index()
 		{
-			var allCourses = await this.proteinService.GetAllNotApproved();
-			return this.View(allCourses);
+			var allProteins = await this.proteinService.GetAllNotApproved();
+			return this.View(allProteins);
 		}
 
 		public async Task<IActionResult> Details([FromRoute] int id)

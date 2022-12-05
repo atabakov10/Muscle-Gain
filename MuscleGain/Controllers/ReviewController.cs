@@ -2,6 +2,7 @@
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Reviews;
 using System.Security.Claims;
+using Ganss.Xss;
 
 namespace MuscleGain.Controllers
 {
@@ -35,6 +36,8 @@ namespace MuscleGain.Controllers
         [HttpPost]
         public async Task<IActionResult> AddReview(AddReviewViewModel model)
         {
+	        var sanitizer = new HtmlSanitizer();
+	        model.Comment = sanitizer.Sanitize(model.Comment);
             model.DateOfPublication = DateTime.Now;
 
             if (!this.ModelState.IsValid)

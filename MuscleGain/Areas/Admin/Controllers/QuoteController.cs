@@ -31,7 +31,7 @@ namespace MuscleGain.Areas.Admin.Controllers
 				var model = await this._quotesService.GetQuoteForEdit(id, user);
 				return this.View(model);
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				TempData[MessageConstant.ErrorMessage] = "The quote doesn't exist!";
 				return RedirectToAction("Index", "Quote");
@@ -53,8 +53,16 @@ namespace MuscleGain.Areas.Admin.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Delete([FromForm] int id)
 		{
-			await this._quotesService.Delete(id);
-			return this.RedirectToAction("Index", "Quote");
+			try
+			{
+				await this._quotesService.Delete(id);
+				return this.RedirectToAction("Index", "Quote");
+			}
+			catch (Exception e)
+			{
+				TempData[MessageConstant.ErrorMessage] = e.Message;
+				return RedirectToAction("Index", "User");
+			}
 		}
 		private string GetUserId()
 			=> this.User.FindFirstValue(ClaimTypes.NameIdentifier);

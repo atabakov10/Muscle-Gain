@@ -103,7 +103,7 @@ namespace MuscleGain.Core.Services.Proteins
 
 		public async Task<IEnumerable<ProteinListingViewModel>> GetAllNotApproved()
 		{
-			var allCourses = await this.dbContext.Proteins
+			var allProteins = await this.dbContext.Proteins
 				.Where(c => c.IsDeleted == false && c.IsApproved == false)
 				.Select(c => new ProteinListingViewModel()
 				{
@@ -113,7 +113,7 @@ namespace MuscleGain.Core.Services.Proteins
 					Price = c.Price,
 				}).ToListAsync();
 
-			return allCourses;
+			return allProteins;
 		}
 
 		public async Task ApproveProtein(int proteinId)
