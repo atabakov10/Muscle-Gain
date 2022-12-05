@@ -25,15 +25,15 @@ namespace MuscleGain.Infrastructure.Data.Models.Protein
 		public decimal OrderTotal { get; set; }
 
 		[Required]
-		[StringLength(50)]
+		[StringLength(DataConstants.PaymentStatusMaxLength)]
 		public string PaymentStatus { get; set; } = null!;
 
 		[Required]
-		[StringLength(50)]
+		[StringLength(DataConstants.OrderStatusMaxLength)]
 		public string OrderStatus { get; set; } = null!;
 
 		[Required]
-		[StringLength(50)]
+		[StringLength(DataConstants.TransactionIdMaxLength)]
 		public string TransactionId { get; set; } = null!;
 
 		public ICollection<Protein> Proteins { get; set; } = new HashSet<Protein>();

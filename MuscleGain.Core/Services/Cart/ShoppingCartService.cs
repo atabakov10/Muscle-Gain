@@ -103,6 +103,7 @@ namespace MuscleGain.Core.Services.Cart
 				.ThenInclude(c => c.ShoppingCartProteins)
 				.FirstOrDefaultAsync();
 
+
 			if (user == null || user.ShoppingCartId == null)
 			{
 				return null;
@@ -115,6 +116,7 @@ namespace MuscleGain.Core.Services.Cart
 				ImageUrl = c.ImageUrl,
 				Price = c.Price,
 			}).ToList();
+
 
 			var cart = new ShoppingCartViewModel()
 			{

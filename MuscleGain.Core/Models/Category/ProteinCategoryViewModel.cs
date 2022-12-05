@@ -7,9 +7,8 @@ namespace MuscleGain.Core.Models.Category
         public int Id { get; set; }
 
         [Required]
-        [StringLength(20)]
+        [StringLength(ModelConstants.CategoryNameMaxLength)]
         public string Name { get; set; } = null!;
 
-        //public virtual ICollection<ProteinCategoryViewModel> ProteinCategories { get; set; } = new HashSet<ProteinCategoryViewModel>();
     }
 }

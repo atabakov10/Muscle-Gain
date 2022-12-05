@@ -10,12 +10,10 @@ namespace MuscleGain.Infrastructure.Data.Models.Quotes
         public int Id { get; set; }
 
         [Required]
-        [StringLength(2046)]
+        [StringLength(DataConstants.QuoteTextMaxLength)]
         public string Text { get; set; } = null!;
 
-        
-        
-        [StringLength(30)]
+        [StringLength(DataConstants.QuoteAuthorNameMaxLength)]
         public string? AuthorName { get; set; }
 
         [Required]

@@ -18,5 +18,12 @@
         //Review
         public const int CommentMaxLength = 500;
         public const int RatingMaxLength = 5;
+        //Quote
+        public const int QuoteTextMaxLength = int.MaxValue;
+        public const int QuoteAuthorNameMaxLength = 30;
+        //Order
+        public const int PaymentStatusMaxLength = 50;
+        public const int OrderStatusMaxLength = 50;
+        public const int TransactionIdMaxLength = 50;
     }
 }
