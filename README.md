@@ -17,6 +17,7 @@ This is the project that I will be presenting on the ASP.NET Advanced Course of 
 <p align="left"> <a href="https://fontawesome.com/"> Font Awesome </a>
 <p align="left"> <a href="https://github.com/jquery/jquery"> jQuery </a>
 <p align="left"> <a href="https://nunit.org/"> nUnit </a>
- <p align="left"> <a href="https://github.com/CodeSeven/toastr"> Toastr </a>
- <p align="left"> <a href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory"> In Memory Database </a>
+<p align="left"> <a href="https://github.com/CodeSeven/toastr"> Toastr </a>
+<p align="left"> <a href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory"> In Memory Database </a>
+<p align="left"> <a href="https://github.com/mganss/HtmlSanitizer"> HtmlSanitizer </a>
  
