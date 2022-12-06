@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Services.Statistics;
 using MuscleGain.Infrastructure.Data;
-using MuscleGain.Infrastructure.Data.Common;
 
 namespace MuscleGain.WebApi.Extensions
 {
@@ -21,7 +20,6 @@ namespace MuscleGain.WebApi.Extensions
 			var connectionString = config.GetConnectionString("DefaultConnection");
 			services.AddDbContext<MuscleGainDbContext>(options =>
 				options.UseSqlServer(connectionString));
-			services.AddScoped<IRepository, Repository>();
 
 			return services;
 		}

@@ -1,14 +1,6 @@
-﻿using MuscleGain.Core.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Category;
-using MuscleGain.Infrastructure.Data.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Models.Protein;
 

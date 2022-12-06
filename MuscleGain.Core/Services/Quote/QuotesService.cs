@@ -2,7 +2,6 @@
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Quotes;
 using MuscleGain.Infrastructure.Data;
-using MuscleGain.Infrastructure.Data.Common;
 using MuscleGain.Infrastructure.Data.Models.Account;
 
 namespace MuscleGain.Core.Services.Quote

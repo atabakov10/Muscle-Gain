@@ -1,11 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MuscleGain.Infrastructure.Data.Models.Account;
+using MuscleGain.Infrastructure.Data.Models.Cart;
+using MuscleGain.Infrastructure.Data.Models.Reviews;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static MuscleGain.Infrastructure.Data.DataConstants;
-using Microsoft.AspNetCore.Identity;
-using MuscleGain.Infrastructure.Data.Models.Account;
-using MuscleGain.Infrastructure.Data.Models.Reviews;
-using MuscleGain.Infrastructure.Data.Models.Cart;
 
 namespace MuscleGain.Infrastructure.Data.Models.Protein
 {

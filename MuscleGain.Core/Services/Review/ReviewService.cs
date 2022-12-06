@@ -1,14 +1,7 @@
-﻿using MuscleGain.Core.Models.Reviews;
-using MuscleGain.Infrastructure.Data.Common;
-using MuscleGain.Infrastructure.Data.Models.Account;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using MuscleGain.Core.Contracts;
+﻿using MuscleGain.Core.Contracts;
+using MuscleGain.Core.Models.Reviews;
 using MuscleGain.Infrastructure.Data;
+using MuscleGain.Infrastructure.Data.Models.Account;
 using MuscleGain.Infrastructure.Data.Models.Protein;
 
 namespace MuscleGain.Core.Services.Review

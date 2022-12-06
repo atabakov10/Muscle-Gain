@@ -1,13 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Cart;
-using MuscleGain.Infrastructure.Data.Common;
-using MuscleGain.Infrastructure.Data.Models.Account;
+using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Models.Cart;
 using MuscleGain.Infrastructure.Data.Models.Protein;
-using System.Linq.Expressions;
-using System.Security.Claims;
-using MuscleGain.Infrastructure.Data;
 
 namespace MuscleGain.Core.Services.Cart
 {
