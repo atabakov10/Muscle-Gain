@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using MuscleGain.Core.Constants;
-using System.Data;
 
 namespace MuscleGain.Areas.Admin.Controllers
 {

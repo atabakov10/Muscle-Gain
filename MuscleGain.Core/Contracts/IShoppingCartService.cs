@@ -1,5 +1,4 @@
 ﻿using MuscleGain.Core.Models.Cart;
-using MuscleGain.Infrastructure.Data.Models.Cart;
 
 namespace MuscleGain.Core.Contracts
 {

@@ -4,9 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using MuscleGain.Core.Constants;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Proteins;
-using MuscleGain.Core.Models.Reviews;
-using MuscleGain.Infrastructure.Data;
-using MuscleGain.Infrastructure.Data.Models.Protein;
 
 namespace MuscleGain.Controllers
 {

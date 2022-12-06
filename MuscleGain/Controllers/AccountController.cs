@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using MuscleGain.Core.Constants;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Users;
-using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Models.Account;
 
 namespace MuscleGain.Controllers

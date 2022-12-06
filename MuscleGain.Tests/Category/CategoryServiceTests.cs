@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using MuscleGain.Core.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
 using MuscleGain.Core.Models.Category;
 using MuscleGain.Core.Services.Categories;
 using MuscleGain.Infrastructure.Data;
-using MuscleGain.Infrastructure.Data.Common;
 using MuscleGain.Infrastructure.Data.Models.Protein;
 
 namespace MuscleGain.Tests.Category

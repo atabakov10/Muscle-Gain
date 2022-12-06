@@ -1,15 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MuscleGain.Core.Services.Quote;
 using MuscleGain.Infrastructure.Data.Models.Quotes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MuscleGain.Core.Models.Quotes;
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Models.Account;
-using Microsoft.VisualStudio.TestPlatform.CrossPlatEngine.Adapter;
 
 namespace MuscleGain.Tests.Quotes
 {

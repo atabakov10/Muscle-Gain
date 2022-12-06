@@ -3,7 +3,6 @@ using MuscleGain.Core.Models.Reviews;
 using MuscleGain.Core.Services.Review;
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Models.Account;
-using MuscleGain.Infrastructure.Data.Models.Protein;
 
 namespace MuscleGain.Tests.Review
 {

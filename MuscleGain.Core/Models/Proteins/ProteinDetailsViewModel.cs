@@ -1,5 +1,4 @@
 ﻿using MuscleGain.Core.Models.Reviews;
-using MuscleGain.Infrastructure.Data.Models.Account;
 
 namespace MuscleGain.Core.Models.Proteins
 {

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MuscleGain.Infrastructure.Data;
-using MuscleGain.Infrastructure.Data.Models;
 using MuscleGain.Infrastructure.Data.Models.Protein;
 
 namespace MuscleGain.Infrastructure

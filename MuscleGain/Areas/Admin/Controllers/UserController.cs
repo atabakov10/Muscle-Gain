@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using MuscleGain.Core.Constants;
 using MuscleGain.Infrastructure.Data.Models.Account;
-using System.Data;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Users;
 

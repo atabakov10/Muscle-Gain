@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MuscleGain.Infrastructure.Data.Models.Protein;
 using MuscleGain.Infrastructure.Data.Models.Quotes;
 
 namespace MuscleGain.Infrastructure.Data.Configurations

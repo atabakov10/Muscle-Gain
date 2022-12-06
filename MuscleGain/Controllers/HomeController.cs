@@ -1,9 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Authorization;
-using MuscleGain.Core.Constants;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Home;
-using MuscleGain.Infrastructure.Data;
 
 namespace MuscleGain.Controllers
 {

@@ -1,12 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using MuscleGain.Areas.Admin.Controllers;
-using MuscleGain.Core.Constants;
+﻿using Microsoft.AspNetCore.Mvc;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Quotes;
-using MuscleGain.Core.Models.Reviews;
 using System.Security.Claims;
-using MuscleGain.Infrastructure.Data.Models.Account;
 
 namespace MuscleGain.Areas.Author.Controllers
 {
@@ -46,7 +41,7 @@ namespace MuscleGain.Areas.Author.Controllers
 
 			if (!this.ModelState.IsValid)
 			{
-				return this.View(model);
+				return this.View();
 			}
 
 			await this._quotesService.Add(model);
