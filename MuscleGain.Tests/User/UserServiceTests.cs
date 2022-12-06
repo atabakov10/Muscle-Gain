@@ -87,6 +87,20 @@ namespace MuscleGain.Tests.User
 
             Assert.NotNull(result);
         }
+        
+        [Test]
+        public async Task GetUserProfileShouldThrowNullReferenceException()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<MuscleGainDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString());
+            var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
+
+            var userService = new UserService(dbContext);
+            
+            Assert.That(
+                async() => await userService.GetUserProfile("null"),
+                Throws.Exception.TypeOf<NullReferenceException>(), "Id is invalid");
+        }
 
         [Test]
         public async Task GetUserForEditShouldReturnEditView()
@@ -143,6 +157,26 @@ namespace MuscleGain.Tests.User
             Assert.NotNull(result);
             Assert.That("AngelEdit" ,Is.EqualTo(dbContext.Users.FirstOrDefaultAsync().Result.FirstName));
             Assert.That("Angelov", Is.EqualTo(dbContext.Users.FirstOrDefaultAsync().Result.LastName));
+        }
+        [Test]
+        public async Task UpdateUserShouldThrowNullReferenceException()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<MuscleGainDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString());
+            var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
+
+            var userService = new UserService(dbContext);
+            
+            var userEdited = new UserEditViewModel()
+            {
+                Id = "tabakov10",
+                FirstName = "AngelEdit",
+                LastName = "Angelov"
+            };
+            
+            Assert.That(
+                async() => await userService.UpdateUser(userEdited),
+                Throws.Exception.TypeOf<NullReferenceException>(), "Invalid user");
         }
     }
 }

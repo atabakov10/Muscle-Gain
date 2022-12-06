@@ -9,7 +9,6 @@ namespace MuscleGain.Tests.Category
     [TestFixture]
     public class CategoryServiceTests
     {
-
         [Test]
         public async Task CreateMethodShouldAddCorrectNewCategoryToDb()
         {
@@ -50,11 +49,26 @@ namespace MuscleGain.Tests.Category
 
             await categoryService.Delete(5);
 
-            Assert.False(dbContext.ProteinsCategories.Any(x=> x.IsDeleted == false));
+            Assert.False(dbContext.ProteinsCategories.Any(x => x.IsDeleted == false));
+        }
+
+
+        [Test]
+        public async Task DeleteMethodShouldThrowNullReferenceIfIdIsNull()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<MuscleGainDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString());
+            var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
+
+            var categoryService = new CategoryService(dbContext);
+
+
+            Assert.That(
+                async () => await categoryService.Delete(6),
+                Throws.Exception.TypeOf<NullReferenceException>());
         }
 
         [Test]
-
         public async Task GetAllShouldReturnAllCategories()
         {
             var optionsBuilder = new DbContextOptionsBuilder<MuscleGainDbContext>()
@@ -179,7 +193,7 @@ namespace MuscleGain.Tests.Category
         }
 
         [Test]
-        public async Task UpdateShouldReturnUpdatedCategoryIfIdFoundElseThrowsException()
+        public async Task UpdateShouldReturnUpdatedCategoryIfIdFound()
         {
             var optionsBuilder = new DbContextOptionsBuilder<MuscleGainDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString());
@@ -206,7 +220,26 @@ namespace MuscleGain.Tests.Category
 
             Assert.NotNull(dbContext.ProteinsCategories.CountAsync());
             Assert.That(dbContext.ProteinsCategories.FirstOrDefaultAsync().Result.Name, Is.EqualTo("testNameEdit"));
+        }
 
+        [Test]
+        public async Task UpdateShouldThrowExceptionIfIdIsNull()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<MuscleGainDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString());
+            var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
+
+            var categoryService = new CategoryService(dbContext);
+
+            var editedCategory = new EditCategoryViewModel()
+            {
+                Id = 5,
+                Name = "testNameEdit"
+            };
+
+            Assert.That(
+                async () => await categoryService.Update(editedCategory),
+                Throws.Exception.TypeOf<Exception>());
         }
     }
 }

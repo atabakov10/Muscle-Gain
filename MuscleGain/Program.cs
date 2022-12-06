@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MuscleGain.Core.Constants;
-using MuscleGain.Core.Services.Payments;
+using MuscleGain.Core.Models.Payments;
 using MuscleGain.Extensions;
 using MuscleGain.Infrastructure;
 using MuscleGain.Infrastructure.Data;

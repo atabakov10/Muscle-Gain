@@ -1,4 +1,4 @@
-﻿namespace MuscleGain.Core.Services.Payments
+﻿namespace MuscleGain.Core.Models.Payments
 {
 	public class StripeSettings
 	{
