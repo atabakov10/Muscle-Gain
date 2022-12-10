@@ -5,7 +5,7 @@ using MuscleGain.Core.Constants;
 
 namespace MuscleGain.Areas.Admin.Controllers
 {
-    [Authorize(Roles = RoleConstants.Manager)]
+    [Authorize(Roles = RoleConstants.Administrator)]
     [Area("Admin")]
     public class BaseController : Controller
     {

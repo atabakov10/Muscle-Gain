@@ -42,9 +42,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("CanDeleteProduct", policy =>
-        policy.RequireAssertion(context => context.User.IsInRole(RoleConstants.Manager) && 
-                                           context.User.IsInRole(RoleConstants.Supervisor) && 
-                                           context.User.IsInRole(RoleConstants.Administrator)));
+        policy.RequireAssertion(context => context.User.IsInRole(RoleConstants.Administrator)));
 });
 
 

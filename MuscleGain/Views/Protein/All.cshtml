@@ -32,6 +32,12 @@
 				<option value="2">Price</option>
 			</select>
 		</div>
+		<div class="form-group row mt-4">
+			<div class="offset-md-4">
+				<button type="submit" class="btn btn-success">Submit</button>
+			</div>
+		</div>
+		
 
 	</div>
 	<script src="js/scripts.js">
@@ -82,7 +88,7 @@
 						{
 							<a asp-controller="Protein" asp-action="Delete" asp-route-id="@protein.Id" class="btn btn-danger">Delete</a>
 						}
-						@if (User.IsInRole(RoleConstants.Seller))
+						@if (User.IsInRole(RoleConstants.Seller) || User.IsInRole(RoleConstants.Administrator))
 						{
 							<a asp-controller="Protein" asp-action="Edit" asp-route-id="@protein.Id" class="btn btn-warning">Edit</a>
 						}

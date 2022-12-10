@@ -44,7 +44,7 @@
 				</li>
 			</ul>
 		</li>
-		@if (User?.IsInRole(RoleConstants.Manager) ?? false)
+		@if (User?.IsInRole(RoleConstants.Administrator) ?? false)
 		{
 			<li class="align-bottom">
 				<a asp-area="Admin" asp-controller="" asp-action="Index" class="nav-link active text-center">

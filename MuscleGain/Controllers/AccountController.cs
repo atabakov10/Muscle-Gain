@@ -133,36 +133,32 @@ namespace MuscleGain.Controllers
 			return RedirectToAction("Index", "Home");
 		}
 
-		//public async Task<IActionResult> CreateRoles()
-		//{
-		//    await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Manager));
-		//    await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Supervisor));
-		//    await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Administrator));
-		//    await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Author));
+		public async Task<IActionResult> CreateRoles()
+		{
+			await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Administrator));
+			await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Author));
+			await _roleManager.CreateAsync(new IdentityRole(RoleConstants.Seller));
 
-		//    return RedirectToAction("Index", "Home");
-		//}
+			return RedirectToAction("Index", "Home");
+		}
 
-		//public async Task<IActionResult> AddUsersToRoles()
-		//{
-		//    //string email4 = "atabakov99@abv.bg";
+		public async Task<IActionResult> AddUsersToRoles()
+		{
+			string email = "atabakov99@abv.bg";
+			var user4 = await _userManager.FindByNameAsync(email);
+			var result = await _userManager.AddToRoleAsync(user4, RoleConstants.Administrator);
 
-		//    string email = "v_tosheva02@abv.bg";
+			if (result.Succeeded)
+			{
+				TempData[MessageConstant.SuccessMessage] = "Successfully added role to the user!";
+			}
+			else
+			{
+				TempData[MessageConstant.ErrorMessage] = "Something went wrong...";
+			}
 
-		//    var user4 = await _userManager.FindByNameAsync(email);
-		//    var result = await _userManager.AddToRolesAsync(user4, new string[] { RoleConstants.Supervisor, RoleConstants.Manager, RoleConstants.Administrator });
-
-		//    if (result.Succeeded)
-		//    {
-		//        TempData[MessageConstant.SuccessMessage] = "Successfully added role to the user!";
-		//    }
-		//    else
-		//    {
-		//        TempData[MessageConstant.ErrorMessage] = "Something went wrong...";
-		//    }
-
-		//    return RedirectToAction("Index", "Home");
-		//}
+			return RedirectToAction("Index", "Home");
+		}
 		public async Task<IActionResult> MyProfile()
 		{
 			var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

@@ -81,10 +81,15 @@ namespace MuscleGain.Controllers
 			}
 
 			await this.proteinService.AddAsync(model);
-			TempData[MessageConstant.ErrorMessage] =
-				"The protein will be approved by the administrator and then will be published.";
+			if (true)
+			{
+				TempData[MessageConstant.ErrorMessage] =
+					"The protein will be approved by the administrator and then will be published.";
+			}
+
 			return this.RedirectToAction(nameof(this.All));
 		}
+
 		/// <summary>
 		/// Gets the protein by id 
 		/// </summary>
@@ -93,8 +98,9 @@ namespace MuscleGain.Controllers
 		/// </returns>
 
 		[HttpGet]
-		[Authorize(Roles = RoleConstants.Seller)]
-		public async Task<IActionResult> Edit(int id)
+		[Authorize(Roles = $"{RoleConstants.Administrator}, {RoleConstants.Seller}")]
+
+	public async Task<IActionResult> Edit(int id)
 		{
 			try
 			{

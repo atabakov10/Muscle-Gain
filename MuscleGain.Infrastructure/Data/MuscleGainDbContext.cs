@@ -39,6 +39,7 @@ namespace MuscleGain.Infrastructure.Data
 
             builder.ApplyConfiguration(new QuoteConfiguration());
 
+
 			base.OnModelCreating(builder);
         }
     }
