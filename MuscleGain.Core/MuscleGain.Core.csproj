@@ -8,7 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="CloudinaryDotNet" Version="1.20.0" />
+    <PackageReference Include="Google.Apis" Version="1.58.0" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.58.0" />
+    <PackageReference Include="Google.Apis.Core" Version="1.58.0" />
+    <PackageReference Include="Google.Apis.Drive.v3" Version="1.58.0.2859" />
     <PackageReference Include="HtmlSanitizer" Version="8.0.601" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.WebHost" Version="5.2.9" />
   </ItemGroup>
 
   <ItemGroup>

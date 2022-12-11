@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Home;
 using MuscleGain.Core.Models.Proteins;
@@ -144,13 +145,13 @@ namespace MuscleGain.Core.Services.Proteins
 			await this.dbContext.SaveChangesAsync();
 		}
 
-		public async Task AddAsync(AddProtein protein)
+		public async Task AddAsync(AddProtein protein, IFormFile? file)
 		{
 			string imageUrl = this.defaultArticlePicture;
 
-			if (protein.PictureFile != null)
+			if (file != null)
 			{
-				imageUrl = await this.cloudinaryService.UploudAsync(protein.PictureFile);
+				imageUrl = await this.cloudinaryService.UploudAsync(file);
 			}
 
 			var product = new Protein()
@@ -174,6 +175,7 @@ namespace MuscleGain.Core.Services.Proteins
 		public async Task<EditProteinViewModel> GetForEditAsync(int id)
 		{
 			var protein = await dbContext.FindAsync<Protein>(id);
+			var picture = await dbContext.Proteins.Where(x => x.ImageUrl == protein.ImageUrl).FirstOrDefaultAsync();
 
 			if (id == null)
 			{
@@ -193,7 +195,7 @@ namespace MuscleGain.Core.Services.Proteins
 				Grams = protein.Grams,
 				Price = protein.Price,
 				Description = protein.Description,
-				ImageUrl = protein.ImageUrl,
+				ImageUrl =protein.ImageUrl,
 				CategoryId = protein.CategoryId,
 				Categories = await categoryService.GetAllCategories(),
 				UserId = protein.ApplicationUserId
@@ -202,15 +204,15 @@ namespace MuscleGain.Core.Services.Proteins
 			return model;
 		}
 
-		public async Task EditAsync(EditProteinViewModel model)
+		public async Task EditAsync(EditProteinViewModel model, IFormFile? file)
 		{
 			var entity = await dbContext.FindAsync<Protein>(model.Id);
 
 			string imageUrl = entity.ImageUrl;
 
-			if (model.PictureFile != null)
+			if (file != null)
 			{
-				imageUrl = await this.cloudinaryService.UploudAsync(model.PictureFile);
+				imageUrl = await this.cloudinaryService.UploudAsync(file);
 			}
 
 			entity.Name = model.Name;

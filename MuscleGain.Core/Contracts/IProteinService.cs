@@ -1,4 +1,5 @@
-﻿using MuscleGain.Core.Models.Home;
+﻿using Microsoft.AspNetCore.Http;
+using MuscleGain.Core.Models.Home;
 using MuscleGain.Core.Models.Proteins;
 using MuscleGain.Core.Services.Proteins;
 using MuscleGain.Infrastructure.Data.Models.Protein;
@@ -14,11 +15,11 @@ namespace MuscleGain.Core.Contracts
              int currentPage = 1,
              int proteinsPerPage = 1);
 
-        Task AddAsync(AddProtein protein);
+        Task AddAsync(AddProtein protein, IFormFile? file);
 
         Task<EditProteinViewModel> GetForEditAsync(int id);
 
-        Task EditAsync(EditProteinViewModel model);
+        Task EditAsync(EditProteinViewModel model, IFormFile? file);
 
         Task<ProteinDetailsViewModel> GetForDetailsAsync(int id);
 

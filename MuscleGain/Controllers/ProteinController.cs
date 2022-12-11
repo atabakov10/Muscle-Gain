@@ -66,7 +66,7 @@ namespace MuscleGain.Controllers
 		/// </returns>
 
 		[HttpPost]
-		public async Task<IActionResult> Add(AddProtein model)
+		public async Task<IActionResult> Add(AddProtein model, IFormFile? file)
 		{
 			var categories = await this.categoryService.GetAllCategories();
 			if (!categories.Any(b => b.Id == model.CategoryId))
@@ -80,7 +80,7 @@ namespace MuscleGain.Controllers
 				return this.View(model);
 			}
 
-			await this.proteinService.AddAsync(model);
+			await this.proteinService.AddAsync(model, file);
 			if (true)
 			{
 				TempData[MessageConstant.ErrorMessage] =
@@ -123,7 +123,7 @@ namespace MuscleGain.Controllers
 		/// </returns>
 
 		[HttpPost]
-		public async Task<IActionResult> Edit(EditProteinViewModel model)
+		public async Task<IActionResult> Edit(EditProteinViewModel model, IFormFile? file)
 		{
 			var categories = await this.categoryService.GetAllCategories();
 
@@ -135,7 +135,7 @@ namespace MuscleGain.Controllers
 				return View(model);
 			}
 
-			await proteinService.EditAsync(model);
+			await proteinService.EditAsync(model, file);
 
 			TempData[MessageConstant.SuccessMessage] = "Successfully edited the protein!";
 

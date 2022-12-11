@@ -31,7 +31,7 @@ namespace MuscleGain.Core.Models.Proteins
         public string UserId { get; set; } = null!;
 
 
-        public IFormFile? PictureFile { get; set; }
+        public string ImageUrl { get; set; }
 
         [Display(Name = "Category")]
         public int CategoryId { get; init; }

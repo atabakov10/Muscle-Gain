@@ -1,10 +1,11 @@
-﻿@using MuscleGain.Core.Constants
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ICollection<MuscleGain.Infrastructure.Data.Models.Protein.Order>
 
-@*@{
-	ViewBag["Title"] = "All orders";
-}*@
+@{
+	ViewData["Title"] = "All orders";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
 @if (Model.Any())
 {
 	@foreach (var order in Model)
@@ -12,7 +13,7 @@
 		<div class="row col-lg-11 my-4">
 			@if (order.Proteins.Any())
 			{
-				<h3>Total order price - @order.OrderTotal $</h3>
+
 				@foreach (var protein in order.Proteins)
 				{
 					<div class="col-md-4 mt-3">
@@ -22,15 +23,31 @@
 							<img src="@protein.ImageUrl" class="card-img-top w-25 center" alt="@protein.Name @protein.Grams - @protein.Price (@protein.ProteinCategory.Name)">
 							<div class="card-body text-center">
 								<h5 class="card-title text-center center">@protein.Name (@protein.Flavour) - @protein.Grams</h5>
-								<h6 class="card-title text-center center">@protein.Price $</h6>
+								<h6 class="card-title text-center center mt-3">@protein.Price $</h6>
 							</div>
 						</div>
 						<div class="mb-4"></div>
 					</div>
 				}
-				<p>Transaction Id - <strong>@order.TransactionId</strong></p>
-				<h5>Time of order - <strong>@order.OrderDate</strong></h5>
+
+				<div class="col-9">
+					<label for="@order.OrderTotal">Total price in dollars:</label>
+					<input readonly asp-for="@order.OrderTotal " type="text" class="form-control" />
+				</div>
+				<div class="col-9">
+					<label for="@order.TransactionId">Transaction Id:</label>
+					<input readonly asp-for="@order.TransactionId" type="text" class="form-control" />
+				</div>
+				<div class="col-9">
+					<label for="@order.TransactionId">Time of order:</label>
+					<input readonly asp-for="@order.OrderDate" type="text" class="form-control" />
+				</div>
 			}
+
 		</div>
 	}
+}
+else
+{
+	<h2 class="text-center">You don't have any orders yet.</h2>
 }
