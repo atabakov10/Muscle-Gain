@@ -42,10 +42,11 @@
 				<textarea asp-for="Description" rows="4" class="form-control" placeholder="Please write at least 10 words about your product."></textarea>
 				<span asp-validation-for="Description" class="small text-danger"></span>
 			</div>
-			<div class="mb-3">
-				<label asp-for="ImageUrl" class="form-label"></label>
-				<input asp-for="ImageUrl" class="form-control" placeholder="Put your URL here...">
-				<span asp-validation-for="ImageUrl" class="small text-danger"></span>
+			<div class="custom-file">
+				<input type="file" accept="image/*" asp-for="PictureFile" class="custom-file-input" id="inputGroupFile01"
+				       aria-describedby="inputGroupFileAddon01">
+				<label class="custom-file-label" for="inputGroupFile01">Choose image</label>
+				<span asp-validation-for="PictureFile" class="text-danger"></span>
 			</div>
 			<label asp-for="CategoryId"></label>
 			<select asp-for="CategoryId" class="form-select">

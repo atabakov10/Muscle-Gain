@@ -111,8 +111,104 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<!-- /.content-wrapper -->
 		<!-- Main Footer -->
 		<footer id="sticky-footer" class="flex-shrink-0 py-4 bg-dark text-white-50 main-footer">
+			<div class="container text-center text-md-left">
+
+				<!-- Grid row -->
+				<div class="row">
+
+					<!-- Grid column -->
+					<div class="col-md-4 col-lg-3 mr-auto my-md-4 my-0 mt-4 mb-1">
+
+						<!-- Content -->
+						<h5 class="font-weight-bold text-uppercase mb-4">Thank you!</h5>
+						<p>Thank you for visiting our website! It was pleasure to have you around here :-)</p>
+						<p>
+							You can share it with your friends, because more content and funcionality is coming soon!
+							Have a great day! <i class="far fa-smile-beam"></i>
+
+						</p>
+
+					</div>
+					<!-- Grid column -->
+
+					<hr class="clearfix w-100 d-md-none">
+
+					<hr class="clearfix w-100 d-md-none">
+
+					<!-- Grid column -->
+					<div class="col-md-4 col-lg-3 mx-auto my-md-4 my-0 mt-4 mb-1">
+
+						<!-- Contact details -->
+						<h5 class="font-weight-bold text-uppercase mb-4">Address</h5>
+
+						<ul class="list-unstyled">
+							<li>
+								<p>
+									<i class="fas fa-home mr-3"></i> Plovdiv, Trakiya, BG
+								</p>
+							</li>
+							<li>
+								<p>
+									<i class="fas fa-envelope mr-3"></i> atabakov99@abv.bg
+								</p>
+							</li>
+							<li>
+								<p>
+									<i class="fas fa-phone mr-3"></i> +359 8862 47 419
+								</p>
+							</li>
+							<li>
+								<p>
+									<i class="fas fa-print mr-3"></i> + 01 234 567 89
+								</p>
+							</li>
+						</ul>
+
+					</div>
+					<!-- Grid column -->
+
+					<hr class="clearfix w-100 d-md-none">
+
+					<!-- Grid column -->
+					<div class="col-md-2 col-lg-2 justify-content-center mx-auto my-4">
+
+						<!-- Social buttons -->
+						<h5 class="font-weight-bold text-uppercase mb-4">Follow Us</h5>
+
+						<div class="justify-content-center row col-lg-10">
+							<!-- Facebook -->
+							<a href="https://www.facebook.com/tabakov10/" type="button" class="btn btn-lg btn-light btn-pill my-1" target="_blank">
+								<i class="fab fa-facebook-square"></i>
+							</a>
+							<!-- Twitter -->
+							<a href="https://www.instagram.com/a10tabakov/" type="button" class="btn btn-lg btn-light btn-pill my-1" target="_blank">
+								<i class="fab fa-instagram"></i>
+							</a>
+							<!-- Google +-->
+							<a href="https://www.linkedin.com/in/angel-tabakov-28270823b/" type="button" class="btn btn-lg btn-light btn-pill my-1" target="_blank">
+								<i class="fab fa-linkedin"></i>
+							</a>
+							<!-- Dribbble -->
+							<a href="https://github.com/atabakov10" type="button" class="btn btn-lg btn-light btn-pill my-1" target="_blank">
+								<i class="fab fa-github"></i>
+							</a>
+						</div>
+					</div>
+					<!-- Grid column -->
+					<hr class="clearfix w-100 d-md-none">
+
+				</div>
+				<!-- Grid row -->
+
+			</div>
 			<div class="container">
 				<small><i>Muscle Gain</i> - 05.09.2022 - @DateTime.UtcNow.ToString("dd/MM/yyyy")</small>
+			</div>
+			<div class="container">
+				<img src="~/img/credit/paypal2.png" />
+				<img src="~/img/credit/mastercard.png" />
+				<img src="~/img/credit/cirrus.png" />
+				<img src="~/img/credit/visa.png" />
 			</div>
 		</footer>
 	</div>
@@ -127,6 +223,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<script src="plugins/toastr/toastr.min.js"></script>
 	<!--Loading screen-->
 	<script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
+	<!--Snowflakes-->
+	<script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
+	<script>
+		new Snowflakes();
+	</script>
 
 	<partial name="_UserMessages" />
 	@await RenderSectionAsync("Scripts", false)

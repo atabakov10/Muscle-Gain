@@ -14,15 +14,21 @@ namespace MuscleGain.Core.Services.Proteins
 	{
 		private readonly MuscleGainDbContext dbContext;
 		private readonly ICategoryService categoryService;
+		private readonly ICloudinaryService cloudinaryService;
 		private readonly IReviewService reviewService;
+
+		private readonly string defaultArticlePicture = "https://m.media-amazon.com/images/I/41MUAw30QzL._AC_.jpg";
+
 		public ProteinService(
 			MuscleGainDbContext dbContext,
 			ICategoryService categoryService,
-			IReviewService reviewService)
+			IReviewService reviewService,
+			ICloudinaryService cloudinaryService)
 		{
 			this.dbContext = dbContext;
 			this.categoryService = categoryService;
 			this.reviewService = reviewService;
+			this.cloudinaryService = cloudinaryService;
 		}
 
 		public async Task<ProteinQueryServiceModel> AllAsync(
@@ -140,6 +146,13 @@ namespace MuscleGain.Core.Services.Proteins
 
 		public async Task AddAsync(AddProtein protein)
 		{
+			string imageUrl = this.defaultArticlePicture;
+
+			if (protein.PictureFile != null)
+			{
+				imageUrl = await this.cloudinaryService.UploudAsync(protein.PictureFile);
+			}
+
 			var product = new Protein()
 			{
 				Name = protein.Name,
@@ -147,7 +160,7 @@ namespace MuscleGain.Core.Services.Proteins
 				Flavour = protein.Flavour,
 				Price = (decimal)protein.Price,
 				Description = protein.Description,
-				ImageUrl = protein.ImageUrl,
+				ImageUrl = imageUrl,
 				CategoryId = protein.CategoryId,
 				ApplicationUserId = protein.UserId
 			};
@@ -193,12 +206,19 @@ namespace MuscleGain.Core.Services.Proteins
 		{
 			var entity = await dbContext.FindAsync<Protein>(model.Id);
 
+			string imageUrl = entity.ImageUrl;
+
+			if (model.PictureFile != null)
+			{
+				imageUrl = await this.cloudinaryService.UploudAsync(model.PictureFile);
+			}
+
 			entity.Name = model.Name;
 			entity.Flavour = model.Flavour;
 			entity.Grams = model.Grams;
 			entity.Price = (decimal)model.Price;
 			entity.Description = model.Description;
-			entity.ImageUrl = model.ImageUrl;
+			entity.ImageUrl = imageUrl;
 			entity.CategoryId = model.CategoryId;
 			entity.ApplicationUserId = model.UserId;
 

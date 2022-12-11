@@ -1,3 +1,4 @@
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -56,6 +57,15 @@ builder.Services.AddControllersWithViews()
 
 
 builder.Services.AddApplicationServices();
+
+// Add cloudinary
+var cloudinary = new Cloudinary(new CloudinaryDotNet.Account()
+{
+	Cloud = builder.Configuration["CloudinarySettings:CloudName"],
+	ApiKey = builder.Configuration["CloudinarySettings:ApiKey"],
+	ApiSecret = builder.Configuration["CloudinarySettings:ApiSecret"],
+});
+builder.Services.AddSingleton(cloudinary);
 
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 

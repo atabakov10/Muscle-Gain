@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 using MuscleGain.Core.Models.Category;
 using static MuscleGain.Infrastructure.Data.DataConstants;
 
@@ -30,10 +31,7 @@ namespace MuscleGain.Core.Models.Proteins
         public string UserId { get; set; } = null!;
 
 
-        [Required(ErrorMessage = "The image URL is required!")]
-		[Display(Name = "Image URL")]
-        [Url(ErrorMessage = "The Image should be a real URL.")]
-        public string ImageUrl { get; init; } = null!;
+        public IFormFile? PictureFile { get; set; }
 
         [Display(Name = "Category")]
         public int CategoryId { get; init; }
