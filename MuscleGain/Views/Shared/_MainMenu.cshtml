@@ -54,7 +54,13 @@
 				</a>
 			</li>
 		}
-		
+		<li class="align-bottom center">
+			<a asp-area="" asp-controller="ShoppingCart" asp-action="GetAllOrders" class="nav-link active text-center">
+				<p>
+					Orders
+				</p>
+			</a>
+		</li>
 		@if (User?.IsInRole(RoleConstants.Author) ?? false)
 		 {
 			 <li class="align-bottom center">
@@ -64,7 +70,6 @@
 					 </p>
 				 </a>
 			 </li>
-
 		 }
 	</ul>
 </nav>

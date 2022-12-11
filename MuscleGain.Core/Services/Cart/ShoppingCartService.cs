@@ -96,7 +96,7 @@ namespace MuscleGain.Core.Services.Cart
 				.Users
 				.Where(u => u.Id == userId)
 				.Include(sc => sc.ShoppingCart)
-				.ThenInclude(c => c.ShoppingCartProteins)
+				.ThenInclude(c => c.ShoppingCartProteins.Where(x=> x.IsDeleted == false && x.IsApproved == true && x.OrderId == null))
 				.FirstOrDefaultAsync();
 
 

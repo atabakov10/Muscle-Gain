@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MuscleGain.Core.Constants
 @model IndexViewModel
 
 @{
@@ -23,15 +24,16 @@
 
 @if (!proteins.Any())
 {
-	<div class="jumbotron">
-		<p class="lead">There aren't any proteins available, so why don't you just add one?</p>
-		<hr class="my-4">
-		@if (this.User?.Identity != null && this.User.Identity.IsAuthenticated)
-		{
+	@if (User.IsInRole(RoleConstants.Seller))
+	{
+		<div class="jumbotron">
+			<p class="lead">There aren't any proteins available, so why don't you just add one?</p>
+			<hr class="my-4">
 			<a asp-controller="Protein" asp-action="Add" class="btn btn-primary btn-lg"
 			   role="button">Add Protein</a>
-		}
-	</div>
+
+		</div>
+	}
 }
 
 
@@ -74,7 +76,7 @@
 		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 		<span class="visually-hidden">Previous</span>
 	</button>
-	<button class="carousel-control-next"  type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+	<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
 		<span class="carousel-control-next-icon" aria-hidden="true"></span>
 		<span class="visually-hidden">Next</span>
 	</button>

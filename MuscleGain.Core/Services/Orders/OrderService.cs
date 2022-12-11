@@ -1,4 +1,6 @@
-﻿using MuscleGain.Core.Contracts;
+﻿using AngleSharp.Html;
+using Microsoft.EntityFrameworkCore;
+using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Order;
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Models.Account;
@@ -60,6 +62,15 @@ namespace MuscleGain.Core.Services.Orders
 
 			this.dbContext.Update(order);
 			await this.dbContext.SaveChangesAsync();
+		}
+
+		public async Task<ICollection<Order>> GetAllOrders(string userId)
+		{
+			var ordersUser = await dbContext.Orders.Where(x => x.Customer.Id == userId).Include(x=> x.Customer)
+				.Include(x=> x.Proteins)
+				.ThenInclude(x=> x.ProteinCategory)
+				.ToListAsync();
+			return ordersUser;
 		}
 	}
 }

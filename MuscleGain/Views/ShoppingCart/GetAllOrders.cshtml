@@ -1,0 +1,36 @@
+﻿@using MuscleGain.Core.Constants
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ICollection<MuscleGain.Infrastructure.Data.Models.Protein.Order>
+
+@*@{
+	ViewBag["Title"] = "All orders";
+}*@
+@if (Model.Any())
+{
+	@foreach (var order in Model)
+	{
+		<div class="row col-lg-11 my-4">
+			@if (order.Proteins.Any())
+			{
+				<h3>Total order price - @order.OrderTotal $</h3>
+				@foreach (var protein in order.Proteins)
+				{
+					<div class="col-md-4 mt-3">
+
+
+						<div class="card mb-3">
+							<img src="@protein.ImageUrl" class="card-img-top w-25 center" alt="@protein.Name @protein.Grams - @protein.Price (@protein.ProteinCategory.Name)">
+							<div class="card-body text-center">
+								<h5 class="card-title text-center center">@protein.Name (@protein.Flavour) - @protein.Grams</h5>
+								<h6 class="card-title text-center center">@protein.Price $</h6>
+							</div>
+						</div>
+						<div class="mb-4"></div>
+					</div>
+				}
+				<p>Transaction Id - <strong>@order.TransactionId</strong></p>
+				<h5>Time of order - <strong>@order.OrderDate</strong></h5>
+			}
+		</div>
+	}
+}

@@ -140,9 +140,18 @@ namespace MuscleGain.Controllers
 			return this.RedirectToAction("OrderConfirmation", "ShoppingCart", new { id = order.Id });
 		}
 
+		public async Task<IActionResult> GetAllOrders()
+		{
+			var user = GetUserId();
+			var model = await orderService.GetAllOrders(user);
+			return View(model);
+		}
+
 		public IActionResult OrderConfirmation(int id)
 		{
 			return this.View(id);
 		}
+		private string GetUserId()
+			=> this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 	}
 }
