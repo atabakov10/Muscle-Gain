@@ -16,7 +16,6 @@ namespace MuscleGain.Core.Models.Order
 
 		public string TransactionId { get; set; } = null!;
 
-
 		public ICollection<ShoppingCartProteinViewModel> Proteins = new List<ShoppingCartProteinViewModel>();
 	}
 }

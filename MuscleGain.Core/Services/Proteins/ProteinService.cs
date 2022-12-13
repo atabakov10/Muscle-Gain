@@ -145,13 +145,13 @@ namespace MuscleGain.Core.Services.Proteins
 			await this.dbContext.SaveChangesAsync();
 		}
 
-		public async Task AddAsync(AddProtein protein, IFormFile? file)
+		public async Task AddAsync(AddProtein protein)
 		{
 			string imageUrl = this.defaultArticlePicture;
 
-			if (file != null)
+			if (protein.ImageUrl != null)
 			{
-				imageUrl = await this.cloudinaryService.UploudAsync(file);
+				imageUrl = await this.cloudinaryService.UploudAsync(protein.ImageUrl);
 			}
 
 			var product = new Protein()
@@ -195,7 +195,7 @@ namespace MuscleGain.Core.Services.Proteins
 				Grams = protein.Grams,
 				Price = protein.Price,
 				Description = protein.Description,
-				ImageUrl =protein.ImageUrl,
+				//ImageUrl =protein.ImageUrl,
 				CategoryId = protein.CategoryId,
 				Categories = await categoryService.GetAllCategories(),
 				UserId = protein.ApplicationUserId
@@ -204,15 +204,15 @@ namespace MuscleGain.Core.Services.Proteins
 			return model;
 		}
 
-		public async Task EditAsync(EditProteinViewModel model, IFormFile? file)
+		public async Task EditAsync(EditProteinViewModel model)
 		{
 			var entity = await dbContext.FindAsync<Protein>(model.Id);
 
 			string imageUrl = entity.ImageUrl;
 
-			if (file != null)
+			if (model.ImageUrl != null)
 			{
-				imageUrl = await this.cloudinaryService.UploudAsync(file);
+				imageUrl = await this.cloudinaryService.UploudAsync(model.ImageUrl);
 			}
 
 			entity.Name = model.Name;

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.EntityFrameworkCore;
 using MuscleGain.Core.Models.Proteins;
 using MuscleGain.Core.Services.Proteins;
 using MuscleGain.Infrastructure.Data;
@@ -17,7 +19,7 @@ namespace MuscleGain.Tests.Protein
 				.UseInMemoryDatabase(Guid.NewGuid().ToString());
 			var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
 
-			var proteinService = new ProteinService(dbContext, null, null);
+			var proteinService = new ProteinService(dbContext, null, null, null);
 
 			var proteinToAdd = new AddProtein()
 			{
@@ -27,7 +29,7 @@ namespace MuscleGain.Tests.Protein
 				Price = new decimal(49.99),
 				Description = "TestDescription",
 				UserId = "tabaka10",
-				ImageUrl = "https://m.media-amazon.com/images/I/616cI2pfTOL._SL1200_.jpg",
+				//ImageUrl = "https://m.media-amazon.com/images/I/616cI2pfTOL._SL1200_.jpg",
 				CategoryId = 1,
 
 			};
@@ -40,7 +42,7 @@ namespace MuscleGain.Tests.Protein
 			Assert.AreEqual("500g", dbContext.Proteins.FirstAsync().Result.Grams);
 			Assert.AreEqual(49.99, dbContext.Proteins.FirstAsync().Result.Price);
 			Assert.AreEqual("TestDescription", dbContext.Proteins.FirstAsync().Result.Description);
-			Assert.AreEqual("https://m.media-amazon.com/images/I/616cI2pfTOL._SL1200_.jpg", dbContext.Proteins.FirstAsync().Result.ImageUrl);
+			//Assert.AreEqual("https://m.media-amazon.com/images/I/616cI2pfTOL._SL1200_.jpg", dbContext.Proteins.FirstAsync().Result.ImageUrl);
 			Assert.AreEqual(1, dbContext.Proteins.FirstAsync().Result.CategoryId);
 			Assert.AreEqual("tabaka10", dbContext.Proteins.FirstAsync().Result.ApplicationUserId);
 		}
@@ -52,7 +54,7 @@ namespace MuscleGain.Tests.Protein
 				.UseInMemoryDatabase(Guid.NewGuid().ToString());
 			var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
 
-			var proteinService = new ProteinService(dbContext, null, null);
+			var proteinService = new ProteinService(dbContext, null, null, null);
 
 			var searchedProtein = new Infrastructure.Data.Models.Protein.Protein
 			{
@@ -116,7 +118,7 @@ namespace MuscleGain.Tests.Protein
 				.UseInMemoryDatabase(Guid.NewGuid().ToString());
 			var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
 
-			var proteinService = new ProteinService(dbContext, null, null);
+			var proteinService = new ProteinService(dbContext, null, null, null);
 
 			var protein = new Infrastructure.Data.Models.Protein.Protein
 			{
@@ -156,7 +158,7 @@ namespace MuscleGain.Tests.Protein
 				.UseInMemoryDatabase(Guid.NewGuid().ToString());
 			var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
 
-			var proteinService = new ProteinService(dbContext, null, null);
+			var proteinService = new ProteinService(dbContext, null, null, null);
 
 			var protein = new Infrastructure.Data.Models.Protein.Protein
 			{
@@ -220,7 +222,7 @@ namespace MuscleGain.Tests.Protein
 				.UseInMemoryDatabase(Guid.NewGuid().ToString());
 			var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
 
-			var proteinService = new ProteinService(dbContext, null, null);
+			var proteinService = new ProteinService(dbContext, null, null, null);
 
 			var protein = new Infrastructure.Data.Models.Protein.Protein
 			{
@@ -260,7 +262,7 @@ namespace MuscleGain.Tests.Protein
 				.UseInMemoryDatabase(Guid.NewGuid().ToString());
 			var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
 
-			var proteinService = new ProteinService(dbContext, null, null);
+			var proteinService = new ProteinService(dbContext, null, null, null);
 
 			var protein = new Infrastructure.Data.Models.Protein.Protein
 			{
@@ -302,7 +304,7 @@ namespace MuscleGain.Tests.Protein
 				.UseInMemoryDatabase(Guid.NewGuid().ToString());
 			var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
 
-			var proteinService = new ProteinService(dbContext, null, null);
+			var proteinService = new ProteinService(dbContext, null, null, null);
 
 			var protein = new Infrastructure.Data.Models.Protein.Protein
 			{
@@ -344,7 +346,7 @@ namespace MuscleGain.Tests.Protein
 				.UseInMemoryDatabase(Guid.NewGuid().ToString());
 			var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
 
-			var proteinService = new ProteinService(dbContext, null, null);
+			var proteinService = new ProteinService(dbContext, null, null, null);
 
 			var protein = new Infrastructure.Data.Models.Protein.Protein
 			{
@@ -378,7 +380,7 @@ namespace MuscleGain.Tests.Protein
 				Description = "TestDescription",
 				Grams = "500g",
 				Price = new decimal(49.99),
-				ImageUrl = "https://m.media-amazon.com/images/I/616cI2pfTOL._SL1200_.jpg",
+				//ImageUrl = "https://m.media-amazon.com/images/I/616cI2pfTOL._SL1200_.jpg",
 			};
 
 			await dbContext.AddAsync(protein);
@@ -391,7 +393,7 @@ namespace MuscleGain.Tests.Protein
 			Assert.NotNull(result);
 			Assert.AreEqual("editedFlavour", result.Flavour);
 			Assert.AreEqual("editedName", result.Name);
-			Assert.AreEqual("https://m.media-amazon.com/images/I/616cI2pfTOL._SL1200_.jpg", result.ImageUrl);
+			//Assert.Equals("https://m.media-amazon.com/images/I/616cI2pfTOL._SL1200_.jpg", result.ImageUrl);
 		}
 
 		[Test]
@@ -401,7 +403,7 @@ namespace MuscleGain.Tests.Protein
 				.UseInMemoryDatabase(Guid.NewGuid().ToString());
 			var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
 
-			var proteinService = new ProteinService(dbContext, null, null);
+			var proteinService = new ProteinService(dbContext, null, null, null);
 
 			var protein = new Infrastructure.Data.Models.Protein.Protein
 			{
@@ -440,7 +442,7 @@ namespace MuscleGain.Tests.Protein
 				.UseInMemoryDatabase(Guid.NewGuid().ToString());
 			var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
 
-			var proteinService = new ProteinService(dbContext, null, null);
+			var proteinService = new ProteinService(dbContext, null, null, null);
 
 			var protein = new Infrastructure.Data.Models.Protein.Protein
 			{
@@ -525,7 +527,7 @@ namespace MuscleGain.Tests.Protein
 				.UseInMemoryDatabase(Guid.NewGuid().ToString());
 			var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
 
-			var proteinService = new ProteinService(dbContext, null, null);
+			var proteinService = new ProteinService(dbContext, null, null, null);
 
 			var protein = new Infrastructure.Data.Models.Protein.Protein
 			{

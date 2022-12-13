@@ -15,11 +15,11 @@ namespace MuscleGain.Core.Contracts
              int currentPage = 1,
              int proteinsPerPage = 1);
 
-        Task AddAsync(AddProtein protein, IFormFile? file);
+        Task AddAsync(AddProtein protein);
 
         Task<EditProteinViewModel> GetForEditAsync(int id);
 
-        Task EditAsync(EditProteinViewModel model, IFormFile? file);
+        Task EditAsync(EditProteinViewModel model);
 
         Task<ProteinDetailsViewModel> GetForDetailsAsync(int id);
 
