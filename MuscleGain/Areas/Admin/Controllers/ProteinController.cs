@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using MuscleGain.Core.Constants;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Proteins;
@@ -79,6 +80,37 @@ namespace MuscleGain.Areas.Admin.Controllers
 			return RedirectToAction(nameof(AllProteins));
 		}
 		//TODO: Add protein method.
+		[HttpGet]
+		public async Task<IActionResult> Add()
+		{
+			var user = this.GetUserId();
+
+			return View(new AddProtein
+			{
+				Categories = await this.categoryService.GetAllCategories(),
+				UserId = user
+			});
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Add(AddProtein model)
+		{
+			var categories = await this.categoryService.GetAllCategories();
+			if (!categories.Any(b => b.Id == model.CategoryId))
+			{
+				this.ModelState.AddModelError(nameof(model.CategoryId), "Category does not exist");
+			}
+
+			if (!this.ModelState.IsValid)
+			{
+				model.Categories = categories;
+				return this.View(model);
+			}
+
+			await this.proteinService.AddAsync(model);
+
+			return this.RedirectToAction(nameof(this.AllProteins));
+		}
 		public async Task<IActionResult> NotApprovedProteins()
 		{
 			try
@@ -148,5 +180,7 @@ namespace MuscleGain.Areas.Admin.Controllers
 				return RedirectToAction("Index", "Home");
 			}
 		}
+		private string GetUserId()
+			=> this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 	}
 }
