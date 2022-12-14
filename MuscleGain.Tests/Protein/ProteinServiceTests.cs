@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.EntityFrameworkCore;
 using MuscleGain.Core.Models.Proteins;
 using MuscleGain.Core.Services.Proteins;
+using MuscleGain.Core.Services.User;
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Models.Account;
 using MuscleGain.Infrastructure.Data.Models.Protein;
@@ -433,6 +434,71 @@ namespace MuscleGain.Tests.Protein
 			var result = await proteinService.GetProteinById(protein.Id);
 
 			Assert.That(result.Id, Is.EqualTo(1));
+		}
+
+		[Test]
+		public async Task GetUsersShouldReturnAllUsers()
+		{
+			var optionsBuilder = new DbContextOptionsBuilder<MuscleGainDbContext>()
+				.UseInMemoryDatabase(Guid.NewGuid().ToString());
+			var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
+
+			var proteinService = new ProteinService(dbContext, null, null, null);
+
+			var protein = new Infrastructure.Data.Models.Protein.Protein()
+			{
+				Id = 1,
+				Name = "testName",
+				Flavour = "testFlavour",
+				Grams = "500g",
+				Price = new decimal(49.99),
+				Description = "TestDescription",
+				ApplicationUserId = "tabaka10",
+				ApplicationUser = new ApplicationUser()
+				{
+					Id = "tabaka10",
+				},
+				ImageUrl = "https://m.media-amazon.com/images/I/616cI2pfTOL._SL1200_.jpg",
+				CategoryId = 5,
+				ProteinCategory = new ProteinsCategories()
+				{
+					Id = 5,
+					Name = "Whey Protein"
+				},
+				IsApproved = true,
+				IsDeleted = false,
+				OrderId = null
+			};
+
+			var proteinTwo = new Infrastructure.Data.Models.Protein.Protein()
+			{
+				Id = 2,
+				Name = "testNamee",
+				Flavour = "testFlavourr",
+				Grams = "1kg",
+				Price = new decimal(49.99),
+				Description = "TestDescriptionn",
+				ApplicationUserId = "tabaka10",
+				ImageUrl = "https://m.media-amazon.com/images/I/616cI2pfTOL._SL1200_.jpg",
+				CategoryId = 6,
+				ProteinCategory = new ProteinsCategories()
+				{
+					Id = 6,
+					Name = "Whey"
+				},
+				IsApproved = true,
+				IsDeleted = false,
+				OrderId = null
+			};
+
+			await dbContext.Proteins.AddAsync(protein);
+			await dbContext.Proteins.AddAsync(proteinTwo);
+			await dbContext.SaveChangesAsync();
+
+			var result = await proteinService.GetAllProteins();
+
+			Assert.NotNull(proteinService.GetAllProteins());
+			Assert.That(result.Count(), Is.EqualTo(2));
 		}
 
 		[Test]

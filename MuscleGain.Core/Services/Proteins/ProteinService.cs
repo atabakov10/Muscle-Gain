@@ -210,12 +210,12 @@ namespace MuscleGain.Core.Services.Proteins
 
 			if (id == null)
 			{
-				throw new Exception();
+				throw new Exception("Invalid Id");
 			}
 
 			if (protein.IsDeleted != false || protein.IsApproved != true || protein.OrderId != null)
 			{
-				throw new Exception();
+				throw new Exception("Something went wrong!");
 			}
 
 			var model = new EditProteinViewModel

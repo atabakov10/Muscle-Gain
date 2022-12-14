@@ -45,7 +45,7 @@ namespace MuscleGain.Controllers
 		/// <returns> the view to add a protein</returns>
 
 		[HttpGet]
-		[Authorize(Roles = RoleConstants.Seller)]
+		[Authorize(Roles = $"{RoleConstants.Seller}, {RoleConstants.Administrator}")]
 		public async Task<IActionResult> Add()
 		{
 			var user = this.GetUserId();
@@ -109,7 +109,7 @@ namespace MuscleGain.Controllers
 			}
 			catch (Exception e)
 			{
-				TempData[MessageConstant.ErrorMessage] = "Oops, something went wrong...";
+				TempData[MessageConstant.ErrorMessage] = e.Message;
 				return RedirectToAction("All", "Protein");
 			}
 

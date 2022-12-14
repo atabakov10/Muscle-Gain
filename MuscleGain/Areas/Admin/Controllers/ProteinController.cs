@@ -1,16 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MuscleGain.Core.Constants;
 using MuscleGain.Core.Contracts;
+using MuscleGain.Core.Models.Proteins;
 
 namespace MuscleGain.Areas.Admin.Controllers
 {
 	public class ProteinController : BaseController
 	{
 		private readonly IProteinService proteinService;
+		private readonly ICategoryService categoryService;
 
-		public ProteinController(IProteinService proteinService)
+		public ProteinController(IProteinService proteinService,
+			ICategoryService categoryService)
 		{
 			this.proteinService = proteinService;
+			this.categoryService = categoryService;
 		}
 
 		public async Task<IActionResult> Index()
@@ -27,7 +31,54 @@ namespace MuscleGain.Areas.Admin.Controllers
 			return this.View(protein);
 		}
 
-		
+		public async Task<IActionResult> Delete(int id)
+		{
+			try
+			{
+				await proteinService.Delete(id);
+				return RedirectToAction(nameof(AllProteins));
+
+			}
+			catch (Exception e)
+			{
+				TempData[MessageConstant.ErrorMessage] = e.Message;
+				return RedirectToAction("All", "Protein");
+			}
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> Edit(int id)
+		{
+			try
+			{
+				var model = await proteinService.GetForEditAsync(id);
+				return View(model);
+			}
+			catch (Exception e)
+			{
+				TempData[MessageConstant.ErrorMessage] = e.Message;
+				return RedirectToAction(nameof(AllProteins));
+			}
+
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Edit(EditProteinViewModel model)
+		{
+			var categories = await this.categoryService.GetAllCategories();
+
+
+			if (!ModelState.IsValid)
+			{
+				model.Categories = categories;
+				return View(model);
+			}
+
+			await proteinService.EditAsync(model);
+
+			return RedirectToAction(nameof(AllProteins));
+		}
+		//TODO: Add protein method.
 		public async Task<IActionResult> NotApprovedProteins()
 		{
 			try

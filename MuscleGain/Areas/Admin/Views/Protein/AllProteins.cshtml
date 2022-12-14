@@ -14,30 +14,35 @@
 			<div class="card-body table-responsive p-0">
 				<table class="table table-hover text-nowrap">
 					<thead>
-						<tr>
-							<th>ID</th>
-							<td>Image</td>
-							<th>Name</th>
-							<th>Flavour</th>
-							<th>Grams</th>
-							<th>Price</th>
-							<th>Category</th>
-						</tr>
+					<tr>
+						<th>ID</th>
+						<td>Image</td>
+						<th>Name</th>
+						<th>Flavour</th>
+						<th>Grams</th>
+						<th>Price</th>
+						<th>Category</th>
+						<th>Actions</th>
+					</tr>
 					</thead>
 					<tbody>
-						@foreach (var protein in Model)
-						{
-							<tr>
-								<td>@protein.Id</td>
-								<td><img class="rounded w-25" src="@protein.ImageUrl"></td>
-								<td>@protein.Name</td>
-								<td>@protein.Flavour</td>
-								<td>@protein.Grams</td>
-								<td>@protein.Price $</td>
-								<td>@protein.Category</td>
-							</tr>
+					@foreach (var protein in Model)
+					{
+						<tr>
+							<td>@protein.Id</td>
+							<td><img class="rounded w-25 center" src="@protein.ImageUrl"></td>
+							<td>@protein.Name</td>
+							<td>@protein.Flavour</td>
+							<td>@protein.Grams</td>
+							<td>@protein.Price $</td>
+							<td>@protein.Category</td>
+							<td>
+								<a asp-area="Admin" asp-controller="Protein" asp-action="Delete" asp-route-id="@protein.Id" class="btn btn-danger">Delete</a>
+								<a asp-area="Admin" asp-controller="Protein" asp-action="Edit" asp-route-id="@protein.Id" class="btn btn-warning">Edit</a>
+							</td>
+						</tr>
 
-						}
+					}
 
 					</tbody>
 				</table>
@@ -47,3 +52,5 @@
 
 	</div>
 </div>
+
+<a asp-area="" asp-controller="Protein" asp-action="Add" class="btn btn-block btn-success btn-sm">Add Protein</a>
