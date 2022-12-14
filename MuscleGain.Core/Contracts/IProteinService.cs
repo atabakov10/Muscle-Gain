@@ -32,7 +32,10 @@ namespace MuscleGain.Core.Contracts
         Task ApproveProtein(int proteinId);
 
         Task UnapproveProtein(int proteinId);
+
         Task Delete(int proteinId);
+
+        Task<IEnumerable<ProteinListingViewModel>> GetAllProteins();
 
     }
 }

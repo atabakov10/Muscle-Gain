@@ -15,8 +15,7 @@ namespace MuscleGain.Areas.Admin.Controllers
 
 		public async Task<IActionResult> Index()
 		{
-			var allProteins = await this.proteinService.GetAllNotApproved();
-			return this.View(allProteins);
+			return this.View();
 		}
 
 		public async Task<IActionResult> Details([FromRoute] int id)
@@ -26,6 +25,40 @@ namespace MuscleGain.Areas.Admin.Controllers
 			this.ViewData["Flavour"] = $"{protein.Flavour}";
 			this.ViewData["Price"] = $"{protein.Price}";
 			return this.View(protein);
+		}
+
+		
+		public async Task<IActionResult> NotApprovedProteins()
+		{
+			try
+			{
+				var allProteins = await this.proteinService.GetAllNotApproved();
+				return this.View(allProteins);
+
+			}
+			catch (NullReferenceException ne)
+			{
+				TempData[MessageConstant.ErrorMessage] = ne.Message;
+				return RedirectToAction("Index", "Protein");
+			}
+
+		}
+
+	
+		public async Task<IActionResult> AllProteins()
+		{
+			try
+			{
+				var allProteins = await this.proteinService.GetAllProteins();
+				return this.View(allProteins);
+
+			}
+			catch (NullReferenceException ne)
+			{
+				TempData[MessageConstant.ErrorMessage] = ne.Message;
+				return RedirectToAction("Index", "Protein");
+			}
+
 		}
 
 		[HttpPost]

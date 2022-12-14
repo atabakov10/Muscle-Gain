@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Collections;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Home;
 using MuscleGain.Core.Models.Proteins;
 using MuscleGain.Core.Models.Reviews;
+using MuscleGain.Core.Models.Users;
 using MuscleGain.Infrastructure.Data;
 using MuscleGain.Infrastructure.Data.Models.Protein;
 
@@ -105,6 +107,31 @@ namespace MuscleGain.Core.Services.Proteins
 			await this.dbContext.SaveChangesAsync();
 		}
 
+		public async Task<IEnumerable<ProteinListingViewModel>> GetAllProteins()
+		{
+			var allProteins = await this.dbContext.Proteins
+				.Include(x=> x.ProteinCategory)
+				.Where(x=> x.IsDeleted == false && x.IsApproved == true && x.OrderId == null)
+				.Select(protein => new ProteinListingViewModel()
+				{
+					Id = protein.Id,
+					ImageUrl = protein.ImageUrl,
+					Name = protein.Name,
+					Flavour = protein.Flavour,
+					Grams = protein.Grams,
+					Price = protein.Price,
+					Category = protein.ProteinCategory.Name
+				})
+				.ToListAsync();
+
+			if (allProteins == null)
+			{
+				throw new NullReferenceException("Something went wrong!");
+			}
+
+			return allProteins;
+		}
+
 		public async Task<IEnumerable<ProteinListingViewModel>> GetAllNotApproved()
 		{
 			var allProteins = await this.dbContext.Proteins
@@ -116,6 +143,11 @@ namespace MuscleGain.Core.Services.Proteins
 					ImageUrl = c.ImageUrl,
 					Price = c.Price,
 				}).ToListAsync();
+
+			if (allProteins == null)
+			{
+				throw new NullReferenceException("Something went wrong");
+			}
 
 			return allProteins;
 		}
