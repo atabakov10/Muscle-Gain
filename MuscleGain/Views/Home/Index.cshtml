@@ -82,18 +82,21 @@
 	</button>
 </div>
 
-<div class="row mt-3">
-	<div class="col-12 text-center">
-		<button class="btn btn-primary" id="statistics-button">Show Statistics</button>
+@if (User.IsInRole(RoleConstants.Administrator))
+{
+	<div class="row mt-3">
+		<div class="col-12 text-center">
+			<button class="btn btn-primary" id="statistics-button">Show Statistics</button>
+		</div>
 	</div>
-</div>
 
-<div class="mt-4 p-5 bg-light d-none" id="statistics">
-	<div class="row">
-		<h2 class="col-md-6 text-center" id="total-proteins"></h2>
-		<h2 class="col-md-6 text-center" id="total-users"></h2>
+	<div class="mt-4 p-5 bg-light d-none" id="statistics">
+		<div class="row">
+			<h2 class="col-md-6 text-center" id="total-proteins"></h2>
+			<h2 class="col-md-6 text-center" id="total-users"></h2>
+		</div>
 	</div>
-</div>
+}
 <div class="mb-3"></div>
 @section Scripts {
 	<script>

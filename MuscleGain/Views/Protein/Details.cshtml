@@ -37,7 +37,7 @@
 					<div class="m-bot15"> <strong>Price : </strong><span class="pro-price"> $@Model.Price</span></div>
 					<p>
 
-						@if (!User.IsInRole(RoleConstants.Seller))
+						@if (!User.IsInRole(RoleConstants.Seller) && !User.IsInRole(RoleConstants.Administrator))
 						{
 							<a asp-controller="ShoppingCart" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-round btn-danger" type="button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
 						}

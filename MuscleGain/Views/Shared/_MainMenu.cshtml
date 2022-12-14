@@ -60,7 +60,7 @@
 				</a>
 			</li>
 		}
-		@if (!User.IsInRole(RoleConstants.Seller) && User.Identity.IsAuthenticated)
+		@if (!User.IsInRole(RoleConstants.Seller) && !User.IsInRole(RoleConstants.Administrator) && User.Identity.IsAuthenticated)
 		{
 			<li class="align-bottom center mb-2">
 				<a asp-area="" asp-controller="ShoppingCart" asp-action="GetAllOrders" class="nav-link active text-center">
