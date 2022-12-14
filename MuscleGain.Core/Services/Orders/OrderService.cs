@@ -1,4 +1,5 @@
-﻿using AngleSharp.Html;
+﻿using System.Security.Cryptography.X509Certificates;
+using AngleSharp.Html;
 using Microsoft.EntityFrameworkCore;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Order;
@@ -69,6 +70,7 @@ namespace MuscleGain.Core.Services.Orders
 			var ordersUser = await dbContext.Orders.Where(x => x.Customer.Id == userId).Include(x=> x.Customer)
 				.Include(x=> x.Proteins)
 				.ThenInclude(x=> x.ProteinCategory)
+				.OrderByDescending(x=> x.OrderDate)
 				.ToListAsync();
 			return ordersUser;
 		}

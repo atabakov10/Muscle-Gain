@@ -47,7 +47,7 @@
 		@if (firstProtein != null)
 		{
 			<div class="carousel-item active">
-				<img class="d-block w-25 center" src="@firstProtein.ImageUrl" alt="@firstProtein.Name - @firstProtein.Grams">
+				<img class="d-block w-50 center" src="@firstProtein.ImageUrl" alt="@firstProtein.Name - @firstProtein.Grams">
 				<div class="carousel-caption d-none d-sm-block">
 					<h5><a class="btn btn-dark" asp-controller="Protein" asp-action="Details" asp-route-id="@firstProtein.Id">@firstProtein.Name (@firstProtein.Flavour) - @firstProtein.Grams</a></h5>
 				</div>
@@ -56,7 +56,7 @@
 		@if (secondProtein != null)
 		{
 			<div class="carousel-item">
-				<img class="d-block w-25 center" src="@secondProtein.ImageUrl" alt="@secondProtein.Name - @secondProtein.Grams">
+				<img class="d-block w-50 center" src="@secondProtein.ImageUrl" alt="@secondProtein.Name - @secondProtein.Grams">
 				<div class="carousel-caption d-none d-sm-block">
 					<h5><a class="btn btn-dark" asp-controller="Protein" asp-action="Details" asp-route-id="@secondProtein.Id">@secondProtein.Name (@secondProtein.Flavour) - @secondProtein.Grams</a></h5>
 				</div>
@@ -65,7 +65,7 @@
 		@if (thirdProtein != null)
 		{
 			<div class="carousel-item">
-				<img class="d-block w-25 center" src="@thirdProtein.ImageUrl" alt="@thirdProtein.Name - @thirdProtein.Grams">
+				<img class="d-block w-50 center" src="@thirdProtein.ImageUrl" alt="@thirdProtein.Name - @thirdProtein.Grams">
 				<div class="carousel-caption d-none d-sm-block">
 					<h5><a class="btn btn-dark" asp-controller="Protein" asp-action="Details" asp-route-id="@thirdProtein.Id">@thirdProtein.Name (@thirdProtein.Flavour) - @thirdProtein.Grams</a></h5>
 				</div>

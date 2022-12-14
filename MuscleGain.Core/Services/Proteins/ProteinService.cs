@@ -175,7 +175,6 @@ namespace MuscleGain.Core.Services.Proteins
 		public async Task<EditProteinViewModel> GetForEditAsync(int id)
 		{
 			var protein = await dbContext.FindAsync<Protein>(id);
-			var picture = await dbContext.Proteins.Where(x => x.ImageUrl == protein.ImageUrl).FirstOrDefaultAsync();
 
 			if (id == null)
 			{
@@ -195,7 +194,7 @@ namespace MuscleGain.Core.Services.Proteins
 				Grams = protein.Grams,
 				Price = protein.Price,
 				Description = protein.Description,
-				//ImageUrl =protein.ImageUrl,
+				//ImageUrl = picture.ImageUrl,
 				CategoryId = protein.CategoryId,
 				Categories = await categoryService.GetAllCategories(),
 				UserId = protein.ApplicationUserId
