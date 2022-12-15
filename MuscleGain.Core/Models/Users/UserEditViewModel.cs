@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace MuscleGain.Core.Models.Users
 {
@@ -6,10 +7,7 @@ namespace MuscleGain.Core.Models.Users
     {
         [Key]
         public string Id { get; set; }
-
-        [Url]
-        [Display(Name = "Image URL")]
-        public string? ImageUrl { get; set; }
+        public IFormFile? ImageUrl { get; set; }
 
         [Phone]
         [Display(Name = "Phone number")]

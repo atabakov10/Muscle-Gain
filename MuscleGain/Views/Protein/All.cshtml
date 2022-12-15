@@ -90,13 +90,13 @@
 							{
 								<a asp-controller="Protein" asp-action="Delete" asp-route-id="@protein.Id" class="btn btn-danger">Delete</a>
 							}
-							@if (User.IsInRole(RoleConstants.Seller) || User.IsInRole(RoleConstants.Administrator))
+							@if (User.IsInRole(RoleConstants.Seller) && !User.IsInRole(RoleConstants.Administrator))
 							{
 								<a asp-controller="Protein" asp-action="Edit" asp-route-id="@protein.Id" class="btn btn-warning">Edit</a>
 							}
 							<a asp-controller="Protein" asp-action="Details" asp-route-id="@protein.Id" class="btn btn-success">Details</a>
 
-							@if (!User.IsInRole(RoleConstants.Seller) || !User.IsInRole(RoleConstants.Administrator))
+							@if (!User.IsInRole(RoleConstants.Seller) && !User.IsInRole(RoleConstants.Administrator))
 							{
 								<a asp-controller="ShoppingCart" asp-action="Add" asp-route-id="@protein.Id" class="btn btn-danger" type="button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
 							}

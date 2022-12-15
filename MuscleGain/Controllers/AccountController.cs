@@ -6,6 +6,7 @@ using MuscleGain.Core.Constants;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Users;
 using MuscleGain.Infrastructure.Data.Models.Account;
+using MuscleGain.Infrastructure.Data.Models.Protein;
 
 namespace MuscleGain.Controllers
 {
@@ -15,17 +16,23 @@ namespace MuscleGain.Controllers
 		private readonly SignInManager<ApplicationUser> _signInManager;
 		private readonly RoleManager<IdentityRole> _roleManager;
 		private readonly IUserService service;
+		private readonly ICloudinaryService cloudinaryService;
+
+		private readonly string defaultPicture = "file:///C:/Users/HP/Desktop/6a5b3185c490202f2b693763a1f98abf.jpg";
+
 
 		public AccountController(
 			SignInManager<ApplicationUser> signInManager,
 			UserManager<ApplicationUser> userManager,
 			RoleManager<IdentityRole> roleManager,
-			IUserService service)
+			IUserService service,
+			ICloudinaryService cloudinaryService)
 		{
 			this._userManager = userManager;
 			this._signInManager = signInManager;
 			this._roleManager = roleManager;
 			this.service = service;
+			this.cloudinaryService = cloudinaryService;
 		}
 
 		[HttpGet]
@@ -46,11 +53,18 @@ namespace MuscleGain.Controllers
 				return View(model);
 			}
 
+			string imageUrl = this.defaultPicture;
+
+			if (model.ImageUrl != null)
+			{
+				imageUrl = await this.cloudinaryService.UploudAsync(model.ImageUrl);
+			}
+
 
 			var user = new ApplicationUser()
 			{
 				Email = model.Email,
-				ImageUrl = model.ImageUrl,
+				ImageUrl = imageUrl,
 				FirstName = model.FirstName,
 				EmailConfirmed = true,
 				LastName = model.LastName,
@@ -112,6 +126,7 @@ namespace MuscleGain.Controllers
 
 				if (result.Succeeded)
 				{
+
 					if (model.ReturnUrl != null)
 					{
 						return Redirect(model.ReturnUrl);
@@ -196,7 +211,7 @@ namespace MuscleGain.Controllers
 		public async Task<IActionResult> Edit(UserEditViewModel model)
 		{
 			var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
+			
 			model.Id = userId;
 			try
 			{

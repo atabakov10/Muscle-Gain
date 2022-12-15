@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Users;
 using MuscleGain.Infrastructure.Data;
@@ -9,9 +10,14 @@ namespace MuscleGain.Core.Services.User
 	public class UserService : IUserService
 	{
         private readonly MuscleGainDbContext dbContext;
-		public UserService(MuscleGainDbContext dbContext)
+        private readonly ICloudinaryService cloudinaryService;
+       
+		public UserService(MuscleGainDbContext dbContext,
+			ICloudinaryService cloudinaryService)
 		{
             this.dbContext = dbContext;
+			this.cloudinaryService = cloudinaryService;
+		
 		}
 
         public async Task<ApplicationUser> GetUserById(string id)
@@ -32,6 +38,7 @@ namespace MuscleGain.Core.Services.User
 			}
 
 			var user = await GetUserById(id);
+		
 			return new UserProfileViewModel()
 			{
 				Id = user.Id,
@@ -56,7 +63,6 @@ namespace MuscleGain.Core.Services.User
 			return new UserEditViewModel()
 			{
 				Id = user.Id,
-				ImageUrl = user.ImageUrl,
 				FirstName = user.FirstName,
 				LastName = user.LastName,
 				PhoneNumber = user.PhoneNumber
@@ -84,6 +90,13 @@ namespace MuscleGain.Core.Services.User
 		{
 			bool result = false;
 			var user = await GetUserById(model.Id);
+			
+			string imageUrl = user.ImageUrl;
+
+			if (model.ImageUrl != null)
+			{ 
+				imageUrl = await this.cloudinaryService.UploudAsync(model.ImageUrl);
+			}
 
 
 			if (user != null)
@@ -91,7 +104,7 @@ namespace MuscleGain.Core.Services.User
 				user.Id = model.Id;
 				user.FirstName = model.FirstName;
 				user.LastName = model.LastName;
-				user.ImageUrl = model.ImageUrl;
+				user.ImageUrl = imageUrl;
 				user.PhoneNumber = model.PhoneNumber;
 				
 				await this.dbContext.SaveChangesAsync();

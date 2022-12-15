@@ -4,6 +4,9 @@
 	ViewData["Title"] = "Update";
 }
 
+<a asp-area="Admin" asp-controller="Quote" asp-action="Index">Back</a>
+
+
 <form asp-area="Admin" asp-controller="Quote" asp-action="Update" method="post">
 	<div class="form-group">
 		<input asp-for="@Model.UserId" hidden>

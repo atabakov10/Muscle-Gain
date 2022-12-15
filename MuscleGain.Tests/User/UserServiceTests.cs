@@ -16,7 +16,7 @@ namespace MuscleGain.Tests.User
                 .UseInMemoryDatabase(Guid.NewGuid().ToString());
             var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
 
-            var userService = new UserService(dbContext);
+            var userService = new UserService(dbContext, null);
 
             var user = new ApplicationUser()
             {
@@ -38,7 +38,7 @@ namespace MuscleGain.Tests.User
                 .UseInMemoryDatabase(Guid.NewGuid().ToString());
             var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
 
-            var userService = new UserService(dbContext);
+            var userService = new UserService(dbContext, null);
 
             var user = new ApplicationUser()
             {
@@ -70,7 +70,7 @@ namespace MuscleGain.Tests.User
                 .UseInMemoryDatabase(Guid.NewGuid().ToString());
             var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
 
-            var userService = new UserService(dbContext);
+            var userService = new UserService(dbContext, null);
 
             var user = new ApplicationUser()
             {
@@ -95,7 +95,7 @@ namespace MuscleGain.Tests.User
                 .UseInMemoryDatabase(Guid.NewGuid().ToString());
             var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
 
-            var userService = new UserService(dbContext);
+            var userService = new UserService(dbContext, null);
             
             Assert.That(
                 async() => await userService.GetUserProfile("null"),
@@ -109,7 +109,7 @@ namespace MuscleGain.Tests.User
                 .UseInMemoryDatabase(Guid.NewGuid().ToString());
             var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
 
-            var userService = new UserService(dbContext);
+            var userService = new UserService(dbContext, null);
 
             var user = new ApplicationUser()
             {
@@ -133,7 +133,7 @@ namespace MuscleGain.Tests.User
                 .UseInMemoryDatabase(Guid.NewGuid().ToString());
             var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
 
-            var userService = new UserService(dbContext);
+            var userService = new UserService(dbContext, null);
 
             var user = new ApplicationUser()
             {
@@ -165,7 +165,7 @@ namespace MuscleGain.Tests.User
                 .UseInMemoryDatabase(Guid.NewGuid().ToString());
             var dbContext = new MuscleGainDbContext(optionsBuilder.Options);
 
-            var userService = new UserService(dbContext);
+            var userService = new UserService(dbContext, null);
             
             var userEdited = new UserEditViewModel()
             {

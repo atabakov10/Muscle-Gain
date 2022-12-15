@@ -72,11 +72,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						{
 							@if (ViewBag.UserProfilePicture == String.Empty)
 							{
-								<img src="~/img/6a5b3185c490202f2b693763a1f98abf.jpg" alt="MG Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+								
 							}
 							else
 							{
-								<img src=@ViewBag.UserProfilePicture alt="Profile picture" class="brand-image img-circle elevation-3" style="opacity: .8">
+								<img src=@ViewBag.UserProfilePicture alt="Profile picture" class="brand-image img-circle elevation-3 w-25" style="opacity: .8">
 							}
 							<a type="submit" class="btn btn-outline-secondary" asp-area="" asp-controller="Account" asp-action="MyProfile" title="Manage">
 								<span class="brand-text font-weight-light"><strong>Hello, <strong>@ViewBag.UserFirstName</strong>!</strong></span>

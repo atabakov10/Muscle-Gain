@@ -45,7 +45,7 @@ namespace MuscleGain.Controllers
 		/// <returns> the view to add a protein</returns>
 
 		[HttpGet]
-		[Authorize(Roles = $"{RoleConstants.Seller}, {RoleConstants.Administrator}")]
+		[Authorize(Roles = RoleConstants.Seller)]
 		public async Task<IActionResult> Add()
 		{
 			var user = this.GetUserId();
@@ -98,9 +98,8 @@ namespace MuscleGain.Controllers
 		/// </returns>
 
 		[HttpGet]
-		[Authorize(Roles = $"{RoleConstants.Administrator}, {RoleConstants.Seller}")]
-
-	public async Task<IActionResult> Edit(int id)
+		[Authorize(Roles = RoleConstants.Seller)]
+		public async Task<IActionResult> Edit(int id)
 		{
 			try
 			{

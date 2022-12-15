@@ -6,13 +6,13 @@
 
 <div class="row">
 	<div class="col-md-4 center">
-		<form id="registerForm" method="post" type="newForm">
+		<form id="registerForm" method="post" type="newForm" enctype="multipart/form-data">
 			<h1 align="center">Create a new account.</h1>
 			<hr />
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-			<div class="form-floating">
-				<label asp-for="ImageUrl"></label>
-				<input asp-for="ImageUrl" class="form-control" autocomplete="firstname" aria-required="true" />
+			<div class="custom-file mb-3">
+				<input type="file" asp-for="ImageUrl" class="form-control" id="inputGroupFile01"
+				       aria-describedby="inputGroupFileAddon01">
 				<span asp-validation-for="ImageUrl" class="text-danger"></span>
 			</div>
 			<div class="form-floating">

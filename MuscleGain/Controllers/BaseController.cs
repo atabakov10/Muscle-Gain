@@ -14,7 +14,7 @@ namespace MuscleGain.Controllers
 			{
 				string picture = String.Empty;
 
-				if (User?.Identity?.IsAuthenticated ?? false && User.HasClaim(c => c.Type == ClaimTypeConstants.ProfilePic))
+				if (User?.Identity?.IsAuthenticated ?? false || User.HasClaim(c => c.Type == ClaimTypeConstants.ProfilePic))
 				{
 					picture = User.Claims
 						.FirstOrDefault(c => c.Type == ClaimTypeConstants.ProfilePic)?

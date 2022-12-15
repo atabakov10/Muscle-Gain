@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MuscleGain.Core.Constants;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Quotes;
 using System.Security.Claims;
@@ -47,7 +48,22 @@ namespace MuscleGain.Areas.Author.Controllers
 			await this._quotesService.Add(model);
 			return this.RedirectToAction(nameof(this.Index));
 		}
-		
+
+		[HttpPost]
+		public async Task<IActionResult> Delete([FromForm] int id)
+		{
+			try
+			{
+				await this._quotesService.Delete(id);
+				return this.RedirectToAction("Index", "Quote");
+			}
+			catch (Exception e)
+			{
+				TempData[MessageConstant.ErrorMessage] = e.Message;
+				return RedirectToAction("Index", "User");
+			}
+		}
+
 		public async Task<IActionResult> Edit(int id)
 		{
 			var userId = this.GetUserId();
