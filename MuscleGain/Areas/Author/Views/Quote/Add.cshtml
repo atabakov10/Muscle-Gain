@@ -4,7 +4,7 @@
 	ViewData["Title"] = "Add Quote";
 }
 
-<a asp-area="Author" asp-controller="Quote" asp-action="Index">Back</a>
+<a asp-area="Author" asp-controller="Quote" asp-action="Index" class="btn btn-outline-dark mb-2">Back</a>
 
 <form asp-controller="Quote" asp-action="Add" method="post">
 		<input asp-for="@Model.UserId" hidden>

@@ -6,7 +6,6 @@ using MuscleGain.Core.Constants;
 using MuscleGain.Core.Contracts;
 using MuscleGain.Core.Models.Users;
 using MuscleGain.Infrastructure.Data.Models.Account;
-using MuscleGain.Infrastructure.Data.Models.Protein;
 
 namespace MuscleGain.Controllers
 {

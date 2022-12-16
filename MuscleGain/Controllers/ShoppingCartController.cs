@@ -2,11 +2,13 @@
 using MuscleGain.Core.Constants;
 using MuscleGain.Core.Contracts;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using MuscleGain.Core.Models.Order;
 using Stripe;
 
 namespace MuscleGain.Controllers
 {
+
 	public class ShoppingCartController : BaseController
 	{
 
@@ -26,7 +28,7 @@ namespace MuscleGain.Controllers
 			this.proteinService = proteinService;
 			this.logger = logger;
 		}
-
+		[Authorize(Policy = "AdminAndSellerCannotShop")]
 		public async Task<IActionResult> Index()
 		{
 			var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -34,7 +36,7 @@ namespace MuscleGain.Controllers
 
 			return this.View(shoppingCart);
 		}
-
+		[Authorize(Policy = "AdminAndSellerCannotShop")]
 		public async Task<IActionResult> Add([FromRoute]int id)
 		{
 			var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -54,7 +56,7 @@ namespace MuscleGain.Controllers
 
 			return this.RedirectToAction("Index", "ShoppingCart");
 		}
-
+		[Authorize(Policy = "AdminAndSellerCannotShop")]
 		public async Task<IActionResult> Delete(int id)
 		{
 
@@ -69,7 +71,7 @@ namespace MuscleGain.Controllers
 
 			return this.RedirectToAction(nameof(this.Index));
 		}
-
+		[Authorize(Policy = "AdminAndSellerCannotShop")]
 		public async Task<IActionResult> DeleteAll()
 		{
 			var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -83,7 +85,7 @@ namespace MuscleGain.Controllers
 
 			return this.RedirectToAction(nameof(this.Index));
 		}
-
+		[Authorize(Policy = "AdminAndSellerCannotShop")]
 		public async Task<IActionResult> Summary()
 		{
 			var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -92,8 +94,8 @@ namespace MuscleGain.Controllers
 
 			return this.View(shoppingCart);
 		}
-
 		[HttpPost]
+		[Authorize(Policy = "AdminAndSellerCannotShop")]
 		public async Task<IActionResult> Summary(string stripeToken)
 		{
 			var userId = this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -139,7 +141,7 @@ namespace MuscleGain.Controllers
 			await this.shoppingCartService.DeleteAllProteinsFromShoppingCart(userId);
 			return this.RedirectToAction("OrderConfirmation", "ShoppingCart", new { id = order.Id });
 		}
-
+		[Authorize(Policy = "AdminAndSellerCannotShop")]
 		public async Task<IActionResult> GetAllOrders()
 		{
 			var user = GetUserId();

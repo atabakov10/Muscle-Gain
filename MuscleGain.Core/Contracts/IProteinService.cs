@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using MuscleGain.Core.Models.Home;
+﻿using MuscleGain.Core.Models.Home;
 using MuscleGain.Core.Models.Proteins;
 using MuscleGain.Core.Services.Proteins;
 using MuscleGain.Infrastructure.Data.Models.Protein;

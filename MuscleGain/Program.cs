@@ -44,6 +44,9 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("CanDeleteProduct", policy =>
         policy.RequireAssertion(context => context.User.IsInRole(RoleConstants.Administrator)));
+
+    options.AddPolicy("AdminAndSellerCannotShop", policy =>
+        policy.RequireAssertion(context => !context.User.IsInRole(RoleConstants.Administrator) && !context.User.IsInRole(RoleConstants.Seller)) );
 });
 
 

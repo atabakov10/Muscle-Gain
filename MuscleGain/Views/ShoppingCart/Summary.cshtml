@@ -1,7 +1,6 @@
 ﻿@using Microsoft.Extensions.Options
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using MuscleGain.Core.Models.Payments
-@model MuscleGain.Core.Models.Cart.ShoppingCartViewModel
+@model ShoppingCartViewModel
 
 @inject IOptions<StripeSettings> Stripe
 
@@ -94,9 +93,9 @@
                             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                     data-key="@Stripe.Value.PublishableKey"
                                     data-amount="@OrderTotalForStripe"
-                                    data-name="MuscleGain"
+                                    data-name="Muscle Gain"
                                     data-label="Place Order"
-                                    data-description="Get The Best Proteins"
+                                    data-description="The best proteins ever created"
                                     data-locale="auto"
                                     data-allow-remember-me="false"
                                     data-image="https://stripe.com/img/documentation/checkout/marketplace.png">

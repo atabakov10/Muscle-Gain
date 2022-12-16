@@ -2,8 +2,6 @@
 using MuscleGain.Core.Contracts;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
-using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.Tokens;
 
 namespace MuscleGain.Core.Services.Cloudinary;
 

@@ -23,7 +23,7 @@ namespace MuscleGain.Controllers
 
 				return picture;
 			}
-		}
+        }
         public string UserFirstName
         {
             get

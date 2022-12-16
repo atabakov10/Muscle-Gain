@@ -1,4 +1,6 @@
-﻿namespace MuscleGain.Core.Services.Proteins
+﻿using MuscleGain.Core.Models.Proteins;
+
+namespace MuscleGain.Core.Services.Proteins
 {
     public class ProteinQueryServiceModel
     {
