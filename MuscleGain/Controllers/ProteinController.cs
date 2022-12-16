@@ -149,7 +149,6 @@ namespace MuscleGain.Controllers
 		/// </returns>
 
 		[HttpGet]
-		[AllowAnonymous]
 		public async Task<IActionResult> Details(int id)
 		{
 			try

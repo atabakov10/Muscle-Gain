@@ -84,21 +84,21 @@
 				<div class="card mb-3 justify-content-center">
 					<img src="@protein.ImageUrl" class="card-img-top w-100 center" alt="@protein.Name @protein.Grams - @protein.Price (@protein.Category)">
 					<div class="card-body text-center">
-						<h5 class="card-title align-content-center">@protein.Name (@protein.Flavour) - @protein.Grams</h5>
+						<h5 class="card-title align-content-center text-center">@protein.Name (@protein.Flavour) - @protein.Grams</h5>
 						<div class="btn-group mt-1" role="group" aria-label="Basic mixed styles example">
 							@if (User.IsInRole(RoleConstants.Administrator))
 							{
-								<a asp-controller="Protein" asp-action="Delete" asp-route-id="@protein.Id" class="btn btn-danger">Delete</a>
+								<a asp-controller="Protein" asp-action="Delete" asp-route-id="@protein.Id" class="btn btn-danger center">Delete</a>
 							}
 							@if (User.IsInRole(RoleConstants.Seller) && !User.IsInRole(RoleConstants.Administrator))
 							{
-								<a asp-controller="Protein" asp-action="Edit" asp-route-id="@protein.Id" class="btn btn-warning">Edit</a>
+								<a asp-controller="Protein" asp-action="Edit" asp-route-id="@protein.Id" class="btn btn-warning center">Edit</a>
 							}
-							<a asp-controller="Protein" asp-action="Details" asp-route-id="@protein.Id" class="btn btn-success">Details</a>
+							<a asp-controller="Protein" asp-action="Details" asp-route-id="@protein.Id" class="btn btn-success center">Details</a>
 
 							@if (!User.IsInRole(RoleConstants.Seller) && !User.IsInRole(RoleConstants.Administrator))
 							{
-								<a asp-controller="ShoppingCart" asp-action="Add" asp-route-id="@protein.Id" class="btn btn-danger" type="button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+								<a asp-controller="ShoppingCart" asp-action="Add" asp-route-id="@protein.Id" class="btn btn-danger center" type="button"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
 							}
 
 						</div>
