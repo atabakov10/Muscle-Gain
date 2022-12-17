@@ -63,6 +63,34 @@ namespace MuscleGain.Areas.Admin.Controllers
 				return RedirectToAction("Index", "User");
 			}
 		}
+		
+		public IActionResult Add()
+		{
+
+			var userId = this.GetUserId();
+			
+			var model = new QuoteViewModel()
+			{
+				UserId = userId
+			};
+
+			return View(model);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Add(AddQuoteViewModel model)
+		{
+
+			if (!this.ModelState.IsValid)
+			{
+				return this.View();
+			}
+
+			await this._quotesService.Add(model);
+			return this.RedirectToAction(nameof(this.Index));
+		}
+
+		
 		private string GetUserId()
 			=> this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 	}
