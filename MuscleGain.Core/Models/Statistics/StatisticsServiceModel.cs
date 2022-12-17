@@ -3,6 +3,6 @@
     public class StatisticsServiceModel
     {
         public int TotalProteins { get; init; }
-        public int TotalUsers { get; init; }
+        public int TotalOrders { get; init; }
     }
 }

@@ -36,7 +36,7 @@ namespace MuscleGain.Controllers
             return View(new IndexViewModel
             {
                 TotalProteins = totalStatistics.Result.TotalProteins,
-                TotalUsers = totalStatistics.Result.TotalUsers,
+                TotalsOrders = totalStatistics.Result.TotalOrders,
                 Proteins = (List<ProteinIndexViewModel>)proteins
             });
         }

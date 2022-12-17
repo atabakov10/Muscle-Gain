@@ -93,7 +93,7 @@
 	<div class="mt-4 p-5 bg-light d-none" id="statistics">
 		<div class="row">
 			<h2 class="col-md-6 text-center" id="total-proteins"></h2>
-			<h2 class="col-md-6 text-center" id="total-users"></h2>
+			<h2 class="col-md-6 text-center" id="total-orders"></h2>
 		</div>
 	</div>
 }
@@ -103,7 +103,7 @@
 		$('#statistics-button').on('click', ev => {
 			$.get('https://localhost:7118/api/statistics', (data) => {
 				$('#total-proteins').text(data.totalProteins + " Proteins available");
-				$('#total-users').text(data.totalUsers + " Users registered");
+				$('#total-orders').text(data.totalOrders + " Orders registered");
 				$('#statistics').removeClass('d-none');
 				$('#statistics-button').hide();
 			});

@@ -17,12 +17,12 @@ namespace MuscleGain.Core.Services.Statistics
 		public async Task<StatisticsServiceModel> Total()
 		{
 			var totalProteins = await this.dbContext.Proteins.Where(x => x.IsDeleted == false && x.IsApproved == true && x.OrderId == null).CountAsync();
-			var totalUsers = await this.dbContext.Users.CountAsync();
+			var totalOrders = await this.dbContext.Orders.Where(x=> x.OrderStatus == "approved").CountAsync();
 
 			return new StatisticsServiceModel
 			{
 				TotalProteins = totalProteins,
-				TotalUsers = totalUsers
+				TotalOrders = totalOrders
 			};
 		}
 	}

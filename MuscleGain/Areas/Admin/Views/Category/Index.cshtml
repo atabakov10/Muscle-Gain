@@ -20,7 +20,7 @@
                     <tbody>
                     @foreach (var category in Model)
                     {
-                        <tr style="background-color: #add8e6">
+                        <tr style="background-color: lightgrey">
                             <td>@category.Name</td>
                             <td>
                                 <a asp-area="Admin" asp-action="Edit" asp-controller="Category" asp-route-id="@category.Id" class="btn btn-block btn-outline-info btn-xs mb-1">Edit</a>

@@ -2,8 +2,8 @@
 <a asp-area="Admin" asp-controller="Protein" asp-action="NotApprovedProteins" class="btn btn-outline-dark mb-2">Back</a>
 <div class="container border-dark">
 	<div class="jumbotron bg-indigo text-warning">
-		<h1>@ViewData["Name"] - $@ViewData["Price"]</h1>
-		<h2>@ViewData["Flavour"]</h2>
+		<h1>Name and Price:  @ViewData["Name"] - $@ViewData["Price"]</h1>
+		<h2>Flavour: @ViewData["Flavour"]</h2>
 	</div>
 </div>
 <div class="container border-dark">
@@ -12,7 +12,7 @@
 			<div class="container">
 				<div class="card card-indigo">
 					<div class="card-header">
-						<h3 class="card-title">Protein description</h3>
+						<h3 class="card-title">Description</h3>
 					</div>
 					<div class="card-body">
 						<p>
@@ -32,7 +32,6 @@
 		<button type="submit" class="btn btn-block btn-success btn-lg">Approve</button>
 	</form>
 </div>
-<br />
 <br />
 <div class="row md-12">
 	<form asp-action="Unapprove" asp-route-id="@Model.Id" method="post">
