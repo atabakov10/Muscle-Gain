@@ -12,25 +12,25 @@
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
                     <thead>
-                        <tr>
-	                        <th>Category</th>
-                            <th>Actions</th>
-                        </tr>
+                    <tr>
+                        <th>Category</th>
+                        <th>Actions</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach (var category in Model)
-                        {
-                            <tr style="background-color: #add8e6">
-	                            <td>@category.Name</td>
-                                <td>
-                                    <a asp-area="Admin" asp-action="Edit" asp-controller="Category" asp-route-id="@category.Id" class="btn btn-block btn-outline-info btn-xs mb-1">Edit</a>
-                                    <form asp-area="Admin" asp-action="Delete" asp-controller="Category" method="post">
-                                        <input name="id" type="hidden" value="@category.Id" />
-                                        <button type="submit" class="btn btn-block btn-outline-danger btn-xs">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        }
+                    @foreach (var category in Model)
+                    {
+                        <tr style="background-color: #add8e6">
+                            <td>@category.Name</td>
+                            <td>
+                                <a asp-area="Admin" asp-action="Edit" asp-controller="Category" asp-route-id="@category.Id" class="btn btn-block btn-outline-info btn-xs mb-1">Edit</a>
+                                <form asp-area="Admin" asp-action="Delete" asp-controller="Category" method="post">
+                                    <input name="id" type="hidden" value="@category.Id"/>
+                                    <button type="submit" class="btn btn-block btn-outline-danger btn-xs">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
                     </tbody>
                 </table>
             </div>
@@ -41,11 +41,8 @@
 </div>
 
 
+<a asp-area="Admin" asp-controller="Category" asp-action="AddCategory" class="btn btn-block btn-success btn-sm">Add Category</a>
 
-
-<a asp-controller="Category" asp-action="AddCategory">
-    <input type="button" class="btn btn-primary" value="Add" />
-</a>
 
 <script>
 
