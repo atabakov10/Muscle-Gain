@@ -1,50 +1,47 @@
 ﻿@model IEnumerable<UserListViewModel>
 
 @{
-    ViewData["Title"] = "Users Page";
+	ViewData["Title"] = "Users Page";
 }
 
-<a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-outline-dark mb-2">Back</a>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="~/css/users.css" />
 
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Users</h3>
-            </div>
 
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Full name</th>
-                        <th>E-mail</th>
-                        <th>Phone number</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var user in Model)
-                    {
-                        <tr style="background-color: lightgrey">
-                            <td>@user.Id</td>
-                            <td>@user.Username</td>
-                            <td>@user.FullName</td>
-                            <td>@user.Email</td>
-                            <td>@user.PhoneNumber</td>
-                            <td>
-                                <a asp-area="Admin" asp-action="Roles" asp-controller="User" asp-route-id="@user.Id" type="submit" class="btn btn-block btn-outline-info btn-xs">Roles</a>
-                            </td>
-                        </tr>
-                    }
 
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-
-    </div>
+<div class="users-div">
+	<h3 class="user-title">Users</h3>
 </div>
+
+<article class="user-article">
+	<table>
+		<thead>
+			<tr class="table-row">
+				<th>ID</th>
+				<th>Username</th>
+				<th>Full name</th>
+				<th>E-mail</th>
+				<th>Phone number</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var user in Model)
+			{
+				<tr>
+					<td>@user.Id</td>
+					<td>@user.Username</td>
+					<td>@user.FullName</td>
+					<td>@user.Email</td>
+					<td>@user.PhoneNumber</td>
+					<td>
+						<a asp-area="Admin" asp-action="Roles" asp-controller="User" asp-route-id="@user.Id" type="submit" class="btn btn-block btn-outline-info btn-xs">Roles</a>
+					</td>
+				</tr>
+			}
+
+		</tbody>
+	</table>
+</article>

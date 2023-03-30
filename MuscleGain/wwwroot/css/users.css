@@ -1,0 +1,64 @@
+﻿body { 
+    font-family: Lora;
+    background-color: black;
+}
+
+div {
+    display: flex;
+    justify-content: center;
+    align-content: center
+}
+
+.users-div {
+    border: 2px solid blue;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    background-color: lightgray;
+}
+
+.user-title {
+    font-weight: bold;
+    padding: 4px;
+    margin-bottom: 0px
+}
+
+.user-article {
+    border: 2px solid blue;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 12px;
+    background-color: lightgray;
+}
+
+.table-row {
+    text-decoration: underline solid gray;
+    cursor: pointer;
+}
+
+thead{
+    text-align:center;
+}
+
+th{
+    color: slategrey;
+    transition: all 300ms
+}
+
+th:hover{
+    color: black;
+}
+
+td{
+    border: 1px solid black;
+    margin: 6px 2px;
+    transition: all 300ms;
+    color: black;
+    padding: 4px;
+}
+
+td:hover {
+    background-color: black;
+    color: white;
+}
+
+

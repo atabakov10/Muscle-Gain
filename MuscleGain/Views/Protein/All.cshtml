@@ -5,6 +5,7 @@
 @{
 	ViewData["Title"] = "Protein page";
 }
+<link rel="stylesheet" href="css/style.css"/>
 
 <form method="get">
 	<div class="row">
@@ -94,7 +95,7 @@
 							{
 								<a asp-controller="Protein" asp-action="Edit" asp-route-id="@protein.Id" class="btn btn-warning">Edit</a>
 							}
-							<a asp-controller="Protein" asp-action="Details" asp-route-id="@protein.Id" class="btn btn-success ">Details</a>
+							<button asp-controller="Protein" asp-action="Details" asp-route-id="@protein.Id" class="btn btn-Details">Details</button>
 
 							@if (!User.IsInRole(RoleConstants.Seller) && !User.IsInRole(RoleConstants.Administrator))
 							{
